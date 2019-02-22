@@ -13,12 +13,23 @@
 *		@date	21/2/19
 */
 
-#include "globalFunctions.h"
+/** 
+ * @brief Use simulator or Mouse.
+ * 
+ * If the variable is set to 1, the simulator will be used. Otherwise the target will be
+ * the actual mouse.
+ */
+#define SIMULATOR 1
+
+#if SIMULATOR
+	#include "simulator.h"
+#endif
+
+
+#include "MappingFunctions.h"
 
 int main(void)
 {
-	/** @brief representation of the maze */
-	Maze* maze;
 	/** @brief representation of the mouse */
 	Mouse* mouse;
 

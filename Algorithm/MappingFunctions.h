@@ -39,6 +39,16 @@
 /** @brief Number of Debugging LEDs on the mouse */
 #define LEDN 8
 
+	/** height of the maze to be solved. If maze height is not known, set as largest value maze width that could occour. */
+	#define HEIGHT	8
+	/** marker to check if dimensions already defined. */
+	#define MAX_DIMENSIONS
+#endif
+///@}
+
+/** @brief Number of Debugging LEDs on the mouse */
+#define LEDN 8
+
 /**
  * @brief Connection between 2 nodes.
  */
@@ -74,7 +84,7 @@ typedef struct Node {
  * @brief Contains the representation of the maze itself
  */ 
 struct Maze {
-	cell index[WIDTH][HEIGHT];			/**< Array of cells used as the maze representation */
+	cell cellno[HEIGHT][WIDTH];			/**< Array of cells used as the maze representation */
 };
 
 /**
@@ -87,6 +97,7 @@ struct Mouse {
 	unsigned int dir : 4;				/**< Direction the mouse is facing */
 	unsigned int index;					/**< Position of the mouse within the maze */
 	unsigned int LEDs : LEDN; 			/**< State of each debugging LED on the mouse */
+	Maze* maze;
 };
 
 /**
@@ -96,7 +107,7 @@ struct Mouse {
  * Also corrects for if the 1 bit falls off the end of the register.
  *
  * @param N 	Number of turns to make.
- * @param mouse Pointer to the mouse representation 
+ * @param mouse Pointer to the mouse representation.
  */
 void turn(int N, struct Mouse* mouse);
 
