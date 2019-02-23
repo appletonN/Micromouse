@@ -21,12 +21,14 @@
  */
 #define SIMULATOR 1
 
+
 #if SIMULATOR
-	#include "simulator.h"
+	#include "Algorithm/simulator.h"
+#else
+    #include "Algorithm/MappingFunctions.h"
 #endif
 
 
-#include "MappingFunctions.h"
 
 int main(void)
 {

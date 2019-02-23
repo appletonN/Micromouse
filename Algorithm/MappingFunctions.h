@@ -15,6 +15,9 @@
  *		@date	21/2/19
  */
 
+#ifndef MAPPING_FUNCTIONS_H
+#define MAPPING_FUNCITONS_H
+
 /**
  * @name Maze Max Dimensions
  *
@@ -39,34 +42,14 @@
 /** @brief Number of Debugging LEDs on the mouse */
 #define LEDN 8
 
-	/** height of the maze to be solved. If maze height is not known, set as largest value maze width that could occour. */
-	#define HEIGHT	8
-	/** marker to check if dimensions already defined. */
-	#define MAX_DIMENSIONS
-#endif
-///@}
-
-/** @brief Number of Debugging LEDs on the mouse */
-#define LEDN 8
-
 /**
  * @brief Connection between 2 nodes.
  */
 struct connection{
-	Node* connection;					/**< Pointer to the connected Node */
+	unsigned int* connection;					/**< Pointer to the index of the connected Node */
 	unsigned int cost;					/**< Cost to get to connected Node */
 	unsigned int direction : 4; 		/**< direction to exit cell to get to connected Node */
 };
-
-/**
- * @brief All info about a given cell
- */
-typedef struct cell {
-	unsigned int walls : 4;				/**< Layout of walls; 1 denotes a wall, 0 is no wall. bit-order is N>E>S>W */
-	unsigned int noOfWalls : 3;			/**< Number of walls of cell. can never be more than 4 */
-	unsigned int isNode : 1;			/**< Marks whether cell is a Node or not */
-	Node* nodeAddress;					/**< Pointer to Node that references this cell (if applicable) */
-} cell;
 
 /**
  * @brief All info about a given Node.
@@ -77,8 +60,18 @@ typedef struct Node {
 	unsigned int noOfConnections : 3; 	/**< Number of Nodes connected to this one */
 
 	struct connection connections[3];	/**< Array  of connected nodes */
-	int distToCentre = -1;				/**< Shortest distance found to centre of maze. -1 represents infinite distance */  
+	int distToCentre;                   /**< Shortest distance found to centre of maze. -1 represents infinite distance */  
 } Node;
+
+/**
+ * @brief All info about a given cell
+ */
+typedef struct cell {
+	unsigned int walls : 4;				/**< Layout of walls; 1 denotes a wall, 0 is no wall. bit-order is N>E>S>W */
+	unsigned int noOfWalls : 3;			/**< Number of walls of cell. can never be more than 4 */
+	unsigned int isNode : 1;			/**< Marks whether cell is a Node or not */
+	Node* nodeAddress;					/**< Pointer to Node that references this cell (if applicable) */
+} cell;
 
 /**
  * @brief Contains the representation of the maze itself
@@ -93,12 +86,12 @@ struct Maze {
  * represents the mosue that inhabits the virtual maze. including physical
  * attributes and debugging info.
  */
-struct Mouse {
+typedef struct Mouse {
 	unsigned int dir : 4;				/**< Direction the mouse is facing */
 	unsigned int index;					/**< Position of the mouse within the maze */
 	unsigned int LEDs : LEDN; 			/**< State of each debugging LED on the mouse */
-	Maze* maze;
-};
+	struct Maze* maze;
+} Mouse;
 
 /**
  * @brief Turn the right mouse within the virtual maze.
@@ -111,3 +104,4 @@ struct Mouse {
  */
 void turn(int N, struct Mouse* mouse);
 
+#endif

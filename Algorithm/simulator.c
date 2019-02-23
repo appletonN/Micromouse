@@ -42,21 +42,19 @@
 ///@}
 
 
-int readSensors(int index, int direction : 4) {
+int readSensors(int index, int direction) {
 
-	static int const completeMaze[ACTUAL_HEIGHT][ACTUAL_WIDTH][4] = {
-		{{1,0,0,1}, {1,0,0,0}, {1,1,0,0}, {1,0,0,1}, {1,1,0,0}, {1,1,0,1}}
-		{{0,1,0,1}, {0,1,1,1}, {0,1,1,1}, {0,1,0,0}, {0,0,1,1}, {0,1,0,0}}
-		{{0,0,1,1}, {1,1,0,0}, {1,0,0,1}, {0,1,0,0}, {1,1,0,1}, {0,1,0,1}}
-		{{1,0,0,1}, {0,1,0,0}, {0,0,1,1}, {0,1,1,0}, {0,0,1,1}, {0,1,0,0}}
-		{{0,1,0,1}, {0,1,0,1}, {1,0,0,1}, {1,1,1,0}, {1,0,0,1}, {0,1,0,0}}
-		{{0,0,1,1}, {0,0,1,0}, {0,0,1,0}, {1,0,1,0}, {0,1,1,0}, {0,1,1,1}}
-	}
+	static int completeMaze[ACTUAL_HEIGHT][ACTUAL_WIDTH][4] = {
+		{ {1,0,0,1}, {1,0,0,0}, {1,1,0,0}, {1,0,0,1}, {1,1,0,0}, {1,1,0,1} },
+		{ {0,1,0,1}, {0,1,1,1}, {0,1,1,1}, {0,1,0,0}, {0,0,1,1}, {0,1,0,0} },
+		{ {0,0,1,1}, {1,1,0,0}, {1,0,0,1}, {0,1,0,0}, {1,1,0,1}, {0,1,0,1} },
+		{ {1,0,0,1}, {0,1,0,0}, {0,0,1,1}, {0,1,1,0}, {0,0,1,1}, {0,1,0,0} },
+		{ {0,1,0,1}, {0,1,0,1}, {1,0,0,1}, {1,1,1,0}, {1,0,0,1}, {0,1,0,0} },
+		{ {0,0,1,1}, {0,0,1,0}, {0,0,1,0}, {1,0,1,0}, {0,1,1,0}, {0,1,1,1} },
+	};
 
 	/** @brief Which wall is being checked */
 	int wall = 0;
-
-	currentCell = completeMaze[index]; 
 
 	switch (direction) {
 		case 0x02:
@@ -84,7 +82,7 @@ int readSensors(int index, int direction : 4) {
  		for (j = 0; i < WIDTH ; i++)
  		{
  			
- 			if (mouse->maze->cellno[i][j]->walls | 0x04) {
+ 			if (mouse->maze->cellno[i][j].walls | 0x04) {
  				//print a wall if there is a wall to the south of the cell
  				printf("+---");
 
@@ -101,7 +99,7 @@ int readSensors(int index, int direction : 4) {
  		for (j = 0; i < WIDTH ; i++)
  		{ 
  			//draw east wall
- 			if (mouse->maze->cellno[i][j]->walls | 0x08) {
+ 			if (mouse->maze->cellno[i][j].walls | 0x08) {
  				//print a wall if there is a wall to the south of the cell
  				printf("|");
 
