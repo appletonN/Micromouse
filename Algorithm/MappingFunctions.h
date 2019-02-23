@@ -45,8 +45,9 @@
 /**
  * @brief Connection between 2 nodes.
  */
-struct connection{
-	unsigned int* connection;					/**< Pointer to the index of the connected Node */
+struct connection
+{
+	unsigned int* connection;			/**< Pointer to the index of the connected Node */
 	unsigned int cost;					/**< Cost to get to connected Node */
 	unsigned int direction : 4; 		/**< direction to exit cell to get to connected Node */
 };
@@ -54,7 +55,8 @@ struct connection{
 /**
  * @brief All info about a given Node.
  */
-typedef struct Node {
+typedef struct Node
+{
 	unsigned int index;					/**< index of the cell that this node references */
 	unsigned int isEnd : 1;				/**< Marks whether the Node is at the centre of the maze */
 	unsigned int noOfConnections : 3; 	/**< Number of Nodes connected to this one */
@@ -66,7 +68,8 @@ typedef struct Node {
 /**
  * @brief All info about a given cell
  */
-typedef struct cell {
+typedef struct cell
+{
 	unsigned int walls : 4;				/**< Layout of walls; 1 denotes a wall, 0 is no wall. bit-order is N>E>S>W */
 	unsigned int noOfWalls : 3;			/**< Number of walls of cell. can never be more than 4 */
 	unsigned int isNode : 1;			/**< Marks whether cell is a Node or not */
@@ -76,7 +79,8 @@ typedef struct cell {
 /**
  * @brief Contains the representation of the maze itself
  */ 
-struct Maze {
+struct Maze
+{
 	cell cellno[HEIGHT][WIDTH];			/**< Array of cells used as the maze representation */
 };
 
@@ -86,7 +90,8 @@ struct Maze {
  * represents the mosue that inhabits the virtual maze. including physical
  * attributes and debugging info.
  */
-typedef struct Mouse {
+typedef struct Mouse
+{
 	unsigned int dir : 4;				/**< Direction the mouse is facing */
 	unsigned int index;					/**< Position of the mouse within the maze */
 	unsigned int LEDs : LEDN; 			/**< State of each debugging LED on the mouse */
@@ -104,4 +109,4 @@ typedef struct Mouse {
  */
 void turn(int N, struct Mouse* mouse);
 
-#endif
+#endif /* MAPPING_FUNCTIONS_H */

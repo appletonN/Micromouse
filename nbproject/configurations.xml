@@ -17,6 +17,9 @@
       <itemPath>main.c</itemPath>
       <itemPath>Algorithm/MappingFunctions.c</itemPath>
       <itemPath>Algorithm/simulator.c</itemPath>
+      <itemPath>MapMaze.c</itemPath>
+      <itemPath>Stacks.h</itemPath>
+      <itemPath>Stacks.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

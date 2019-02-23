@@ -9,13 +9,14 @@
  *
  *		@author		Nick Appleton @ UWE Robotics
  *
- *		@date	21/2/19
+ *		@date	23/2/19
  */
 
 #include "MappingFunctions.h"
 
 
-void turn(int N, Mouse* mouse){
+void turn(int N, Mouse* mouse)
+{
 	int i;
 
 	for (i=0; i<N; i++)

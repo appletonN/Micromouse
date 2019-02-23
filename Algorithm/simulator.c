@@ -42,7 +42,8 @@
 ///@}
 
 
-int readSensors(int index, int direction) {
+int readSensors(int index, int direction)
+{
 
 	static int completeMaze[ACTUAL_HEIGHT][ACTUAL_WIDTH][4] = {
 		{ {1,0,0,1}, {1,0,0,0}, {1,1,0,0}, {1,0,0,1}, {1,1,0,0}, {1,1,0,1} },
@@ -73,7 +74,8 @@ int readSensors(int index, int direction) {
 }
 
 
- void printStatus(Mouse* mouse){
+ void printStatus(Mouse* mouse)
+ {
  	int i, j;
 
  	for (i = HEIGHT-1 ; i<=0 ; i--)	//for every row (top-down)

@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=main.c Algorithm/MappingFunctions.c Algorithm/simulator.c
+SOURCEFILES_QUOTED_IF_SPACED=main.c Algorithm/MappingFunctions.c Algorithm/simulator.c MapMaze.c Stacks.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/Algorithm/MappingFunctions.o ${OBJECTDIR}/Algorithm/simulator.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/Algorithm/MappingFunctions.o.d ${OBJECTDIR}/Algorithm/simulator.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/Algorithm/MappingFunctions.o ${OBJECTDIR}/Algorithm/simulator.o ${OBJECTDIR}/MapMaze.o ${OBJECTDIR}/Stacks.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/Algorithm/MappingFunctions.o.d ${OBJECTDIR}/Algorithm/simulator.o.d ${OBJECTDIR}/MapMaze.o.d ${OBJECTDIR}/Stacks.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/Algorithm/MappingFunctions.o ${OBJECTDIR}/Algorithm/simulator.o
+OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/Algorithm/MappingFunctions.o ${OBJECTDIR}/Algorithm/simulator.o ${OBJECTDIR}/MapMaze.o ${OBJECTDIR}/Stacks.o
 
 # Source Files
-SOURCEFILES=main.c Algorithm/MappingFunctions.c Algorithm/simulator.c
+SOURCEFILES=main.c Algorithm/MappingFunctions.c Algorithm/simulator.c MapMaze.c Stacks.c
 
 
 CFLAGS=
@@ -115,6 +115,20 @@ ${OBJECTDIR}/Algorithm/simulator.o: Algorithm/simulator.c  nbproject/Makefile-${
 	${MP_CC} $(MP_EXTRA_CC_PRE)  Algorithm/simulator.c  -o ${OBJECTDIR}/Algorithm/simulator.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Algorithm/simulator.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/Algorithm/simulator.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/MapMaze.o: MapMaze.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/MapMaze.o.d 
+	@${RM} ${OBJECTDIR}/MapMaze.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  MapMaze.c  -o ${OBJECTDIR}/MapMaze.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/MapMaze.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/MapMaze.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/Stacks.o: Stacks.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/Stacks.o.d 
+	@${RM} ${OBJECTDIR}/Stacks.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  Stacks.c  -o ${OBJECTDIR}/Stacks.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Stacks.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/Stacks.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -136,6 +150,20 @@ ${OBJECTDIR}/Algorithm/simulator.o: Algorithm/simulator.c  nbproject/Makefile-${
 	@${RM} ${OBJECTDIR}/Algorithm/simulator.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  Algorithm/simulator.c  -o ${OBJECTDIR}/Algorithm/simulator.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Algorithm/simulator.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/Algorithm/simulator.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/MapMaze.o: MapMaze.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/MapMaze.o.d 
+	@${RM} ${OBJECTDIR}/MapMaze.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  MapMaze.c  -o ${OBJECTDIR}/MapMaze.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/MapMaze.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/MapMaze.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/Stacks.o: Stacks.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/Stacks.o.d 
+	@${RM} ${OBJECTDIR}/Stacks.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  Stacks.c  -o ${OBJECTDIR}/Stacks.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Stacks.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/Stacks.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

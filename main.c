@@ -13,22 +13,7 @@
 *		@date	21/2/19
 */
 
-/** 
- * @brief Use simulator or Mouse.
- * 
- * If the variable is set to 1, the simulator will be used. Otherwise the target will be
- * the actual mouse.
- */
-#define SIMULATOR 1
-
-
-#if SIMULATOR
-	#include "Algorithm/simulator.h"
-#else
-    #include "Algorithm/MappingFunctions.h"
-#endif
-
-
+#include "simulator.h"
 
 int main(void)
 {
