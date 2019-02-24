@@ -42,7 +42,7 @@
 ///@}
 
 
-int readSensors(int index, int direction)
+int readSensor(int index, int direction)
 {
 
 	static int completeMaze[ACTUAL_HEIGHT][ACTUAL_WIDTH][4] = {

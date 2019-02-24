@@ -27,7 +27,7 @@
  * @param index			index that the mouse is at within the maze.
  * @param direction		direction register of the mouse.
  */
-int readSensors(int index, int direction);
+int readSensor(int index, int direction);
 
 /**
  * @brief Print out the maze to stdout.
