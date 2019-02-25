@@ -70,9 +70,10 @@ typedef struct Node
  */
 typedef struct cell
 {
-	unsigned int walls : 4;				/**< Layout of walls; 1 denotes a wall, 0 is no wall. bit-order is N>E>S>W */
-	unsigned int noOfWalls : 3;			/**< Number of walls of cell. can never be more than 4 */
-	unsigned int isNode : 1;			/**< Marks whether cell is a Node or not */
+	unsigned int walls : 8;				/**< Layout of walls; 1 denotes a wall, 0 is no wall. bit-order is N>E>S>W */
+	unsigned int noOfWalls : 6;			/**< Number of walls of cell. can never be more than 4 */
+    unsigned int explored : 1;          /**< Marks whether cell has been visited */
+	unsigned int isNode : 1;            /**< Marks whether cell is a Node or not */
 	Node* nodeAddress;					/**< Pointer to Node that references this cell (if applicable) */
 } cell;
 
@@ -87,15 +88,17 @@ struct Maze
 /**
  * @brief Representation of the Mouse in virtual space
  *
- * represents the mosue that inhabits the virtual maze. including physical
+ * represents the mouse that inhabits the virtual maze. including physical
  * attributes and debugging info.
  */
 typedef struct Mouse
 {
 	unsigned int dir : 4;				/**< Direction the mouse is facing */
 	unsigned int index;					/**< Position of the mouse within the maze */
+    unsigned int DeadEnd : 1;           /**< Marks whether backtracking from a dead end */
 	unsigned int LEDs : LEDN; 			/**< State of each debugging LED on the mouse */
-	struct Maze* maze;
+	struct Maze maze;                   /**< contains the mouse's model of the maze */
+    Node* parentNode;                   /**< Node last viseted, next node found will be connected to this */
 } Mouse;
 
 /**
@@ -108,5 +111,15 @@ typedef struct Mouse
  * @param mouse Pointer to the mouse representation.
  */
 void turn(int N, struct Mouse* mouse);
+
+/**
+ * @brief Changes the index of the mouse to move into an adjacent cell
+ *
+ * looks at the direction the mouse is facing and changes the index by the
+ * right amount to move the mouse into the adjacent cell in that direction.
+ *
+ * @param mouse Pointer to the mouse representation.
+ */
+void incrementIndex(Mouse* mouse);
 
 #endif /* MAPPING_FUNCTIONS_H */
