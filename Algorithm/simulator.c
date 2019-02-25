@@ -18,15 +18,6 @@
 
 #include <stdio.h>
 
-#define ANSI_COLOR_RED     "\x1b[31m"
-#define ANSI_COLOR_GREEN   "\x1b[32m"
-#define ANSI_COLOR_YELLOW  "\x1b[33m"
-#define ANSI_COLOR_BLUE    "\x1b[34m"
-#define ANSI_COLOR_MAGENTA "\x1b[35m"
-#define ANSI_COLOR_CYAN    "\x1b[36m"
-#define ANSI_COLOR_RESET   "\x1b[0m"
-
-
 /**
  * @name Maze Actual Simulated Dimensions
  *
@@ -78,13 +69,13 @@ int readSensor(int index, int direction)
  {
  	int i, j;
 
- 	for (i = HEIGHT-1 ; i<=0 ; i--)	//for every row (top-down)
+ 	for (i = HEIGHT-1 ; i>=0 ; i--)	//for every row (top-down)
  	{
- 		//Start by drawing the south facing walls of the row
- 		for (j = 0; i < WIDTH ; i++)
+ 		//Start by drawing the North facing walls of the row
+ 		for (j = 0; j < WIDTH ; j++)
  		{
  			
- 			if (mouse->maze->cellno[i][j].walls | 0x04) {
+ 			if (mouse->maze.cellno[i][j].walls & 0x01) {
  				//print a wall if there is a wall to the south of the cell
  				printf("+---");
 
@@ -98,10 +89,10 @@ int readSensor(int index, int direction)
 
 
  		//Next draw the East walls, and cell info
- 		for (j = 0; i < WIDTH ; i++)
+ 		for (j = 0; j < WIDTH ; j++)
  		{ 
  			//draw east wall
- 			if (mouse->maze->cellno[i][j].walls | 0x08) {
+ 			if (mouse->maze.cellno[i][j].walls & 0x08) {
  				//print a wall if there is a wall to the south of the cell
  				printf("|");
 
@@ -115,24 +106,36 @@ int readSensor(int index, int direction)
  				//print the mouse in red faving the correct direction
  				switch (mouse->dir){
  					case 0x01:
- 						printf(ANSI_COLOR_RED "/^\\" ANSI_COLOR_RESET);
+ 						printf("/^\\");
  						break;
  					case 0x02:
- 						printf(ANSI_COLOR_RED " > " ANSI_COLOR_RESET);
+ 						printf(" > ");
  						break;
  					case 0x04:
- 						printf(ANSI_COLOR_RED " v " ANSI_COLOR_RESET);
+ 						printf( " v " );
  						break;
  					case 0x08:
- 						printf(ANSI_COLOR_RED " < " ANSI_COLOR_RESET);
+ 						printf( " < " );
  						break;
  				}//SWITCH
 
- 			} else if ( mouse->maze->cellno[WIDTH*i + j]->isNode ) {
- 				//if it's a node then print a Magenta N
- 				printf(ANSI_COLOR_MAGENTA " N " ANSI_COLOR_RESET);
- 			}
+ 			} else if ( mouse->maze.cellno[i][j].isNode ) {
+ 				//if it's a node then print an N
+ 				printf( " N " );
+                
+ 			} else {
+                printf("   ");
+            }
  		} //FOR j
+        
+        printf("|\n");
 
  	} //FOR i
- }
+    
+    //print bottom wall
+    for (j = 0; j < WIDTH ; j++)
+    {
+        printf("+---");
+    } //FOR j
+    printf("+\n");
+}

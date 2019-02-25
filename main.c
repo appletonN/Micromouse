@@ -13,13 +13,16 @@
 *		@date	21/2/19
 */
 
-#include "simulator.h"
+#include "Algorithm/MappingFunctions.h"
+#include "Algorithm/MapMaze.h"
+#include <stdlib.h>
 
 int main(void)
 {
-	/** @brief representation of the mouse */
-	Mouse* mouse;
-
+    
+	Mouse mouse;
+    
+    mapmaze(&mouse);
 	
 	return 0;
 }
