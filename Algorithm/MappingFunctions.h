@@ -16,7 +16,7 @@
  */
 
 #ifndef MAPPING_FUNCTIONS_H
-#define MAPPING_FUNCITONS_H
+#define MAPPING_FUNCTIONS_H
 
 /**
  * @name Maze Max Dimensions

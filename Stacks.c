@@ -28,7 +28,7 @@ unsigned int pop(Stack* stack)
     
     //extract data and free top element
     unsigned int data = temp->data;
-    free(*temp);
+    free(temp);
     
     return data;
 }
