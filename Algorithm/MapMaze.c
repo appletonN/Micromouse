@@ -33,10 +33,7 @@ void mapmaze(Mouse* mouse)
     
     printStatus(mouse, &openlist);
     
-    //while openlist isn't empty
-    while(openlist->nextitem);
-    
-    
+    ExploreNewCell(mouse, &openlist);
     
 }
 
@@ -190,5 +187,5 @@ void ConnectNodes(Mouse* mouse)
     CurrentNode->connections[CurrentNode->noOfConnections].direction = mouse->dir;
     turn(2, mouse);
     
-    
+    mouse->parentNode = CurrentNode;
 }

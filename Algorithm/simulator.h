@@ -1,6 +1,6 @@
 /**
  *		@file simulator.c
- *		@brief Display the maze for debugging
+ *		@brief Display the maze for debugging.
  *
  *		Adds functionality for the simulator to be used. This will
  *		mean that the program can be run without using the physical

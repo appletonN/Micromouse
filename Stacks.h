@@ -58,7 +58,7 @@ void push(Stack* stack, unsigned int Newdata);
  * 
  * @param stack     the stack from which the data will be popped.
  */
-unsigned int pop(Stack stack);
+unsigned int pop(Stack* stack);
 
 
 #endif	/* STACKS_H */

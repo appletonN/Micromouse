@@ -114,7 +114,7 @@ typedef struct Mouse
 void turn(int N, Mouse* mouse);
 
 /**
- * @brief Changes the index of the mouse to move into an adjacent cell
+ * @brief Changes the index of the mouse to move into an adjacent cell.
  *
  * looks at the direction the mouse is facing and changes the index by the
  * right amount to move the mouse into the adjacent cell in that direction.

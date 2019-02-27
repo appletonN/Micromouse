@@ -1,18 +1,4 @@
-/**
- *		@file simulator.c
- *		@brief Display the maze for debugging
- *
- *		Displays the maze live on stdout for when the micromouse
- *		is not available. The simulator displays the current status
- *		of teh maze as well as teh status of the mouse including it's
- *		location, the direction it is facing and the status of all
- *		the debugging LEDs.  
- *
- *
- *		@author		Nick Appleton @ UWE Robotics
- *
- *		@date	21/2/19
- */
+
 
 #include "simulator.h"
 
