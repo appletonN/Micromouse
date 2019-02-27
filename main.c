@@ -16,6 +16,7 @@
 #include "Algorithm/MappingFunctions.h"
 #include "Algorithm/MapMaze.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int main(void)
 {
@@ -23,6 +24,8 @@ int main(void)
 	Mouse mouse;
     
     mapmaze(&mouse);
+    
+    printf("done, bye bye\n\n\n");
 	
 	return 0;
 }

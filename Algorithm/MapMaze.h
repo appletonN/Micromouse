@@ -20,7 +20,7 @@
 /**
  * @brief main maze-mapping function.
  * 
- * calls all the other fuctions to map out the whole
+ * calls all the other functions to map out the whole
  * reachable maze.
  * 
  * @param mouse     representation of the mouse in the maze.
@@ -64,6 +64,17 @@ Node* createNode(Mouse* mouse, unsigned int index);
  * @param openlist  The stack of unexplored cells.
  */
 void checkcurrentcell(Mouse* mouse, Stack* openlist);
+
+/**
+ * @brief Connects the parent node to the current cell.
+ * 
+ * Adds a connection to the parent Node to the current cell, also
+ * adds the connection back from current cell to parent Node. If the
+ * current cell is not a Node, it creates a new node to use.
+ * 
+ * @param mouse
+ */
+void ConnectNodes(Mouse* mouse);
 
 #endif	/* MAPMAZE_H */
 

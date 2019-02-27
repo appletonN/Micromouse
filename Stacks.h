@@ -47,7 +47,7 @@ typedef struct stackitem* Stack;
  * @param stack        the stack that the data will be pushed to.
  * @param Newdata      the data that will be pushed to the stack.
  */
-void push(Stack stack, unsigned int Newdata);
+void push(Stack* stack, unsigned int Newdata);
 
 /**
  * @brief pops an item from the top of the stack.

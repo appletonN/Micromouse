@@ -15,19 +15,20 @@
 #include "Stacks.h"
 
 
-void push(Stack stack, unsigned int Newdata)
+void push(Stack* stack, unsigned int Newdata)
 {
     // allocate memory to new item
     struct stackitem* newelement;
     newelement = malloc(sizeof(struct stackitem));
     
+    
     // add data to element
     newelement->data = Newdata;
     // add pointer to current top of stack
-    newelement->nextitem = stack;
+    newelement->nextitem = *stack;
     
     // move stack pointer to the new item
-    stack = newelement;
+    *stack = newelement;
 }
 
 unsigned int pop(Stack stack)

@@ -5,7 +5,8 @@
 void turn(int N, Mouse* mouse)
 {
 	int i;
-
+    
+    
 	for (i=0; i<N; i++)
 	{ 
 		mouse->dir = mouse->dir >> 1;
@@ -19,20 +20,20 @@ void turn(int N, Mouse* mouse)
 void incrementIndex(Mouse* mouse)
 {
     switch (mouse->dir) {
-        case 0x01:                      //< facing N
+        case 0x08:                      //< facing N
             mouse->index += WIDTH;
             break;
             
-        case 0x02:                      //< facing E
-            mouse->index += HEIGHT;
+        case 0x04:                      //< facing E
+            mouse->index += 1;
             break;
             
-        case 0x04:                      //< facing S
+        case 0x02:                      //< facing S
             mouse->index -= WIDTH;
             break;
             
-        case 0x08:                      //< facing W
-            mouse->index -= HEIGHT;
+        case 0x01:                      //< facing W
+            mouse->index -= 1;
             break;
             
     }//SWITCH

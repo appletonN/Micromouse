@@ -15,6 +15,7 @@
  */
 
 #include "MappingFunctions.h"
+#include "../Stacks.h"
 
 /**
  * @brief used to find if a wall is there or not.
@@ -38,4 +39,4 @@ int readSensor(int index, int direction);
  *
  * @param mouse			representation of the mouse to be referenced.
  */
- void printStatus(Mouse* mouse);
+ void printStatus(Mouse* mouse, Stack* openlist);

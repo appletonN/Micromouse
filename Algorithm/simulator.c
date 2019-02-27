@@ -37,27 +37,27 @@ int readSensor(int index, int direction)
 {
 
 	static int completeMaze[ACTUAL_HEIGHT][ACTUAL_WIDTH][4] = {
-		{ {1,0,0,1}, {1,0,0,0}, {1,1,0,0}, {1,0,0,1}, {1,1,0,0}, {1,1,0,1} },
-		{ {0,1,0,1}, {0,1,1,1}, {0,1,1,1}, {0,1,0,0}, {0,0,1,1}, {0,1,0,0} },
-		{ {0,0,1,1}, {1,1,0,0}, {1,0,0,1}, {0,1,0,0}, {1,1,0,1}, {0,1,0,1} },
-		{ {1,0,0,1}, {0,1,0,0}, {0,0,1,1}, {0,1,1,0}, {0,0,1,1}, {0,1,0,0} },
-		{ {0,1,0,1}, {0,1,0,1}, {1,0,0,1}, {1,1,1,0}, {1,0,0,1}, {0,1,0,0} },
-		{ {0,0,1,1}, {0,0,1,0}, {0,0,1,0}, {1,0,1,0}, {0,1,1,0}, {0,1,1,1} },
+        {{0,1,1,1}, {0,0,1,0}, {0,0,1,0}, {1,0,1,0}, {0,1,1,0}, {0,1,1,1}},
+        {{0,1,0,1}, {0,1,0,1}, {1,0,0,1}, {1,1,1,0}, {1,0,0,1}, {0,1,0,0}},
+        {{1,0,0,1}, {0,1,0,0}, {0,0,1,1}, {0,1,1,0}, {0,0,1,1}, {0,1,0,0}},
+        {{0,0,1,1}, {1,1,0,0}, {1,0,0,1}, {0,1,0,0}, {1,1,0,1}, {0,1,0,1}},   
+        {{0,1,0,1}, {0,1,1,1}, {0,1,1,1}, {0,1,0,0}, {0,0,1,1}, {0,1,0,0}},    
+        {{1,0,0,1}, {1,0,0,0}, {1,1,0,0}, {1,0,0,1}, {1,1,0,0}, {1,1,0,1}}
 	};
 
 	/** @brief Which wall is being checked */
 	int wall = 0;
 
 	switch (direction) {
+		case 0x01:
+			wall++;
 		case 0x02:
 			wall++;
 		case 0x04:
 			wall++;
-		case 0x08:
-			wall++;
 	}
-
-	if (completeMaze[index+wall])
+    
+	if (completeMaze[0][index][wall])
 		return 1;
 	else
 		return 0;
@@ -65,7 +65,7 @@ int readSensor(int index, int direction)
 }
 
 
- void printStatus(Mouse* mouse)
+ void printStatus(Mouse* mouse, Stack* openlist)
  {
  	int i, j;
 
@@ -75,8 +75,8 @@ int readSensor(int index, int direction)
  		for (j = 0; j < WIDTH ; j++)
  		{
  			
- 			if (mouse->maze.cellno[i][j].walls & 0x01) {
- 				//print a wall if there is a wall to the south of the cell
+ 			if (mouse->maze.cellno[i][j].walls & 0x08) {
+ 				//print a wall if there is a wall to the North of the cell
  				printf("+---");
 
  			} else {
@@ -88,12 +88,12 @@ int readSensor(int index, int direction)
  		printf("+\n"); 	//finish off row
 
 
- 		//Next draw the East walls, and cell info
+ 		//Next draw the West walls, and cell info
  		for (j = 0; j < WIDTH ; j++)
  		{ 
- 			//draw east wall
- 			if (mouse->maze.cellno[i][j].walls & 0x08) {
- 				//print a wall if there is a wall to the south of the cell
+ 			//draw West wall
+ 			if (mouse->maze.cellno[i][j].walls & 0x01) {
+ 				//print a wall if there is a wall to the West of the cell
  				printf("|");
 
  			} else {
@@ -105,16 +105,16 @@ int readSensor(int index, int direction)
  			if ( WIDTH*i + j == mouse->index ){
  				//print the mouse in red faving the correct direction
  				switch (mouse->dir){
- 					case 0x01:
+ 					case 0x08:
  						printf("/^\\");
  						break;
- 					case 0x02:
+ 					case 0x04:
  						printf(" > ");
  						break;
- 					case 0x04:
+ 					case 0x02:
  						printf( " v " );
  						break;
- 					case 0x08:
+ 					case 0x01:
  						printf( " < " );
  						break;
  				}//SWITCH
@@ -123,7 +123,11 @@ int readSensor(int index, int direction)
  				//if it's a node then print an N
  				printf( " N " );
                 
- 			} else {
+ 			} else if ( WIDTH*i + j == (*openlist)->data ) {
+                //if it's the first item in the openlist, print *
+                printf(" X ");
+                
+            } else {
                 printf("   ");
             }
  		} //FOR j
@@ -138,4 +142,8 @@ int readSensor(int index, int direction)
         printf("+---");
     } //FOR j
     printf("+\n");
+    
+    /*  Print LEDs  */
+    printf("%X\n", mouse->LEDs);
+    
 }

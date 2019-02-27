@@ -40,7 +40,7 @@
 ///@}
 
 /** @brief Number of Debugging LEDs on the mouse */
-#define LEDN 8
+#define LEDN 5
 
 /**
  * @brief Connection between 2 nodes.
@@ -70,7 +70,7 @@ typedef struct Node
  */
 typedef struct cell
 {
-	unsigned int walls : 8;				/**< Layout of walls; 1 denotes a wall, 0 is no wall. bit-order is N>E>S>W */
+	unsigned int walls : 4;				/**< Layout of walls; 1 denotes a wall, 0 is no wall. bit-order is N>E>S>W */
 	unsigned int noOfWalls : 6;			/**< Number of walls of cell. can never be more than 4 */
     unsigned int explored : 1;          /**< Marks whether cell has been visited */
 	unsigned int isNode : 1;            /**< Marks whether cell is a Node or not */
@@ -99,6 +99,7 @@ typedef struct Mouse
 	unsigned int LEDs : LEDN; 			/**< State of each debugging LED on the mouse */
 	struct Maze maze;                   /**< contains the mouse's model of the maze */
     Node* parentNode;                   /**< Node last viseted, next node found will be connected to this */
+    struct connection currentConnection;/**< Info about current exploration from parent Node */
 } Mouse;
 
 /**
@@ -110,7 +111,7 @@ typedef struct Mouse
  * @param N 	Number of turns to make.
  * @param mouse Pointer to the mouse representation.
  */
-void turn(int N, struct Mouse* mouse);
+void turn(int N, Mouse* mouse);
 
 /**
  * @brief Changes the index of the mouse to move into an adjacent cell
