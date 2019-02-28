@@ -4,7 +4,7 @@
 *
 *		Maps the full maze including placing nodes
 *       and finding the connections between those
-*       Nodes.s
+*       Nodes.
 *
 *
 *		@author		Nick Appleton @ UWE Robotics
@@ -75,6 +75,40 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist);
  * @param mouse
  */
 void ConnectNodes(Mouse* mouse);
+
+/**
+ * @breif Used to get to new areas.
+ * 
+ * Pops the first item from the openlist and explores the cell
+ * at that index. If the cell is not accessible from the current
+ * cell, then it backtracks until it finds it.
+ * 
+ * @param mouse
+ * @param openlist
+ */
+void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history);
+
+/**
+ * @brief identify in which direction a cell is.
+ * 
+ * Identifies which direction an adjacent cell is in, if the
+ * target cell is not adjacent, then 0 is returned.
+ * 
+ * @param mouse
+ * @param target    the cell that the mouse is trying to get to.
+ * @return          the direction of the adjacent cell.
+ */
+unsigned int identifyDirection(Mouse* mouse, unsigned int target);
+
+/**
+ * @brief move mouse into an adjacent cell in the direction given.
+ * 
+ * Moves the physical mouse into a cell geven in the direction param.
+ * 
+ * @param mouse
+ * @param direction     the direction in which the adjacent cell is.
+ */
+void moveToAdjacentCell(Mouse* mouse, unsigned int direction);
 
 #endif	/* MAPMAZE_H */
 
