@@ -39,6 +39,14 @@
 #endif
 ///@}
 
+/**
+ * @brief direction inputs into the turn function
+ */
+///@{
+#define LEFT 1
+#define RIGHT -1
+///@}
+
 /** @brief Number of Debugging LEDs on the mouse */
 #define LEDN 5
 
@@ -47,7 +55,7 @@
  */
 struct connection
 {
-	unsigned int* connection;			/**< Pointer to the index of the connected Node */
+	unsigned int connection;			/**< Index of the connected Node */
 	unsigned int cost;					/**< Cost to get to connected Node */
 	unsigned int direction : 4; 		/**< direction to exit cell to get to connected Node */
 };

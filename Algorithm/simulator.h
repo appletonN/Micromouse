@@ -40,3 +40,23 @@ int readSensor(int index, int direction);
  * @param mouse			representation of the mouse to be referenced.
  */
  void printStatus(Mouse* mouse, Stack* openlist);
+ 
+ /**
+  * @brief Turn physical Mouse.
+  * 
+  * Dummy function as there is no physical mouse to turn. This is a 
+  * placeholder so that the final program will run correctly on the
+  * simulator with minimal changing of code.
+  * 
+  * @param direciton    Direction to turn.
+  */
+ void MouseTurn(int direciton);
+ 
+ /**
+  * @brief Move physical mouse forward one cell.
+  * 
+  * Dummy function as there is no physical mouse to turn. This is a 
+  * placeholder so that the final program will run correctly on the
+  * simulator with minimal changing of code.
+  */
+ void ForwardOneCell(void);

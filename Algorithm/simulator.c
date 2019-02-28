@@ -133,3 +133,7 @@ int readSensor(int index, int direction)
     printf("%X\n", mouse->LEDs);
     
 }
+ 
+void MouseTurn(int direciton);
+
+void ForwardOneCell(void);

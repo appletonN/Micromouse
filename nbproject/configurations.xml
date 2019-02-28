@@ -8,7 +8,6 @@
       <itemPath>Algorithm/simulator.h</itemPath>
       <itemPath>Stacks.h</itemPath>
       <itemPath>Algorithm/MapMaze.h</itemPath>
-      <itemPath>Algorithm/Explore.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -22,7 +21,6 @@
       <itemPath>Algorithm/simulator.c</itemPath>
       <itemPath>Stacks.c</itemPath>
       <itemPath>Algorithm/MapMaze.c</itemPath>
-      <itemPath>Algorithm/Explore.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -159,7 +157,7 @@
         <property key="general-code-protect" value="no_code_protect"/>
         <property key="general-write-protect" value="no_write_protect"/>
         <property key="generate-cross-reference-file" value="false"/>
-        <property key="heap-size" value="500"/>
+        <property key="heap-size" value="200"/>
         <property key="input-libraries" value=""/>
         <property key="linker-stack" value="true"/>
         <property key="linker-symbols" value=""/>
