@@ -134,6 +134,6 @@ int readSensor(int index, int direction)
     
 }
  
-void MouseTurn(int direciton);
+void MouseTurn(int direciton){}
 
-void ForwardOneCell(void);
+void ForwardOneCell(void){}
