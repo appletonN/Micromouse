@@ -18,6 +18,8 @@
 #define ACTUAL_HEIGHT 6		/**< the Height the simulated maze actually is */
 ///@}
 
+#define DELAY 20000
+
 
 int readSensor(int index, int direction)
 {
@@ -27,7 +29,7 @@ int readSensor(int index, int direction)
         {{0,1,0,1}, {0,1,0,1}, {1,0,0,1}, {1,1,1,0}, {1,0,0,1}, {0,1,0,0}},
         {{1,0,0,1}, {0,1,0,0}, {0,0,1,1}, {0,1,1,0}, {0,0,1,1}, {0,1,0,0}},
         {{0,0,1,1}, {1,1,0,0}, {1,0,0,1}, {0,1,0,0}, {1,1,0,1}, {0,1,0,1}},   
-        {{0,1,0,1}, {0,1,1,1}, {0,1,1,1}, {0,1,0,0}, {0,0,1,1}, {0,1,0,0}},    
+        {{0,1,0,1}, {0,1,1,1}, {0,0,1,1}, {0,1,0,0}, {0,0,1,1}, {0,1,0,0}},    
         {{1,0,0,1}, {1,0,0,0}, {1,1,0,0}, {1,0,0,1}, {1,1,0,0}, {1,1,0,1}}
 	};
 
@@ -55,6 +57,9 @@ int readSensor(int index, int direction)
  {
  	int i, j;
 
+    for (i=0; i<5; i++)
+        for (j=0; j<DELAY; j++);
+    
  	for (i = HEIGHT-1 ; i>=0 ; i--)	//for every row (top-down)
  	{
  		//Start by drawing the North facing walls of the row
