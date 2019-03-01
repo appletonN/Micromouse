@@ -43,21 +43,41 @@ void mapmaze(Mouse* mouse)
     mouse->DeadEnd = 0;
     turn(2, mouse);
     
-    printStatus(mouse, &openlist);
+    //printStatus(mouse, &openlist);
     
     //while openlist is not empty
     while ( openlist )
     {
-        //goto first item in openlist
+        /*  goto first item in openlist  */
         ExploreNewCell(mouse, &openlist, &history);
         
-        printStatus(mouse, &openlist);
+        //printStatus(mouse, &openlist);
 
+        /*  Map Current Cell   */
         checkcurrentcell(mouse, &openlist);
+                 
+        /*  VIRTUAL MOUSE WILL RUN HERE  */
+        
+        /* Check No Openlist Conflicts*/
+        //movable stack checker
+        Stack check = openlist;
+                
+        //while check is not = 0
+ /*       while ( check->nextitem )
+        {
+            if ( mouse->maze.cellno[0][check->nextitem->data].explored ) {
+                //if next item in openlist is explored, remove
+                check->nextitem = check->nextitem->nextitem;
+                free(check->nextitem);
+            }
+            check = check->nextitem;
+        }*/
+        
+        if ( mouse->index == 21 )
+            printf("!!!\n");
         
         printStatus(mouse, &openlist);
     }
-    printStatus(mouse, &openlist);
 }
 
 
@@ -126,6 +146,7 @@ Node* createNode(Mouse* mouse, unsigned int index)
 void checkcurrentcell(Mouse* mouse, Stack* openlist)
 {
     int i, j;
+    unsigned int GoBack = 0;
     cell* currentcell;
     
     
@@ -151,9 +172,14 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist)
                 
             } else {
                 //if no wall, then if it's unexplored, add to the openlist
-                if (!currentcell->explored) {
+                if ( !currentcell->explored ) {
                     push(openlist, mouse->index);
-                }
+                    
+                //else if it is a Node, connect with parent    
+                } else if ( currentcell->isNode ) {
+                    ConnectNodes(mouse);
+                    GoBack = 1;
+                }//IF UNEXPLORED / NODE
                 
             }//IF
             
@@ -187,16 +213,20 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist)
    
     //  Check if dead end or Node
     if ( currentcell->noOfWalls == 3 ) {
+        //if dead end, set bit and spin 180
         mouse->DeadEnd = 1;
-        turn(2, mouse);
+        GoBack = 1;
 
     } else if ( currentcell->noOfWalls <= 1 ) {
         //if current cell is a Node, connect it to the parent Node
         ConnectNodes(mouse);
     }
     
-         
-    /*  VIRTUAL MOUSE WILL RUN HERE  */
+    if ( GoBack ) {
+        turn(2, mouse);
+        MouseTurn(180);
+        GoBack = 0;
+    }
 }
 
 void ConnectNodes(Mouse* mouse)
@@ -232,14 +262,14 @@ void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history)
 {
     //set target as most recently found unexplored cell
     unsigned int target = pop(openlist);
+    unsigned int tempTarget;
     
     unsigned int direction = identifyDirection(mouse, target);
     
     //while first item in openlist is not adjacent
     while ( !direction )
     {
-        //set target as last cell visited
-        unsigned int tempTarget = pop(history);
+        tempTarget = pop(history);   
         
         //find the direction of that cell
         direction = identifyDirection(mouse, tempTarget);
@@ -247,10 +277,8 @@ void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history)
         //move into the cell
         moveToAdjacentCell(mouse, direction);    
         
-        printStatus(mouse, openlist);
-        
         cell* currentCell = &(mouse->maze.cellno[0][mouse->index]);
-        
+                       
         //if the dead end bit is set and the current cell is a Node 
         if ( mouse->DeadEnd && currentCell->isNode ) {
             //correct node
@@ -284,12 +312,16 @@ void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history)
                     
                     mouse->DeadEnd = 0;
                 }//IF NO CONNECTIONS
+                
             }//IF NO OF WALLS
-        }
+            
+        }//IF DEAD END BACKTRACK HAS REACHED NODE
         
         //check if target is reachable
         direction = identifyDirection(mouse, target);
-    }
+    
+    }//WHILE NOT ADJACENT TO TARGET
+    
     push(history, mouse->index);
     
     //target is adjacent

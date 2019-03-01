@@ -56,9 +56,6 @@ int readSensor(int index, int direction)
  void printStatus(Mouse* mouse, Stack* openlist)
  {
  	int i, j;
-
-    for (i=0; i<5; i++)
-        for (j=0; j<DELAY; j++);
     
  	for (i = HEIGHT-1 ; i>=0 ; i--)	//for every row (top-down)
  	{
