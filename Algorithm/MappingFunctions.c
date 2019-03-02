@@ -2,39 +2,41 @@
 #include "MappingFunctions.h"
 
 
-void turn(int N, Mouse* mouse)
+unsigned int turn(int N, unsigned int dir)
 {
 	int i;
     
     
 	for (i=0; i<N; i++)
 	{ 
-		mouse->dir = mouse->dir >> 1;
+		dir = dir >> 1;
 
-		if (mouse->dir == 0x00) 	//if mouse has shifted too far right
-			mouse->dir = 0x08; 		//bring it back around to 1000 (facing North)
+		if (dir == 0x00) 	//if mouse has shifted too far right
+			dir = 0x08; 		//bring it back around to 1000 (facing North)
 	}
+    return dir;
 }
 
 
-void incrementIndex(Mouse* mouse)
+unsigned int incrementIndex(unsigned int index, unsigned int dir)
 {
-    switch (mouse->dir) {
+    switch (dir) {
         case 0x08:                      //< facing N
-            mouse->index += WIDTH;
+            index += WIDTH;
             break;
             
         case 0x04:                      //< facing E
-            mouse->index += 1;
+            index += 1;
             break;
             
         case 0x02:                      //< facing S
-            mouse->index -= WIDTH;
+            index -= WIDTH;
             break;
             
         case 0x01:                      //< facing W
-            mouse->index -= 1;
+            index -= 1;
             break;
             
     }//SWITCH
+    return index;
 }

@@ -41,9 +41,9 @@ void mapmaze(Mouse* mouse)
     
     //undo dead end stuff
     mouse->DeadEnd = 0;
-    turn(2, mouse);
+    mouse->dir = turn(2, mouse->dir);
     
-    //printStatus(mouse, &openlist);
+    printStatus(mouse, &openlist);
     
     //while openlist is not empty
     while ( openlist )
@@ -56,7 +56,7 @@ void mapmaze(Mouse* mouse)
         /*  Map Current Cell   */
         checkcurrentcell(mouse, &openlist);
                  
-        /*  VIRTUAL MOUSE WILL RUN HERE  */
+        virtualMouse(&(mouse->maze));
         
         /* Check No Openlist Conflicts*/
                 
@@ -165,7 +165,7 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist)
     for ( i=0; i<3; i++)
     {
         //rotate in such a way that all directions are checked except backwards
-        turn(i, mouse);
+        mouse->dir = turn(i, mouse->dir);
         
         
         int sensorval = readSensor(mouse->index, mouse->dir);
@@ -192,8 +192,8 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist)
             }//IF
             
             //move into cell ahead and turn around to append relevant wall
-            incrementIndex(mouse);
-            turn(2, mouse);
+            mouse->index = incrementIndex(mouse->index, mouse->dir);
+            mouse->dir = turn(2, mouse->dir);
             
             
             currentcell = &(mouse->maze.cellno[0][mouse->index]);
@@ -203,7 +203,7 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist)
         
     }//FOR i
 
-    turn(1, mouse);
+    mouse->dir = turn(1, mouse->dir);
 
     /*  UPDATE CELL INFO    */
     
@@ -231,7 +231,7 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist)
     }
     
     if ( GoBack ) {
-        turn(2, mouse);
+        mouse->dir = turn(2, mouse->dir);
         MouseTurn(180);
         GoBack = 0;
     }
@@ -258,9 +258,9 @@ void ConnectNodes(Mouse* mouse)
     CurrentNode->connections[CurrentNode->noOfConnections] = mouse->currentConnection;
     
     //Set opposite direction as direction to Parent from current Node
-    turn(2, mouse);
+    mouse->dir = turn(2, mouse->dir);
     CurrentNode->connections[CurrentNode->noOfConnections].direction = mouse->dir;
-    turn(2, mouse);
+    mouse->dir = turn(2, mouse->dir);
     
     mouse->parentNode = CurrentNode;
 }
@@ -295,9 +295,9 @@ void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history)
             if ( !currentCell->noOfWalls ) {
                 
                 //place wall behind
-                turn(2, mouse);
+                mouse->dir = turn(2, mouse->dir);
                 currentCell->walls |= mouse->dir;
-                turn(2, mouse);
+                mouse->dir = turn(2, mouse->dir);
                 
             } else if ( currentCell->noOfWalls == 1 ) {
                 //if only 1 wall (2 possible direction)
@@ -374,7 +374,7 @@ void moveToAdjacentCell(Mouse* mouse, unsigned int direction)
         //if mouse is not facing the correct direction
         //look right
         
-        turn(1, mouse);
+        mouse->dir = turn(1, mouse->dir);
         
         mouse->currentConnection.cost += TURN_COST;
         
@@ -385,7 +385,7 @@ void moveToAdjacentCell(Mouse* mouse, unsigned int direction)
             //if mouse is still not facing correct direction
             //look left
             
-            turn(2, mouse);
+            mouse->dir = turn(2, mouse->dir);
             
             //set turn to LEFT
             turnDir = LEFT;
@@ -396,6 +396,6 @@ void moveToAdjacentCell(Mouse* mouse, unsigned int direction)
     
     mouse->currentConnection.cost += STRAIGHT_COST;
     
-    incrementIndex(mouse);
+    mouse->index = incrementIndex(mouse->index, mouse->dir);
     ForwardOneCell();
 }

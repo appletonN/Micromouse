@@ -117,9 +117,10 @@ typedef struct Mouse
  * Also corrects for if the 1 bit falls off the end of the register.
  *
  * @param N 	Number of turns to make.
- * @param mouse Pointer to the mouse representation.
+ * @param dir   Current direction to be turned.
+ * @return      New direction after turning
  */
-void turn(int N, Mouse* mouse);
+unsigned int turn(int N, unsigned int dir);
 
 /**
  * @brief Changes the index of the mouse to move into an adjacent cell.
@@ -127,8 +128,10 @@ void turn(int N, Mouse* mouse);
  * looks at the direction the mouse is facing and changes the index by the
  * right amount to move the mouse into the adjacent cell in that direction.
  *
- * @param mouse Pointer to the mouse representation.
+ * @param index     index to be incremented.
+ * @param dir       direction to move into.
+ * @return          the index having been incremented into the adjacent cell.
  */
-void incrementIndex(Mouse* mouse);
+unsigned int incrementIndex(unsigned int index, unsigned int dir);
 
 #endif /* MAPPING_FUNCTIONS_H */
