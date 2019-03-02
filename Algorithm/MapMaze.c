@@ -59,11 +59,22 @@ void mapmaze(Mouse* mouse)
         /*  VIRTUAL MOUSE WILL RUN HERE  */
         
         /* Check No Openlist Conflicts*/
-        //movable stack checker
+                
+        //movable stack checker to check whole of stack
         Stack check = openlist;
+        
+        //check first item
+        if ( mouse->maze.cellno[0][openlist->data].explored ) {
+            //if the cell at the top of the openlist is explored,
+            //move openlist pointer to the next item and free the previous one
+            check = openlist->nextitem;
+            free(openlist);
+            openlist = check;
+        }
+
                 
         //while check is not = 0
- /*       while ( check->nextitem )
+        while ( check->nextitem )
         {
             if ( mouse->maze.cellno[0][check->nextitem->data].explored ) {
                 //if next item in openlist is explored, remove
@@ -71,10 +82,7 @@ void mapmaze(Mouse* mouse)
                 free(check->nextitem);
             }
             check = check->nextitem;
-        }*/
-        
-        if ( mouse->index == 21 )
-            printf("!!!\n");
+        }
         
         printStatus(mouse, &openlist);
     }
