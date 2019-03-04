@@ -35,13 +35,7 @@ void mapmaze(Mouse* mouse, Node* nodelist)
     int i, j;
     
     //setup all mapping stuff
-    SetupMapping(mouse, nodelist);
-    
-    checkcurrentcell(mouse, &openlist, nodelist);
-    
-    //undo dead end stuff
-    mouse->DeadEnd = 0;
-    mouse->dir = turn(2, mouse->dir);
+    SetupMapping(mouse, &openlist, nodelist);
     
     printStatus(mouse, &openlist);
     
@@ -58,6 +52,9 @@ void mapmaze(Mouse* mouse, Node* nodelist)
              
         virtualMouse(&(mouse->maze));
         
+        if (mouse->index == 7)
+            __asm("nop");
+        
         /* Check No Openlist Conflicts*/
                
         //check first item
@@ -67,7 +64,7 @@ void mapmaze(Mouse* mouse, Node* nodelist)
             pop(&openlist);
         }
                 
-        //while check is not = 0
+        //for each item in the openlist
         for (i=0; i<openlist.head; i++)
         {
             if ( mouse->maze.cellno[0][openlist.data[i]].explored ) {
@@ -77,6 +74,7 @@ void mapmaze(Mouse* mouse, Node* nodelist)
                     openlist.data[j] = openlist.data[j+1];
                 }
                 openlist.head--;
+                i=-1; //start check again
             }
             
         }
@@ -88,7 +86,7 @@ void mapmaze(Mouse* mouse, Node* nodelist)
 }
 
 
-void SetupMapping(Mouse* mouse, Node* nodelist)
+void SetupMapping(Mouse* mouse, Stack* openlist, Node* nodelist)
 {
     //initialise mouse
     mouse->index = 0;
@@ -128,7 +126,17 @@ void SetupMapping(Mouse* mouse, Node* nodelist)
     mouse->parentNode = StartNode;
     mouse->currentConnection.cost = 0;
     mouse->currentConnection.direction = mouse->dir;
+    
+    //add starting walls, given by rules
+    mouse->maze.cellno[0][0].walls |= 0x04;
+    mouse->maze.cellno[0][0].noOfWalls = 3;
+    mouse->maze.cellno[0][0].explored = 1;
+    
+    mouse->maze.cellno[0][1].walls |= 0x01;
+    mouse->maze.cellno[0][1].noOfWalls = 2;
   
+    //push frist cell to openlist
+    push(openlist, WIDTH);
 }
 
 unsigned int createNode(Mouse* mouse, unsigned int index, Node* nodelist)
@@ -265,6 +273,7 @@ void ConnectNodes(Mouse* mouse, Node* nodelist)
     //Set opposite direction as direction to Parent from current Node
     mouse->dir = turn(2, mouse->dir);
     CurrentNode->connections[CurrentNode->noOfConnections].direction = mouse->dir;
+    CurrentNode->noOfConnections++;
     mouse->dir = turn(2, mouse->dir);
     
     mouse->parentNode = mouse->maze.cellno[0][mouse->index].nodeAddress;
@@ -308,13 +317,10 @@ void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelis
                 //if only 1 wall (2 possible direction)
                 //one has been determined to be a dead end,
                 //so it can be considered a corridor.
-                printf("%d", nodelist[currentCell->nodeAddress].noOfConnections);
-                if ( !(nodelist[currentCell->nodeAddress].noOfConnections) ) {
-                    //if there are no connections then destroy the Node
+                if ( nodelist[currentCell->nodeAddress].noOfConnections == 1 ) {
+                    //if there is one connection then destroy the Node
                     //the mouse will then see this as a corridor
-                      
-                    //set parent as pointer to the Node connected to the current one
-                    //and update all working information about the parent cell
+                    //(one connection is back the way it started.)
                     
                     mouse->currentConnection = nodelist[mouse->maze.cellno[0][mouse->index].nodeAddress].connections[0];
                     mouse->parentNode = mouse->maze.cellno[0][mouse->currentConnection.connection].nodeAddress;
@@ -322,6 +328,7 @@ void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelis
                     //destroy node at current location
                     mouse->maze.cellno[0][mouse->index].isNode = 0;
                     nodelist[mouse->maze.cellno[0][mouse->index].nodeAddress].distToCentre = 0;
+                    nodelist[mouse->maze.cellno[0][mouse->index].nodeAddress].noOfConnections = 0;
                     //distToCentre = 0 used to find unused index in array
                     
                     int i;
@@ -416,7 +423,7 @@ void virtualMouse(struct Maze* maze)
 {
     int i;
     
-    for (i = 0; i < WIDTH*HEIGHT; i++)
+    for (i = 1; i < WIDTH*HEIGHT; i++)
     {
         //for each cell in the maze
         //if it hasn't been explored, check if it's dead end
@@ -443,7 +450,7 @@ void VMcheck(struct Maze* maze, int index)
         unsigned int dir = ~(0xFFF0 | currentcell->walls);
         
         //set all walls to 1
-        currentcell->walls |= 0x0F;
+        currentcell->walls = 0x0F;
         
         //check cell in direction of new wall + append wall in that cell
         index = incrementIndex(index, dir);

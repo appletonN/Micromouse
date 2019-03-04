@@ -37,7 +37,7 @@ void mapmaze(Mouse* mouse, Node* nodelist);
  * 
  * @param mouse
  */
-void SetupMapping(Mouse* mouse, Node* nodelist);
+void SetupMapping(Mouse* mouse, Stack* openlist, Node* nodelist);
 
 /**
  * @brief creates a new node.
