@@ -3,32 +3,16 @@
 
 
 void push(Stack* stack, unsigned int Newdata)
-{
-    // allocate memory to new item
-    struct stackitem* newelement;
-    newelement = malloc(sizeof(struct stackitem));
-    
+{   
     
     // add data to element
-    newelement->data = Newdata;
-    // add pointer to current top of stack
-    newelement->nextitem = *stack;
-    
-    // move stack pointer to the new item
-    *stack = newelement;
+    stack->data[stack->head] = Newdata;
+    // increment head
+    stack->head++;
 }
 
 unsigned int pop(Stack* stack)
 {
-    // mark top element
-    Stack temp = *stack;
-    
-    //point to item below current
-    *stack = (*stack)->nextitem;
-    
-    //extract data and free top element
-    unsigned int data = temp->data;
-    free(temp);
-    
-    return data;
+    stack->head--;
+    return stack->data[stack->head];
 }

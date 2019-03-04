@@ -40,6 +40,14 @@
 ///@}
 
 /**
+ * @brief maximum number of Nodes that can be stored.
+ * 
+ * describes the amount of memory needed to store the list of Nodes.
+ * Will not be able to store more Nodes than this.
+ */
+#define MAX_NODES 15
+
+/**
  * @brief direction inputs into the turn function
  */
 ///@{
@@ -82,7 +90,7 @@ typedef struct cell
 	unsigned int noOfWalls : 6;			/**< Number of walls of cell. can never be more than 4 */
     unsigned int explored : 1;          /**< Marks whether cell has been visited */
 	unsigned int isNode : 1;            /**< Marks whether cell is a Node or not */
-	Node* nodeAddress;					/**< Pointer to Node that references this cell (if applicable) */
+	unsigned int nodeAddress;			/**< Index of Node that references this cell in nodelist */
 } cell;
 
 /**
@@ -106,7 +114,7 @@ typedef struct Mouse
     unsigned int DeadEnd : 1;           /**< Marks whether backtracking from a dead end */
 	unsigned int LEDs : LEDN; 			/**< State of each debugging LED on the mouse */
 	struct Maze maze;                   /**< contains the mouse's model of the maze */
-    Node* parentNode;                   /**< Node last viseted, next node found will be connected to this */
+    unsigned int parentNode;            /**< index of Node last viseted in nodelist, next node found will be connected to this */
     struct connection currentConnection;/**< Info about current exploration from parent Node */
 } Mouse;
 

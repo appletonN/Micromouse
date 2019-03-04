@@ -111,7 +111,7 @@ int readSensor(int index, int direction)
  				//if it's a node then print an N
  				printf( " N " );
                 
- 			} else if ( WIDTH*i + j == (*openlist)->data ) {
+ 			} else if ( WIDTH*i + j == openlist->data[openlist->head-1] ) {
                 //if it's the first item in the openlist, print *
                 printf(" X ");
                 

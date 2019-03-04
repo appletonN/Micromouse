@@ -23,7 +23,9 @@ int main(void)
     
 	Mouse mouse;
     
-    mapmaze(&mouse);
+    Node nodelist[MAX_NODES] = {{0}};
+    
+    mapmaze(&mouse, nodelist);
     
     printf("done, bye bye\n\n\n");
 	

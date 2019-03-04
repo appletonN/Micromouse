@@ -17,25 +17,17 @@
 #ifndef STACKS_H
 #define	STACKS_H
 
+#include "Algorithm/MappingFunctions.h"
 
 /** 
- * @brief Linked list implementation of each item in a stack. 
- */
-struct stackitem 
-{
-    unsigned int data;              /**< contains the data that is to be stored in this item of teh struct. */
-    struct stackitem* nextitem;     /**< points to the item below in the stack */
-};
-
-/**
- * @brief points to the head of a stack.
+ * @brief array of data that is the Stack.
  * 
- * Currently stacks DO NOT have a max size. If this becomes
- * an issue, this can be changed to a structure containing 
- * the pointer as well as a max-size. This then needs to be
- * chekced when pushing and popping.
+ * The size of the stack equal to number of cells in the maze.
  */
-typedef struct stackitem* Stack;
+typedef struct Stack {
+    unsigned int data[WIDTH*HEIGHT];
+    int head;
+} Stack ;
 
 /**
  * @brief pushes item onto a stack.

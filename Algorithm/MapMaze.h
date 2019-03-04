@@ -25,7 +25,7 @@
  * 
  * @param mouse     representation of the mouse in the maze.
  */
-void mapmaze(Mouse* mouse);
+void mapmaze(Mouse* mouse, Node* nodelist);
 
 /**
  * @brief sets up the mouse ready to map out the maze.
@@ -37,7 +37,7 @@ void mapmaze(Mouse* mouse);
  * 
  * @param mouse
  */
-void SetupMapping(Mouse* mouse);
+void SetupMapping(Mouse* mouse, Node* nodelist);
 
 /**
  * @brief creates a new node.
@@ -50,7 +50,7 @@ void SetupMapping(Mouse* mouse);
  * @param index     index at which the new Node is to be created
  * @return          a pointer to the newly created node
  */
-Node* createNode(Mouse* mouse, unsigned int index);
+unsigned int createNode(Mouse* mouse, unsigned int index, Node* nodelist);
 
 /**
  * @brief updates info on the cell currently occupied.
@@ -63,7 +63,7 @@ Node* createNode(Mouse* mouse, unsigned int index);
  * @param mouse     representation of the mouse in the maze.
  * @param openlist  The stack of unexplored cells.
  */
-void checkcurrentcell(Mouse* mouse, Stack* openlist);
+void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist);
 
 /**
  * @brief Connects the parent node to the current cell.
@@ -74,7 +74,7 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist);
  * 
  * @param mouse
  */
-void ConnectNodes(Mouse* mouse);
+void ConnectNodes(Mouse* mouse, Node* nodelist);
 
 /**
  * @breif Used to get to new areas.
@@ -86,7 +86,7 @@ void ConnectNodes(Mouse* mouse);
  * @param mouse
  * @param openlist
  */
-void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history);
+void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelist);
 
 /**
  * @brief identify in which direction a cell is.
@@ -112,3 +112,28 @@ void moveToAdjacentCell(Mouse* mouse, unsigned int direction);
 
 #endif	/* MAPMAZE_H */
 
+/**
+ * @brief corrects any known but unexplored dead-ends.
+ * 
+ * Checks every cell in the maze, if the cell is unexplored and has 3
+ * walls, then it will mark the cell as explored. This will get the 
+ * cell removed from the openlist during the mapmaze function.
+ * 
+ * @param maze      the maze that needs to be checked.
+ */
+void virtualMouse(struct Maze* maze);
+
+/**
+ * @brief checks one cell for dead end and corrects it.
+ * 
+ * checks if cell is dead end by looking at wall pattern. If it is, it
+ * sets all the walls to 1, moves into the cell that connects to it and
+ * runs the check on that cell too. This means the "virtual mouse" will 
+ * move back through the dead-end corridor, correcting it cell by cell,
+ * until it gets to either a non-fully-mapped cell or the end of that
+ * corridor.
+ * 
+ * @param maze      The maze in which the cell being checked is held.
+ * @param index     The index of the cell within the maze.
+ */
+void VMcheck(struct Maze* maze, int index);
