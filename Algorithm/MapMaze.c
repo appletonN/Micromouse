@@ -37,7 +37,7 @@ void mapmaze(Mouse* mouse, Node* nodelist)
     //setup all mapping stuff
     SetupMapping(mouse, &openlist, nodelist);
     
-    printStatus(mouse, &openlist);
+    //printStatus(mouse, &openlist);
     
     //while openlist is not empty
     while ( openlist.head )
@@ -51,9 +51,6 @@ void mapmaze(Mouse* mouse, Node* nodelist)
         printStatus(mouse, &openlist);
              
         virtualMouse(&(mouse->maze));
-        
-        if (mouse->index == 7)
-            __asm("nop");
         
         /* Check No Openlist Conflicts*/
                
@@ -141,7 +138,7 @@ void SetupMapping(Mouse* mouse, Stack* openlist, Node* nodelist)
 
 unsigned int createNode(Mouse* mouse, unsigned int index, Node* nodelist)
 {
-    unsigned int newNode;
+    unsigned int newNode = 0;
     
     //count how many Nodes have been initialised
     while ( nodelist[newNode].distToCentre == -1 ) {
@@ -162,7 +159,6 @@ unsigned int createNode(Mouse* mouse, unsigned int index, Node* nodelist)
     
     return newNode;
 }
-
 
 void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist)
 {
@@ -256,29 +252,36 @@ void ConnectNodes(Mouse* mouse, Node* nodelist)
     Node* ParentNode = &nodelist[mouse->parentNode];
     
     //save connection in ParentNode
+    //save to index equal to number of connections already made, will stor in a new index
     ParentNode->connections[ParentNode->noOfConnections] = mouse->currentConnection;
+    //connect to current cell
+    ParentNode->connections[ParentNode->noOfConnections].connectedCell = mouse->index;
+    //increment number of connections
     ParentNode->noOfConnections++;
     
+    int currentNodeIndex;
     //if current cell not already a Node
     if ( !(mouse->maze.cellno[0][mouse->index].isNode) ) {
         //create a New Node at the current cell
-        createNode(mouse, mouse->index, nodelist);
+        currentNodeIndex = createNode(mouse, mouse->index, nodelist);
+    } else {
+        //otherwise, find where node is in the nodelist
+        currentNodeIndex = mouse->maze.cellno[0][mouse->index].nodeAddress;
     }
     
-    //add connection to the node at the current cell
-    Node* CurrentNode = &nodelist[mouse->maze.cellno[0][mouse->index].nodeAddress];
+    //create pointer to the Node within nodelist
+    Node* CurrentNode = &nodelist[currentNodeIndex];
     
+    //update connection information at correct index in Node
     CurrentNode->connections[CurrentNode->noOfConnections] = mouse->currentConnection;
+    CurrentNode->connections[CurrentNode->noOfConnections].connectedCell = ParentNode->index;
     
-    //Set opposite direction as direction to Parent from current Node
-    mouse->dir = turn(2, mouse->dir);
-    CurrentNode->connections[CurrentNode->noOfConnections].direction = mouse->dir;
+    //set direction as opposite of the direction being faced now
+    CurrentNode->connections[CurrentNode->noOfConnections].direction = turn(2, mouse->dir);
     CurrentNode->noOfConnections++;
-    mouse->dir = turn(2, mouse->dir);
-    
-    mouse->parentNode = mouse->maze.cellno[0][mouse->index].nodeAddress;
-}
 
+    //parent node is updated when a Node is left (in ExploreNewCell function)
+}
 
 void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelist)
 {
@@ -322,8 +325,11 @@ void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelis
                     //the mouse will then see this as a corridor
                     //(one connection is back the way it started.)
                     
-                    mouse->currentConnection = nodelist[mouse->maze.cellno[0][mouse->index].nodeAddress].connections[0];
-                    mouse->parentNode = mouse->maze.cellno[0][mouse->currentConnection.connection].nodeAddress;
+                    Node* currentNode = &nodelist[mouse->maze.cellno[0][mouse->index].nodeAddress];
+                    Node* previousNode = &nodelist[mouse->maze.cellno[0][currentNode->connections[0].connectedCell].nodeAddress];
+                                        
+                    mouse->parentNode = mouse->maze.cellno[0][currentNode->connections[0].connectedCell].nodeAddress;
+                    mouse->currentConnection = previousNode->connections[--previousNode->noOfConnections];
                     
                     //destroy node at current location
                     mouse->maze.cellno[0][mouse->index].isNode = 0;
@@ -349,6 +355,13 @@ void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelis
     
     }//WHILE NOT ADJACENT TO TARGET
     
+    //if at node now, make it parent and correct values before moving into new cell
+    if ( mouse->maze.cellno[0][mouse->index].isNode ) {
+        mouse->parentNode = mouse->maze.cellno[0][mouse->index].nodeAddress;
+        mouse->currentConnection.cost = 0;
+        mouse->currentConnection.direction = direction;
+    }
+    
     push(history, mouse->index);
     
     //target is adjacent
@@ -357,7 +370,6 @@ void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelis
     
     
 }
-
 
 unsigned int identifyDirection(Mouse* mouse, unsigned int target)
 {
@@ -431,7 +443,6 @@ void virtualMouse(struct Maze* maze)
         VMcheck(maze, i);
     }
 }
-
 
 void VMcheck(struct Maze* maze, int index)
 {

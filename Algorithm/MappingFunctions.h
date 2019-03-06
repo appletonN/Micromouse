@@ -63,7 +63,7 @@
  */
 struct connection
 {
-	unsigned int connection;			/**< Index of the connected Node */
+	unsigned int connectedCell;			/**< Index of the connected Node in th maze */
 	unsigned int cost;					/**< Cost to get to connected Node */
 	unsigned int direction : 4; 		/**< direction to exit cell to get to connected Node */
 };
