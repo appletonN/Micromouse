@@ -63,7 +63,7 @@ int readSensor(int index, int direction)
  		for (j = 0; j < WIDTH ; j++)
  		{
  			
- 			if (mouse->maze.cellno[i][j].walls & 0x08) {
+ 			if (mouse->maze->cellno[i][j].walls & 0x08) {
  				//print a wall if there is a wall to the North of the cell
  				printf("+---");
 
@@ -80,7 +80,7 @@ int readSensor(int index, int direction)
  		for (j = 0; j < WIDTH ; j++)
  		{ 
  			//draw West wall
- 			if (mouse->maze.cellno[i][j].walls & 0x01) {
+ 			if (mouse->maze->cellno[i][j].walls & 0x01) {
  				//print a wall if there is a wall to the West of the cell
  				printf("|");
 
@@ -107,7 +107,7 @@ int readSensor(int index, int direction)
  						break;
  				}//SWITCH
 
- 			} else if ( mouse->maze.cellno[i][j].isNode ) {
+ 			} else if ( mouse->maze->cellno[i][j].isNode ) {
  				//if it's a node then print an N
  				printf( " N " );
                 

@@ -15,6 +15,7 @@
  */
 
 #include "MappingFunctions.h"
+#include "MapMaze.h"
 #include "../Stacks.h"
 
 /**

@@ -20,12 +20,11 @@
 
 int main(void)
 {
-    
-	Mouse mouse;
+    struct Maze Cellmaze;
     
     Node nodelist[MAX_NODES] = {{0}};
     
-    mapmaze(&mouse, nodelist);
+    mapmaze(&Cellmaze, nodelist);
     
     printf("done, bye bye\n\n\n");
 	

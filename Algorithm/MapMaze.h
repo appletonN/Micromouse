@@ -18,6 +18,24 @@
 #include "../Stacks.h"
 
 /**
+ * @brief Representation of the Mouse in virtual space
+ *
+ * represents the mouse that inhabits the virtual maze. including physical
+ * attributes and debugging info.
+ */
+typedef struct Mouse
+{
+	unsigned int dir : 4;				/**< Direction the mouse is facing */
+	unsigned int index;					/**< Position of the mouse within the maze */
+    unsigned int DeadEnd : 1;           /**< Marks whether backtracking from a dead end */
+	unsigned int LEDs : LEDN; 			/**< State of each debugging LED on the mouse */
+	struct Maze* maze;                   /**< contains the mouse's model of the maze */
+    unsigned int parentNode;            /**< index of Node last viseted in nodelist, next node found will be connected to this */
+    struct connection currentConnection;/**< Info about current exploration from parent Node */
+} Mouse;
+
+
+/**
  * @brief main maze-mapping function.
  * 
  * calls all the other functions to map out the whole
@@ -25,7 +43,7 @@
  * 
  * @param mouse     representation of the mouse in the maze.
  */
-void mapmaze(Mouse* mouse, Node* nodelist);
+void mapmaze(struct Maze* mazeArg, Node* nodelist);
 
 /**
  * @brief sets up the mouse ready to map out the maze.
@@ -110,8 +128,6 @@ unsigned int identifyDirection(Mouse* mouse, unsigned int target);
  */
 void moveToAdjacentCell(Mouse* mouse, unsigned int direction);
 
-#endif	/* MAPMAZE_H */
-
 /**
  * @brief corrects any known but unexplored dead-ends.
  * 
@@ -121,7 +137,7 @@ void moveToAdjacentCell(Mouse* mouse, unsigned int direction);
  * 
  * @param maze      the maze that needs to be checked.
  */
-void virtualMouse(struct Maze* maze);
+void virtualMouse(Mouse* mouse, Node* nodelist);
 
 /**
  * @brief checks one cell for dead end and corrects it.
@@ -136,4 +152,9 @@ void virtualMouse(struct Maze* maze);
  * @param maze      The maze in which the cell being checked is held.
  * @param index     The index of the cell within the maze.
  */
-void VMcheck(struct Maze* maze, int index);
+void VMcheck(Mouse* mouse, int index, Node* nodelist);
+
+void DestroyNode(Mouse* mouse, Node* nodelist, unsigned int index);
+
+
+#endif	/* MAPMAZE_H */

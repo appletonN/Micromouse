@@ -77,7 +77,7 @@ typedef struct Node
 	unsigned int isEnd : 1;				/**< Marks whether the Node is at the centre of the maze */
 	unsigned int noOfConnections : 3; 	/**< Number of Nodes connected to this one */
 
-	struct connection connections[3];	/**< Array  of connected nodes */
+	struct connection connections[4];	/**< Array  of connected nodes */
 	int distToCentre;                   /**< Shortest distance found to centre of maze. -1 represents infinite distance */  
 } Node;
 
@@ -100,23 +100,6 @@ struct Maze
 {
 	cell cellno[HEIGHT][WIDTH];			/**< Array of cells used as the maze representation */
 };
-
-/**
- * @brief Representation of the Mouse in virtual space
- *
- * represents the mouse that inhabits the virtual maze. including physical
- * attributes and debugging info.
- */
-typedef struct Mouse
-{
-	unsigned int dir : 4;				/**< Direction the mouse is facing */
-	unsigned int index;					/**< Position of the mouse within the maze */
-    unsigned int DeadEnd : 1;           /**< Marks whether backtracking from a dead end */
-	unsigned int LEDs : LEDN; 			/**< State of each debugging LED on the mouse */
-	struct Maze maze;                   /**< contains the mouse's model of the maze */
-    unsigned int parentNode;            /**< index of Node last viseted in nodelist, next node found will be connected to this */
-    struct connection currentConnection;/**< Info about current exploration from parent Node */
-} Mouse;
 
 /**
  * @brief Turn the right mouse within the virtual maze.
