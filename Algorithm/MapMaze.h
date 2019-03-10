@@ -91,8 +91,10 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* hist
  * current cell is not a Node, it creates a new node to use.
  * 
  * @param mouse
+ * @param nodelist
+ * @param dir           direction in which the mouse entered the cell to be connected to the parent.
  */
-void ConnectNodes(Mouse* mouse, Node* nodelist);
+void ConnectNodes(Mouse* mouse, Node* nodelist, unsigned int dir);
 
 /**
  * @breif Used to get to new areas.

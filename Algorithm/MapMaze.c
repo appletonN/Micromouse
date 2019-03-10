@@ -44,10 +44,10 @@ void mapmaze(struct Maze* mazeArg, Node* nodelist)
     //while openlist is not empty
     while ( openlist.head )
     {
-        printStatus(&mouse, &openlist, nodelist);
         
         /*  goto first item in openlist  */
         ExploreNewCell(&mouse, &openlist, &history, nodelist);
+        printStatus(&mouse, &openlist, nodelist);
         
         /*  Map Current Cell   */
         checkcurrentcell(&mouse, &openlist, nodelist, &history); 
@@ -171,6 +171,7 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* hist
 {
     int i, j;
     unsigned int GoBack = 0;
+    unsigned int adjacentNode = 0;
     cell* currentcell;
     
     
@@ -183,7 +184,7 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* hist
         //rotate in such a way that all directions are checked except backwards
         mouse->dir = turn(i, mouse->dir);
         
-        
+                
         int sensorval = readSensor(mouse->index, mouse->dir);
         
         //repeat twice
@@ -200,27 +201,11 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* hist
                     push(openlist, mouse->index);
                     
                 //else if it is a Node, connect with parent    
-                } else if ( currentcell->isNode ) {
+                } else if ( j && currentcell->isNode ) {
                     
-                    //if mouse is not facing forwards, add turn cost
-                    if ( i )
-                        mouse->currentConnection.cost += TURN_COST;
-                    //add cost to move into that Node
-                    mouse->currentConnection.cost += STRAIGHT_COST;
-                    
-                    //connect nodes together
-                    mouse->dir = turn(2, mouse->dir);
-                    ConnectNodes(mouse, nodelist);
-                    mouse->dir = turn(2, mouse->dir);
-                    
-                    virtualMouse(mouse, nodelist);
-                    GoBack = 1; 
-                    
-                    //if it is the end, make it next cell to move to
-                    if ( nodelist[currentcell->nodeAddress].isEnd == 1 ) {
-                        history->head -= 2;
-                   }
-                    
+                    adjacentNode |= turn(2, mouse->dir);   //mark direction as Node
+                    GoBack = 1;             //turn around (corrected if current cell is Node)
+
                 }//IF UNEXPLORED / NODE
                 
             }//IF
@@ -238,7 +223,11 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* hist
     }//FOR i
 
     mouse->dir = turn(1, mouse->dir);
-
+    
+    // j is used to check if turn cost should be added when connecting adjacent cells
+    // it should not be if the current cell is a node (set to 1 if so)
+    j=0;
+    
     /*  UPDATE CELL INFO    */
     
     // COUNT WALLS
@@ -258,15 +247,71 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* hist
         mouse->DeadEnd = 1;
         GoBack = 1;
 
-    } else if ( currentcell->noOfWalls <= 1 ) {
-        GoBack = 0;
-        //if current cell is a Node, connect it to the parent Node
-        virtualMouse(mouse, nodelist);
-        //if it's still a node after VM check
-        if ( currentcell->noOfWalls <= 1 ) 
-            ConnectNodes(mouse, nodelist);
-    }
+    } else {
+        if ( currentcell->noOfWalls <= 1 ) {
+            GoBack = 0;
+            //if current cell is a Node, connect it to the parent Node
+            virtualMouse(mouse, nodelist);
+            //if it's still a node after VM check
+            if ( currentcell->noOfWalls <= 1 ) {
+                ConnectNodes(mouse, nodelist, mouse->dir);
+                j=1;
+
+                //set as parentNode
+                mouse->parentNode = mouse->maze->cellno[0][mouse->index].nodeAddress;
+                //set cost to move into adjacent cells as 1
+                mouse->currentConnection.cost = 0;
+            }
+        }//FINISHED DEALING WITH NODE
+        
+        
+        //add cost to move into adjacent cell
+        mouse->currentConnection.cost += STRAIGHT_COST;
+        int dir;
+        
+        //connect any adjacent Nodes
+        for (i=0; i<4; i++) {
+            //set dir as the correct direction relative to the mouse
+            dir = turn(i, mouse->dir);
+            
+            //check if cell being looked at needs to be connected
+            if ( adjacentNode & dir ) {
+
+                //add turn cost if needed(only add once)
+                if ( i && !j ) {
+                    mouse->currentConnection.cost += TURN_COST;
+                    j=1;
+                }
+
+                //set direction from node as correct if currently at a Node
+                if (currentcell->noOfWalls <= 1)
+                    mouse->currentConnection.direction = dir;
+
+                //move mouse onto node to be connected
+                mouse->index = incrementIndex(mouse->index, dir);
+                //connect Nodes
+                ConnectNodes(mouse, nodelist, dir);
+
+                //if it is the end, make it next cell to move to
+                if ( nodelist[mouse->maze->cellno[0][mouse->index].nodeAddress].isEnd == 1 )
+                    history->head -= 2;
+
+                //move mouse back
+                mouse->index = incrementIndex(mouse->index, turn(2, dir));
+
+            }//CONNECT NODE
+        }//ALL ADJACENT NODES CONNECTED
+
+        //reset cost to correct value
+        mouse->currentConnection.cost -= STRAIGHT_COST;
+        //j = 1 if it is a node, where the cost will be reset when it leaves,
+        //or if it turned while adding adjacent Nodes, so the cost is now too high
+        if ( j )
+            mouse->currentConnection.cost -= TURN_COST;
+        
+    }//IF NOOFWALLS = 3
     
+    //do a U-turn
     if ( GoBack ) {
         mouse->dir = turn(2, mouse->dir);
         MouseTurn(180);
@@ -274,7 +319,7 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* hist
     }
 }
 
-void ConnectNodes(Mouse* mouse, Node* nodelist)
+void ConnectNodes(Mouse* mouse, Node* nodelist, unsigned int dir)
 {    
     //shortcut to parent node
     Node* ParentNode = &nodelist[mouse->parentNode];
@@ -305,7 +350,7 @@ void ConnectNodes(Mouse* mouse, Node* nodelist)
     CurrentNode->connections[CurrentNode->noOfConnections].connectedCell = ParentNode->index;
     
     //set direction as opposite of the direction being faced now
-    CurrentNode->connections[CurrentNode->noOfConnections].direction = turn(2, mouse->dir);
+    CurrentNode->connections[CurrentNode->noOfConnections].direction = turn(2, dir);
 
     //if it is connection a Node to itself, then this must be the Middle of the Maze, so the End
     if ( CurrentNode == ParentNode && CurrentNode->connections[CurrentNode->noOfConnections].cost == 13 ) 
@@ -355,9 +400,6 @@ void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelis
 
         }//IF NO OF WALLS
 
-        if ( mouse->index == 27 )
-            __asm("nop");
-        
         //check if target is reachable
         direction = identifyDirection(mouse, target);
     
