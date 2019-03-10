@@ -13,6 +13,5 @@ void push(Stack* stack, unsigned int Newdata)
 
 unsigned int pop(Stack* stack)
 {
-    stack->head--;
-    return stack->data[stack->head];
+    return stack->data[--stack->head];
 }

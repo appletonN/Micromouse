@@ -44,23 +44,21 @@ void mapmaze(struct Maze* mazeArg, Node* nodelist)
     //while openlist is not empty
     while ( openlist.head )
     {
+        printStatus(&mouse, &openlist, nodelist);
+        
         /*  goto first item in openlist  */
         ExploreNewCell(&mouse, &openlist, &history, nodelist);
         
         /*  Map Current Cell   */
-        checkcurrentcell(&mouse, &openlist, nodelist); 
-        
-        printStatus(&mouse, &openlist);
-             
-        virtualMouse(&mouse, nodelist);
-        
+        checkcurrentcell(&mouse, &openlist, nodelist, &history); 
+                
         /* Check No Openlist Conflicts*/
                
         //check first item
-        if ( mouse.maze->cellno[0][openlist.data[openlist.head-1]].explored ) {
-            //if the cell at the top of the openlist is explored,
-            //discard the top item in the list
-            pop(&openlist);
+        //if it is explored AND (not a node OR the end Node) 
+        //remove from openlist
+         while ( openlist.head && mouse.maze->cellno[0][openlist.data[openlist.head-1]].explored ) {
+                pop(&openlist);
         }
                 
         //for each item in the openlist
@@ -74,12 +72,21 @@ void mapmaze(struct Maze* mazeArg, Node* nodelist)
                 }
                 openlist.head--;
                 i=-1; //start check again
-            }
+
+            }           
+        }//FOR
+
+    }//WHILE OPENLIST NOT EMPTY
+    
+ 
+    printStatus(&mouse, &openlist, nodelist); 
+    
+    //block off all dead end routes
+    for ( i=1; i< WIDTH*HEIGHT; i++) 
+        VMcheck(&mouse, i, nodelist);
             
-        }
-        
-    }
-            
+    printStatus(&mouse, &openlist, nodelist);
+
 }
 
 
@@ -160,7 +167,7 @@ unsigned int createNode(Mouse* mouse, unsigned int index, Node* nodelist)
     return newNode;
 }
 
-void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist)
+void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* history)
 {
     int i, j;
     unsigned int GoBack = 0;
@@ -194,10 +201,26 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist)
                     
                 //else if it is a Node, connect with parent    
                 } else if ( currentcell->isNode ) {
+                    
+                    //if mouse is not facing forwards, add turn cost
+                    if ( i )
+                        mouse->currentConnection.cost += TURN_COST;
+                    //add cost to move into that Node
+                    mouse->currentConnection.cost += STRAIGHT_COST;
+                    
+                    //connect nodes together
                     mouse->dir = turn(2, mouse->dir);
                     ConnectNodes(mouse, nodelist);
                     mouse->dir = turn(2, mouse->dir);
-                    GoBack = 1;
+                    
+                    virtualMouse(mouse, nodelist);
+                    GoBack = 1; 
+                    
+                    //if it is the end, make it next cell to move to
+                    if ( nodelist[currentcell->nodeAddress].isEnd == 1 ) {
+                        history->head -= 2;
+                   }
+                    
                 }//IF UNEXPLORED / NODE
                 
             }//IF
@@ -228,8 +251,7 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist)
 
         walls = walls >> 1;
     }
-    
-   
+        
     //  Check if dead end or Node
     if ( currentcell->noOfWalls == 3 ) {
         //if dead end, set bit and spin 180
@@ -237,8 +259,12 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist)
         GoBack = 1;
 
     } else if ( currentcell->noOfWalls <= 1 ) {
+        GoBack = 0;
         //if current cell is a Node, connect it to the parent Node
-        ConnectNodes(mouse, nodelist);
+        virtualMouse(mouse, nodelist);
+        //if it's still a node after VM check
+        if ( currentcell->noOfWalls <= 1 ) 
+            ConnectNodes(mouse, nodelist);
     }
     
     if ( GoBack ) {
@@ -254,7 +280,7 @@ void ConnectNodes(Mouse* mouse, Node* nodelist)
     Node* ParentNode = &nodelist[mouse->parentNode];
     
     //save connection in ParentNode
-    //save to index equal to number of connections already made, will stor in a new index
+    //save to index equal to number of connections already made, will store in a new index
     ParentNode->connections[ParentNode->noOfConnections] = mouse->currentConnection;
     //connect to current cell
     ParentNode->connections[ParentNode->noOfConnections].connectedCell = mouse->index;
@@ -280,8 +306,13 @@ void ConnectNodes(Mouse* mouse, Node* nodelist)
     
     //set direction as opposite of the direction being faced now
     CurrentNode->connections[CurrentNode->noOfConnections].direction = turn(2, mouse->dir);
-    CurrentNode->noOfConnections++;
 
+    //if it is connection a Node to itself, then this must be the Middle of the Maze, so the End
+    if ( CurrentNode == ParentNode && CurrentNode->connections[CurrentNode->noOfConnections].cost == 13 ) 
+        CurrentNode->isEnd = 1;
+    
+    CurrentNode->noOfConnections++;   
+    
     //parent node is updated when a Node is left (in ExploreNewCell function)
 }
 
@@ -305,45 +336,38 @@ void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelis
         moveToAdjacentCell(mouse, direction);    
         
         cell* currentCell = &(mouse->maze->cellno[0][mouse->index]);
-                       
-        //if the dead end bit is set and the current cell is a Node 
-        if ( mouse->DeadEnd && currentCell->isNode ) {
-            //correct node
+
+        
+        //Fix dead ends if dead end bit is set
+        if ( mouse->DeadEnd && !currentCell->noOfWalls ) {
+            //if no walls, there are 3 paths, so cannot destroy node (yet)
+            //place wall behind
+            mouse->dir = turn(2, mouse->dir);
+            currentCell->walls |= mouse->dir;
+            mouse->dir = turn(2, mouse->dir);
+            mouse->DeadEnd = 0;
+
+        } else if ( mouse->DeadEnd && currentCell->noOfWalls == 1 ) {
+            //if there is 1 wall, then the Node can be destroyed
             
-            //if there are no walls ( 3 possible paths )
-            if ( !currentCell->noOfWalls ) {
-                
-                //place wall behind
-                mouse->dir = turn(2, mouse->dir);
-                currentCell->walls |= mouse->dir;
-                mouse->dir = turn(2, mouse->dir);
-                
-            } else if ( currentCell->noOfWalls == 1 ) {
-                
-                DestroyNode(mouse, nodelist, mouse->index);
-                
-            }//IF NO OF WALLS
-            
-        }//IF DEAD END BACKTRACK HAS REACHED NODE
+            DestroyNode(mouse, nodelist, mouse->index);
+            mouse->DeadEnd = 0;
+
+        }//IF NO OF WALLS
+
+        if ( mouse->index == 27 )
+            __asm("nop");
         
         //check if target is reachable
         direction = identifyDirection(mouse, target);
     
     }//WHILE NOT ADJACENT TO TARGET
     
-    //if at node now, make it parent and correct values before moving into new cell
-    if ( mouse->maze->cellno[0][mouse->index].isNode ) {
-        mouse->parentNode = mouse->maze->cellno[0][mouse->index].nodeAddress;
-        mouse->currentConnection.cost = 0;
-        mouse->currentConnection.direction = direction;
-    }
-    
     push(history, mouse->index);
     
     //target is adjacent
     //direction points to target cell (not mouse->dir)
-    moveToAdjacentCell(mouse, direction);
-    
+    moveToAdjacentCell(mouse, direction);    
     
 }
 
@@ -401,6 +425,13 @@ void moveToAdjacentCell(Mouse* mouse, unsigned int direction)
         MouseTurn(turnDir);        
     }//IF TURN
     
+    //if at node now, make it parent and correct values before moving into new cell
+    if ( mouse->maze->cellno[0][mouse->index].isNode ) {
+        mouse->parentNode = mouse->maze->cellno[0][mouse->index].nodeAddress;
+        mouse->currentConnection.cost = 0;
+        mouse->currentConnection.direction = direction;
+    }
+    
     mouse->currentConnection.cost += STRAIGHT_COST;
     
     mouse->index = incrementIndex(mouse->index, mouse->dir);
@@ -416,7 +447,7 @@ void virtualMouse(Mouse* mouse, Node* nodelist)
         //for each cell in the maze
         //if it hasn't been explored, check if it's dead end
         if ( !(mouse->maze->cellno[0][i].explored) )
-        VMcheck(mouse, i, nodelist);
+            VMcheck(mouse, i, nodelist);
     }
 }
 
@@ -444,9 +475,10 @@ void VMcheck(Mouse* mouse, int index, Node* nodelist)
         currentcell = &(mouse->maze->cellno[0][index]);
         dir = turn(2, dir);        
         currentcell->walls |= dir;
+        currentcell->noOfWalls++;
         
         //if it was a node but now is not, destroy it
-        if ( currentcell->isNode && currentcell->noOfWalls >= 1 )
+        if ( currentcell->isNode && currentcell->noOfWalls > 1 )
             DestroyNode(mouse, nodelist, index);
         
         //run same check on adjacent cell to the one just found
@@ -463,28 +495,44 @@ void DestroyNode(Mouse* mouse, Node* nodelist, unsigned int index)
     Node* currentNode = &nodelist[mouse->maze->cellno[0][index].nodeAddress];
     Node* previousNode = &nodelist[mouse->maze->cellno[0][currentNode->connections[0].connectedCell].nodeAddress];
 
-
-    if ( nodelist[currentCell->nodeAddress].noOfConnections == 1 ) {
-        //if there is one connection then destroy the Node
-        //the mouse will then see this as a corridor
-        //(one connection is back the way it started.)
-        mouse->parentNode = mouse->maze->cellno[0][currentNode->connections[0].connectedCell].nodeAddress;
-        mouse->currentConnection = previousNode->connections[--previousNode->noOfConnections];
-
-        //destroy node at current location
-        mouse->maze->cellno[0][index].isNode = 0;
-        nodelist[mouse->maze->cellno[0][index].nodeAddress].distToCentre = 0;
-        nodelist[mouse->maze->cellno[0][index].nodeAddress].noOfConnections = 0;
-        //distToCentre = 0 used to find unused index in array
-
-        int i;
-        for ( i=mouse->maze->cellno[0][index].nodeAddress; i<MAX_NODES; i++) {
-            //shift everything into the gap
-            nodelist[i] = nodelist[i+1];
-        }
-
-        mouse->DeadEnd = 0;
+    //destroy node at current location
+    mouse->maze->cellno[0][index].isNode = 0;
+    nodelist[mouse->maze->cellno[0][index].nodeAddress].distToCentre = 0;
+    //distToCentre = 0 used to find unused index in array
     
+    mouse->DeadEnd = 0;
+    
+    if ( nodelist[currentCell->nodeAddress].noOfConnections == 1 ) {
+        //revert parent to previous Node
+        mouse->parentNode = mouse->maze->cellno[0][currentNode->connections[0].connectedCell].nodeAddress;
+        
+        previousNode->noOfConnections--;
+        
+        if ( mouse->index == index) {
+            //if it was called from mouse
+            //inherit cost and direction from connection between the Node that is destroyed and previous Node
+            //decrement connection counter
+            mouse->currentConnection = previousNode->connections[previousNode->noOfConnections];
+            
+            //if the mouse is in the Node to be destroyed, AND there is a wall in front of the mouse,
+            //then the mouse will have to turn, so need to negate this by decrementing cost
+            if ( currentCell->walls & mouse->dir )
+                mouse->currentConnection.cost -= TURN_COST;
+            
+        } else {
+            //if it was called from VM
+            //add connection between previous Node and Node to be destroyed to the current connection
+            mouse->currentConnection.cost += previousNode->connections[previousNode->noOfConnections].cost;
+            //inherit the direction from previous Node
+            mouse->currentConnection.direction = previousNode->connections[previousNode->noOfConnections].direction;
+        
+            //if a turn is required at the Node to be destroyed to get from previouNode to CurrentNode
+            //add that to the cost. Determined by checking if the directions are opposite
+            if ( currentNode->connections[0].direction != turn(2, mouse->currentConnection.direction) )
+                mouse->currentConnection.cost += TURN_COST;
+        
+        }
+            
     } else if ( nodelist[currentCell->nodeAddress].noOfConnections == 2 ) {
         
         Node* NextNode = &nodelist[mouse->maze->cellno[0][currentNode->connections[1].connectedCell].nodeAddress];
@@ -506,7 +554,14 @@ void DestroyNode(Mouse* mouse, Node* nodelist, unsigned int index)
         
         NextNode->connections[NextNodeConnectionNo].connectedCell = previousNode->index;
         NextNode->connections[NextNodeConnectionNo].cost += previousNode->connections[previousNodeConnectionNo].cost;
-    
-        //NOTE: cost will not take into account turn needed to be made on this Node, so may be up to 3 short.
+        
+        //if a turn is required on theNode, increment cost
+        //Check the direction the needs to go to get to previousNode is the opposite of the direction to
+        //get to the NextNode - if it is, then the mouse goes in a straight line so cost is correct
+        if ( currentNode->connections[0].direction != turn(2, currentNode->connections[1].direction) ) {
+            previousNode->connections[previousNodeConnectionNo].cost += TURN_COST; 
+            NextNode->connections[NextNodeConnectionNo].cost += TURN_COST;
+        }
+        
     }
 }

@@ -45,7 +45,7 @@
  * describes the amount of memory needed to store the list of Nodes.
  * Will not be able to store more Nodes than this.
  */
-#define MAX_NODES 15
+#define MAX_NODES 22
 
 /**
  * @brief direction inputs into the turn function
@@ -55,8 +55,6 @@
 #define RIGHT -1
 ///@}
 
-/** @brief Number of Debugging LEDs on the mouse */
-#define LEDN 5
 
 /**
  * @brief Connection between 2 nodes.

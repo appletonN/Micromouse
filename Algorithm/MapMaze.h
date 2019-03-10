@@ -28,8 +28,8 @@ typedef struct Mouse
 	unsigned int dir : 4;				/**< Direction the mouse is facing */
 	unsigned int index;					/**< Position of the mouse within the maze */
     unsigned int DeadEnd : 1;           /**< Marks whether backtracking from a dead end */
-	unsigned int LEDs : LEDN; 			/**< State of each debugging LED on the mouse */
-	struct Maze* maze;                   /**< contains the mouse's model of the maze */
+	unsigned int LEDs;              	/**< What is being displayed on the LEDs using Timer 5 */
+	struct Maze* maze;                  /**< contains the mouse's model of the maze */
     unsigned int parentNode;            /**< index of Node last viseted in nodelist, next node found will be connected to this */
     struct connection currentConnection;/**< Info about current exploration from parent Node */
 } Mouse;
@@ -81,7 +81,7 @@ unsigned int createNode(Mouse* mouse, unsigned int index, Node* nodelist);
  * @param mouse     representation of the mouse in the maze.
  * @param openlist  The stack of unexplored cells.
  */
-void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist);
+void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* history);
 
 /**
  * @brief Connects the parent node to the current cell.

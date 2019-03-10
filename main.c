@@ -20,11 +20,15 @@
 
 int main(void)
 {
+    //create maze
     struct Maze Cellmaze;
     
+    //create array of Nodes
     Node nodelist[MAX_NODES] = {{0}};
     
+    //Map the entire maze
     mapmaze(&Cellmaze, nodelist);
+    
     
     printf("done, bye bye\n\n\n");
 	

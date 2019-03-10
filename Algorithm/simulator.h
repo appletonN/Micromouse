@@ -40,7 +40,7 @@ int readSensor(int index, int direction);
  *
  * @param mouse			representation of the mouse to be referenced.
  */
- void printStatus(Mouse* mouse, Stack* openlist);
+ void printStatus(Mouse* mouse, Stack* openlist, Node* nodelist);
  
  /**
   * @brief Turn physical Mouse.

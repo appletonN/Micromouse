@@ -15,7 +15,7 @@
  */
 ///@{
 #define ACTUAL_WIDTH 6		/**< the Width the simulated maze actually is */
-#define ACTUAL_HEIGHT 6		/**< the Height the simulated maze actually is */
+#define ACTUAL_HEIGHT 8		/**< the Height the simulated maze actually is */
 ///@}
 
 #define DELAY 20000
@@ -25,12 +25,14 @@ int readSensor(int index, int direction)
 {
 
 	static int completeMaze[ACTUAL_HEIGHT][ACTUAL_WIDTH][4] = {
-        {{0,1,1,1}, {0,0,1,1}, {0,0,1,0}, {1,0,1,0}, {0,1,1,0}, {0,1,1,1}},
-        {{0,1,0,1}, {0,1,0,1}, {1,0,0,1}, {1,1,1,0}, {1,0,0,1}, {0,1,0,0}},
-        {{1,0,0,1}, {0,1,0,0}, {0,0,1,1}, {0,1,1,0}, {0,0,1,1}, {0,1,0,0}},
-        {{0,0,1,1}, {1,1,0,0}, {1,0,0,1}, {0,1,0,0}, {1,1,0,1}, {0,1,0,1}},   
-        {{0,1,0,1}, {0,1,1,1}, {0,0,1,1}, {0,1,0,0}, {0,0,1,1}, {0,1,0,0}},    
-        {{1,0,0,1}, {1,0,0,0}, {1,1,0,0}, {1,0,0,1}, {1,1,0,0}, {1,1,0,1}}
+        {0,1,1,1, 0,0,1,1, 0,0,1,0, 0,0,1,0, 0,1,1,0, 0,1,1,1},
+        {0,0,0,1, 0,1,0,0, 0,1,0,1, 0,1,0,1, 0,1,0,1, 0,1,0,1},
+        {0,1,0,1, 0,0,0,1, 1,0,0,1, 1,0,0,0, 0,1,0,0, 0,1,0,1},
+        {0,0,0,1, 0,1,0,0, 0,0,1,1, 0,1,1,0, 0,1,0,1, 0,1,0,1},
+        {0,1,0,1, 0,1,0,1, 1,0,0,1, 1,0,0,0, 0,1,0,0, 0,1,0,1},
+        {0,0,0,1, 0,0,0,0, 1,0,1,0, 0,0,1,0, 1,0,0,0, 0,1,0,0},
+        {0,1,0,1, 1,0,0,1, 0,1,1,0, 0,0,0,1, 0,0,1,0, 0,1,0,0},
+        {1,0,1,1, 1,0,1,0, 1,0,0,0, 1,1,0,0, 1,1,0,1, 1,1,0,1}, 
 	};
 
 	/** @brief Which wall is being checked */
@@ -53,7 +55,7 @@ int readSensor(int index, int direction)
 }
 
 
- void printStatus(Mouse* mouse, Stack* openlist)
+ void printStatus(Mouse* mouse, Stack* openlist, Node* nodelist)
  {
  	int i, j;
     
@@ -94,7 +96,7 @@ int readSensor(int index, int direction)
  				//print the mouse in red faving the correct direction
  				switch (mouse->dir){
  					case 0x08:
- 						printf("/^\\");
+ 						printf(" A ");
  						break;
  					case 0x04:
  						printf(" > ");
@@ -108,9 +110,14 @@ int readSensor(int index, int direction)
  				}//SWITCH
 
  			} else if ( mouse->maze->cellno[i][j].isNode ) {
- 				//if it's a node then print an N
- 				printf( " N " );
-                
+                //print N if it is a Node, or E for End, or S for start
+                if ( nodelist[mouse->maze->cellno[i][j].nodeAddress].isEnd == 1 )
+                    printf(" E ");
+                else if ( mouse->maze->cellno[i][j].nodeAddress == 0 )
+                    printf(" S ");
+                else
+                    printf( " N " );
+                           
  			} else if ( WIDTH*i + j == openlist->data[openlist->head-1] ) {
                 //if it's the first item in the openlist, print *
                 printf(" X ");
@@ -130,9 +137,6 @@ int readSensor(int index, int direction)
         printf("+---");
     } //FOR j
     printf("+\n");
-    
-    /*  Print LEDs  */
-    printf("%X\n", mouse->LEDs);
     
 }
  
