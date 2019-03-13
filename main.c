@@ -28,7 +28,7 @@ int main(void)
     
     //Map the entire maze
     mapmaze(&Cellmaze, nodelist);
-    
+     
     
     printf("done, bye bye\n\n\n");
 	

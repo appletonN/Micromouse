@@ -42,6 +42,8 @@ typedef struct Mouse
  * reachable maze.
  * 
  * @param mouse     representation of the mouse in the maze.
+ * @param nodelist  list of all the Nodes in the maze. can be considered the Nodemap.
+ * @return          the index of the Node the mouse is currently at in the nodelist
  */
 void mapmaze(struct Maze* mazeArg, Node* nodelist);
 
