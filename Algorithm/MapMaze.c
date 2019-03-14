@@ -197,25 +197,26 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* hist
         //repeat twice
         for ( j=0; j<2; j++ )
         {
-            
-            //if there is a wall, add the wall by ORing the walls with the direction
-            if (sensorval){
-                currentcell->walls |= mouse->dir;
-                
-            } else if ( !(currentcell->walls & mouse->dir) ) {
-                //if no wall, then if it's unexplored, add to the openlist
-                if ( !(currentcell->explored) ) {
-                    push(openlist, mouse->index);
-                    
-                //else if it is a Node, connect with parent    
-                } else if ( j && currentcell->isNode ) {
-                    
-                    adjacentNode |= turn(2, mouse->dir);   //mark direction as Node
-                    GoBack = 1;             //turn around (corrected if current cell is Node)
+            if (mouse->index < WIDTH*HEIGHT) {
+                //if there is a wall, add the wall by ORing the walls with the direction
+                if (sensorval){
+                    currentcell->walls |= mouse->dir;
 
-                }//IF UNEXPLORED / NODE
-                
-            }//IF
+                } else if ( !(currentcell->walls & mouse->dir) ) {
+                    //if no wall, then if it's unexplored, add to the openlist
+                    if ( !(currentcell->explored) ) {
+                        push(openlist, mouse->index);
+
+                    //else if it is a Node, connect with parent    
+                    } else if ( j && currentcell->isNode ) {
+
+                        adjacentNode |= turn(2, mouse->dir);   //mark direction as Node
+                        GoBack = 1;             //turn around (corrected if current cell is Node)
+
+                    }//IF UNEXPLORED / NODE
+
+                }//IF
+        }
             
             //move into cell ahead and turn around to append relevant wall
             mouse->index = incrementIndex(mouse->index, mouse->dir);
@@ -396,9 +397,7 @@ void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelis
         if ( mouse->DeadEnd && !currentCell->noOfWalls ) {
             //if no walls, there are 3 paths, so cannot destroy node (yet)
             //place wall behind
-            mouse->dir = turn(2, mouse->dir);
-            currentCell->walls |= mouse->dir;
-            mouse->dir = turn(2, mouse->dir);
+            currentCell->noOfWalls++;
             mouse->DeadEnd = 0;
 
         } else if ( mouse->DeadEnd && currentCell->noOfWalls == 1 ) {
