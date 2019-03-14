@@ -525,7 +525,9 @@ void VMcheck(Mouse* mouse, int index, Node* nodelist)
         currentcell = &(mouse->maze->cellno[0][index]);
         dir = turn(2, dir);        
         currentcell->walls |= dir;
-        currentcell->noOfWalls++;
+        
+        if ( currentcell->explored )
+            currentcell->noOfWalls++;
         
         //if it was a node but now is not, destroy it
         if ( currentcell->isNode && currentcell->noOfWalls > 1 )
