@@ -155,14 +155,14 @@ unsigned int createNode(Mouse* mouse, unsigned int index, Node* nodelist)
     unsigned int newNode = 0;
     
     //count how many Nodes have been initialised
-    while ( nodelist[newNode].distToCentre == -1 ) {
+    while ( nodelist[newNode].distToStart == -1 ) {
         //while item in nodelist is not 0
         newNode++;
     }
     
     nodelist[newNode].index              = index;
     nodelist[newNode].noOfConnections    = 0;
-    nodelist[newNode].distToCentre       = -1;
+    nodelist[newNode].distToStart       = -1;
     nodelist[newNode].isEnd              = 0;
     
     //update cell info
@@ -216,7 +216,7 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* hist
                     }//IF UNEXPLORED / NODE
 
                 }//IF
-        }
+            }
             
             //move into cell ahead and turn around to append relevant wall
             mouse->index = incrementIndex(mouse->index, mouse->dir);
@@ -397,6 +397,8 @@ void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelis
         if ( mouse->DeadEnd && !currentCell->noOfWalls ) {
             //if no walls, there are 3 paths, so cannot destroy node (yet)
             //place wall behind
+            currentCell->walls |= turn(2, mouse->dir);
+            mouse->maze->cellno[0][incrementIndex(mouse->index, turn(2, mouse->dir))].walls |= mouse->dir;
             currentCell->noOfWalls++;
             mouse->DeadEnd = 0;
 
@@ -549,8 +551,8 @@ void DestroyNode(Mouse* mouse, Node* nodelist, unsigned int index)
 
     //destroy node at current location
     mouse->maze->cellno[0][index].isNode = 0;
-    nodelist[mouse->maze->cellno[0][index].nodeAddress].distToCentre = 0;
-    //distToCentre = 0 used to find unused index in array
+    nodelist[mouse->maze->cellno[0][index].nodeAddress].distToStart = 0;
+    //distToStart = 0 used to find unused index in array
     
     mouse->DeadEnd = 0;
     
