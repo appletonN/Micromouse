@@ -8,12 +8,12 @@
 
 Stack dijekstra(struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* end, char startdir)
 {
-    unsigned char i, j;
+    unsigned char i, j, extracost;
    
     //set openlists
-    Node* openlist[MAX_NODES];
+    Node* openlist[MAX_NODES] = {0};
     unsigned char openlisthead = 0;
-    
+  
     //check start Node to begin with
     Node* currentNode = start;
     Node* connectedNode;
@@ -24,16 +24,17 @@ Stack dijekstra(struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* e
         
         //check each connection connected to the current cell
         for ( i=0; i<currentNode->noOfConnections; i++) {
-              
+            extracost = 0;  
+            
             //Node being looked at
             connectedNode = &nodemap[maze->cellno[0][currentNode->connections[i].connectedCell].nodeAddress];            
 
             //add turn if necessary
             if ( currentNode != start && currentNode->connections[i].direction != turn(2, currentNode->connections[j].direction) )
-                currentNode->connections[i].cost += TURN_COST; 
+                extracost += TURN_COST; 
          
             //if it is a new shortest path to this Node, then update the cost
-            if ( currentNode->distToStart + currentNode->connections[i].cost < connectedNode->distToStart 
+            if ( currentNode->distToStart + currentNode->connections[i].cost + extracost < connectedNode->distToStart 
                     || connectedNode->distToStart == -1 ) {
                 
                 //if it is a new candidate, add it to the openlist
@@ -44,7 +45,7 @@ Stack dijekstra(struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* e
                 
                 }
                 
-                connectedNode->distToStart = currentNode->distToStart + currentNode->connections[i].cost;
+                connectedNode->distToStart = currentNode->distToStart + currentNode->connections[i].cost + extracost;
                 connectedNode->via = currentNode->index;               
                
             }
@@ -157,40 +158,49 @@ Stack dijekstra(struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* e
     //push initial turn
     push(&route, i);
     
+    //reeset for next run
+    for ( i=0; i<MAX_NODES; i++ ) {
+        if ( nodemap[i].distToStart )
+            nodemap[i].distToStart = -1;
+    }
+    start->distToStart = -1;
+    
     return route;
 }
 
 
-void cocktail(Node* arr[MAX_NODES])
+int cocktail(Node* arr[MAX_NODES])
 {
     unsigned char flag, i, j;
     Node* temp;
+    
+    unsigned char sizes[2] = {0, MAX_NODES -2};
     while(1)
     {
-        unsigned char sizes[2] = {0, WIDTH*HEIGHT*2 -2};
             
-        for ( i=1; i>=0; i-- ) {   //1 counts up, 0 counts down
+        for ( i=0; i<2; i++ ) {   //0 counts up, 1 counts down
             flag = 1;
             
             //start checking
-            for ( j=sizes[i]; j<sizes[!i]; ) {
+            for ( j=sizes[i]; j!=sizes[!i]; ) {
                 
-                if ( arr[i+1]->distToStart > arr[i]->distToStart ) {      //swap elements if they are in the wrong order
-                    temp = arr[i];
-                    arr[i] = arr[i+1];
-                    arr[i+1] = temp;
+                if ( arr[j+1]->distToStart > arr[j]->distToStart ) {      //swap elements if they are in the wrong order
+                    temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
                     flag = 0;
                 }
                 
                 if ( i )
-                    i++;
+                    j--;
                 else
-                    i--;
+                    j++;
             }
             
-            //if no elements were swapped, break out
-            if ( flag )
-                return;
+            //if no elements were swapped, break out if both directions have been checked
+            if ( flag && i )
+                return 0;
         }
     }
+    return 1;
 }

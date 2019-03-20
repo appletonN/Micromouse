@@ -43,12 +43,6 @@ int main(void)
     while ( !nodelist[EndNode].isEnd )
         EndNode++;
     
-    unsigned char i;
-    //reset distance values
-    for ( i=0; i<MAX_NODES; i++ ) {
-        if ( nodelist[i].distToStart ) 
-            nodelist[i].distToStart = -1;
-    }   
     
     Stack fast;
     fast = dijekstra(&Cellmaze, nodelist, &nodelist[0], &nodelist[EndNode], 0x02);
