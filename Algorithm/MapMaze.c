@@ -15,13 +15,6 @@
 #endif
 ///@}
 
-/**
- * @brief cost of the movements between Nodes.
- */
-///@{
-#define TURN_COST 3
-#define STRAIGHT_COST 1
-///@}
 
 #include "MapMaze.h"
 #include <stdlib.h>

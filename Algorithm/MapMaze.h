@@ -1,6 +1,6 @@
 /**
 *		@file MapMaze.c
-*		@brief Fully maps the maze,
+*		@brief Fully maps the maze.
 *
 *		Maps the full maze including placing nodes
 *       and finding the connections between those

@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=main.c Algorithm/MappingFunctions.c Algorithm/simulator.c Stacks.c Algorithm/MapMaze.c
+SOURCEFILES_QUOTED_IF_SPACED=main.c Algorithm/MappingFunctions.c Algorithm/simulator.c Stacks.c Algorithm/MapMaze.c Integration/LED.c Algorithm/Dijekstra.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/Algorithm/MappingFunctions.o ${OBJECTDIR}/Algorithm/simulator.o ${OBJECTDIR}/Stacks.o ${OBJECTDIR}/Algorithm/MapMaze.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/Algorithm/MappingFunctions.o.d ${OBJECTDIR}/Algorithm/simulator.o.d ${OBJECTDIR}/Stacks.o.d ${OBJECTDIR}/Algorithm/MapMaze.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/Algorithm/MappingFunctions.o ${OBJECTDIR}/Algorithm/simulator.o ${OBJECTDIR}/Stacks.o ${OBJECTDIR}/Algorithm/MapMaze.o ${OBJECTDIR}/Integration/LED.o ${OBJECTDIR}/Algorithm/Dijekstra.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/Algorithm/MappingFunctions.o.d ${OBJECTDIR}/Algorithm/simulator.o.d ${OBJECTDIR}/Stacks.o.d ${OBJECTDIR}/Algorithm/MapMaze.o.d ${OBJECTDIR}/Integration/LED.o.d ${OBJECTDIR}/Algorithm/Dijekstra.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/Algorithm/MappingFunctions.o ${OBJECTDIR}/Algorithm/simulator.o ${OBJECTDIR}/Stacks.o ${OBJECTDIR}/Algorithm/MapMaze.o
+OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/Algorithm/MappingFunctions.o ${OBJECTDIR}/Algorithm/simulator.o ${OBJECTDIR}/Stacks.o ${OBJECTDIR}/Algorithm/MapMaze.o ${OBJECTDIR}/Integration/LED.o ${OBJECTDIR}/Algorithm/Dijekstra.o
 
 # Source Files
-SOURCEFILES=main.c Algorithm/MappingFunctions.c Algorithm/simulator.c Stacks.c Algorithm/MapMaze.c
+SOURCEFILES=main.c Algorithm/MappingFunctions.c Algorithm/simulator.c Stacks.c Algorithm/MapMaze.c Integration/LED.c Algorithm/Dijekstra.c
 
 
 CFLAGS=
@@ -129,6 +129,20 @@ ${OBJECTDIR}/Algorithm/MapMaze.o: Algorithm/MapMaze.c  nbproject/Makefile-${CND_
 	${MP_CC} $(MP_EXTRA_CC_PRE)  Algorithm/MapMaze.c  -o ${OBJECTDIR}/Algorithm/MapMaze.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Algorithm/MapMaze.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/Algorithm/MapMaze.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/Integration/LED.o: Integration/LED.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/Integration" 
+	@${RM} ${OBJECTDIR}/Integration/LED.o.d 
+	@${RM} ${OBJECTDIR}/Integration/LED.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  Integration/LED.c  -o ${OBJECTDIR}/Integration/LED.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Integration/LED.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/Integration/LED.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/Algorithm/Dijekstra.o: Algorithm/Dijekstra.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/Algorithm" 
+	@${RM} ${OBJECTDIR}/Algorithm/Dijekstra.o.d 
+	@${RM} ${OBJECTDIR}/Algorithm/Dijekstra.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  Algorithm/Dijekstra.c  -o ${OBJECTDIR}/Algorithm/Dijekstra.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Algorithm/Dijekstra.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/Algorithm/Dijekstra.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -164,6 +178,20 @@ ${OBJECTDIR}/Algorithm/MapMaze.o: Algorithm/MapMaze.c  nbproject/Makefile-${CND_
 	@${RM} ${OBJECTDIR}/Algorithm/MapMaze.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  Algorithm/MapMaze.c  -o ${OBJECTDIR}/Algorithm/MapMaze.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Algorithm/MapMaze.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/Algorithm/MapMaze.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/Integration/LED.o: Integration/LED.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/Integration" 
+	@${RM} ${OBJECTDIR}/Integration/LED.o.d 
+	@${RM} ${OBJECTDIR}/Integration/LED.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  Integration/LED.c  -o ${OBJECTDIR}/Integration/LED.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Integration/LED.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/Integration/LED.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/Algorithm/Dijekstra.o: Algorithm/Dijekstra.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/Algorithm" 
+	@${RM} ${OBJECTDIR}/Algorithm/Dijekstra.o.d 
+	@${RM} ${OBJECTDIR}/Algorithm/Dijekstra.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  Algorithm/Dijekstra.c  -o ${OBJECTDIR}/Algorithm/Dijekstra.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Algorithm/Dijekstra.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/Algorithm/Dijekstra.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

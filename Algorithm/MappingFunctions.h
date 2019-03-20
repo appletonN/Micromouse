@@ -1,7 +1,7 @@
 /**
- *		@file globalFunctions.h
- *		@brief Prototype the global functions, structures
- *		and data types.
+ *		@file MappingFunctions.h
+ *		@brief contains all functions, structures
+ *		and data types used by most files.
  *
  *		Functions are used throughout the program, 
  *		mostly to edit the maze information. Structures that are 
@@ -39,6 +39,9 @@
 #endif
 ///@}
 
+
+#include "../Stacks.h"
+
 /**
  * @brief maximum number of Nodes that can be stored.
  * 
@@ -46,6 +49,14 @@
  * Will not be able to store more Nodes than this.
  */
 #define MAX_NODES 22
+
+/**
+ * @brief cost of the movements between Nodes.
+ */
+///@{
+#define TURN_COST 3
+#define STRAIGHT_COST 1
+///@}
 
 /**
  * @brief direction inputs into the turn function
@@ -76,8 +87,9 @@ typedef struct Node
 	unsigned int noOfConnections : 3; 	/**< Number of Nodes connected to this one */
 
 	struct connection connections[4];	/**< Array  of connected nodes */
-	int distToCentre;                   /**< Shortest distance found to centre of maze. -1 represents infinite distance */  
-} Node;
+	int distToStart;                    /**< Shortest distance found to centre of maze. -1 represents infinite distance */  
+    int via;                            /**< Node shortest route goes through to get here. */
+} Node; 
 
 /**
  * @brief All info about a given cell

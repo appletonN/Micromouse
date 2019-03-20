@@ -4,7 +4,7 @@
 *		robot.
 *
 *		Contains the mission planner and runs all
-*		initialisation of maze. offloadds most functionality
+*		initialisation of maze. offloads most functionality
 *		to external functions.
 *
 *
@@ -15,11 +15,20 @@
 
 #include "Algorithm/MappingFunctions.h"
 #include "Algorithm/MapMaze.h"
+#include "Algorithm/Dijekstra.h"
+#include "Integration/LED.h"
 #include <stdlib.h>
 #include <stdio.h>
 
+_FWDT(WDT_OFF); 
+//watch dog is disabled
+
+
 int main(void)
 {
+//    setupLEDs();
+//    timer1Setup();    
+    
     //create maze
     struct Maze Cellmaze;
     
@@ -28,6 +37,9 @@ int main(void)
     
     //Map the entire maze
     mapmaze(&Cellmaze, nodelist);
+    
+    Stack fast;
+    fast = dijekstra(&Cellmaze, nodelist, &nodelist[0], &nodelist[4], );
      
     
     printf("done, bye bye\n\n\n");

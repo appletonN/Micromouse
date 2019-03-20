@@ -8,6 +8,8 @@
       <itemPath>Algorithm/simulator.h</itemPath>
       <itemPath>Stacks.h</itemPath>
       <itemPath>Algorithm/MapMaze.h</itemPath>
+      <itemPath>Integration/LED.h</itemPath>
+      <itemPath>Algorithm/Dijekstra.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -21,6 +23,8 @@
       <itemPath>Algorithm/simulator.c</itemPath>
       <itemPath>Stacks.c</itemPath>
       <itemPath>Algorithm/MapMaze.c</itemPath>
+      <itemPath>Integration/LED.c</itemPath>
+      <itemPath>Algorithm/Dijekstra.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -32,6 +36,7 @@
   </logicalFolder>
   <sourceRootList>
     <Elem>Algorithm</Elem>
+    <Elem>Integration</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

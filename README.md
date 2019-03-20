@@ -3,21 +3,12 @@
 
 # LED Codes
 
-0 - off
-1 - Flash Slow
-2 - Flash Fast
+0 - Display Error
+1 - Flash
+2 - wake up
 3 - Scan
 4 - cylon
 5 - dance
-
-6 - light left
-7 - light right
-8 - light front
-9 - turn right
-10 - turn left
-
-11 - wake up
-12 - error
 
 # Test Mazes
 
