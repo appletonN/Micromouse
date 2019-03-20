@@ -72,7 +72,7 @@
  */
 struct connection
 {
-	unsigned int connectedCell;			/**< Index of the connected Node in th maze */
+	unsigned char connectedCell;			/**< Index of the connected Node in th maze */
 	unsigned int cost;					/**< Cost to get to connected Node */
 	unsigned int direction : 4; 		/**< direction to exit cell to get to connected Node */
 };
@@ -82,13 +82,13 @@ struct connection
  */
 typedef struct Node
 {
-	unsigned int index;					/**< index of the cell that this node references */
+	unsigned char index;					/**< index of the cell that this node references */
 	unsigned int isEnd : 1;				/**< Marks whether the Node is at the centre of the maze */
 	unsigned int noOfConnections : 3; 	/**< Number of Nodes connected to this one */
 
 	struct connection connections[4];	/**< Array  of connected nodes */
 	int distToStart;                    /**< Shortest distance found to centre of maze. -1 represents infinite distance */  
-    int via;                            /**< Node shortest route goes through to get here. */
+    unsigned char via;                            /**< Node shortest route goes through to get here. */
 } Node; 
 
 /**
@@ -100,7 +100,7 @@ typedef struct cell
 	unsigned int noOfWalls : 6;			/**< Number of walls of cell. can never be more than 4 */
     unsigned int explored : 1;          /**< Marks whether cell has been visited */
 	unsigned int isNode : 1;            /**< Marks whether cell is a Node or not */
-	unsigned int nodeAddress;			/**< Index of Node that references this cell in nodelist */
+	unsigned char nodeAddress;			/**< Index of Node that references this cell in nodelist */
 } cell;
 
 /**
@@ -121,7 +121,7 @@ struct Maze
  * @param dir   Current direction to be turned.
  * @return      New direction after turning
  */
-unsigned int turn(int N, unsigned int dir);
+unsigned char turn(char N, unsigned char dir);
 
 /**
  * @brief Changes the index of the mouse to move into an adjacent cell.
@@ -133,6 +133,6 @@ unsigned int turn(int N, unsigned int dir);
  * @param dir       direction to move into.
  * @return          the index having been incremented into the adjacent cell.
  */
-unsigned int incrementIndex(unsigned int index, unsigned int dir);
+unsigned char incrementIndex(unsigned char index, unsigned char dir);
 
 #endif /* MAPPING_FUNCTIONS_H */

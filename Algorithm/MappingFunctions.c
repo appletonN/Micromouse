@@ -2,9 +2,9 @@
 #include "MappingFunctions.h"
 
 
-unsigned int turn(int N, unsigned int dir)
+unsigned char turn(char N, unsigned char dir)
 {
-	int i;
+	unsigned char i;
     
     
 	for (i=0; i<N; i++)
@@ -18,7 +18,7 @@ unsigned int turn(int N, unsigned int dir)
 }
 
 
-unsigned int incrementIndex(unsigned int index, unsigned int dir)
+unsigned char incrementIndex(unsigned char index, unsigned char dir)
 {
     switch (dir) {
         case 0x08:                      //< facing N

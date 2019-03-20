@@ -25,8 +25,8 @@
  * The size of the stack equal to number of cells in the maze.
  */
 typedef struct Stack {
-    unsigned int data[WIDTH*HEIGHT];
-    int head;
+    unsigned char data[WIDTH*HEIGHT*2];
+    unsigned char head;
 } Stack ;
 
 /**
@@ -39,7 +39,7 @@ typedef struct Stack {
  * @param stack        the stack that the data will be pushed to.
  * @param Newdata      the data that will be pushed to the stack.
  */
-void push(Stack* stack, unsigned int Newdata);
+void push(Stack* stack, unsigned char Newdata);
 
 /**
  * @brief pops an item from the top of the stack.
@@ -50,7 +50,7 @@ void push(Stack* stack, unsigned int Newdata);
  * 
  * @param stack     the stack from which the data will be popped.
  */
-unsigned int pop(Stack* stack);
+unsigned char pop(Stack* stack);
 
 
 #endif	/* STACKS_H */

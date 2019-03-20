@@ -2,7 +2,7 @@
 #include "Stacks.h"
 
 
-void push(Stack* stack, unsigned int Newdata)
+void push(Stack* stack, unsigned char Newdata)
 {   
     
     // add data to element
@@ -11,7 +11,7 @@ void push(Stack* stack, unsigned int Newdata)
     stack->head++;
 }
 
-unsigned int pop(Stack* stack)
+unsigned char pop(Stack* stack)
 {
     return stack->data[--stack->head];
 }

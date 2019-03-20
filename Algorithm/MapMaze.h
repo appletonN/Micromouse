@@ -26,11 +26,10 @@
 typedef struct Mouse
 {
 	unsigned int dir : 4;				/**< Direction the mouse is facing */
-	unsigned int index;					/**< Position of the mouse within the maze */
+	unsigned char index;					/**< Position of the mouse within the maze */
     unsigned int DeadEnd : 1;           /**< Marks whether backtracking from a dead end */
-	unsigned int LEDs;              	/**< What is being displayed on the LEDs using Timer 5 */
 	struct Maze* maze;                  /**< contains the mouse's model of the maze */
-    unsigned int parentNode;            /**< index of Node last viseted in nodelist, next node found will be connected to this */
+    unsigned char parentNode;            /**< index of Node last viseted in nodelist, next node found will be connected to this */
     struct connection currentConnection;/**< Info about current exploration from parent Node */
 } Mouse;
 
@@ -70,7 +69,7 @@ void SetupMapping(Mouse* mouse, Stack* openlist, Node* nodelist);
  * @param index     index at which the new Node is to be created
  * @return          a pointer to the newly created node
  */
-unsigned int createNode(Mouse* mouse, unsigned int index, Node* nodelist);
+unsigned char createNode(Mouse* mouse, unsigned char index, Node* nodelist);
 
 /**
  * @brief updates info on the cell currently occupied.
@@ -96,7 +95,7 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* hist
  * @param nodelist
  * @param dir           direction in which the mouse entered the cell to be connected to the parent.
  */
-void ConnectNodes(Mouse* mouse, Node* nodelist, unsigned int dir);
+void ConnectNodes(Mouse* mouse, Node* nodelist, unsigned char dir);
 
 /**
  * @breif Used to get to new areas.
@@ -120,7 +119,7 @@ void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelis
  * @param target    the cell that the mouse is trying to get to.
  * @return          the direction of the adjacent cell.
  */
-unsigned int identifyDirection(Mouse* mouse, unsigned int target);
+unsigned char identifyDirection(Mouse* mouse, unsigned char target);
 
 /**
  * @brief move mouse into an adjacent cell in the direction given.
@@ -130,7 +129,7 @@ unsigned int identifyDirection(Mouse* mouse, unsigned int target);
  * @param mouse
  * @param direction     the direction in which the adjacent cell is.
  */
-void moveToAdjacentCell(Mouse* mouse, unsigned int direction);
+void moveToAdjacentCell(Mouse* mouse, unsigned char direction);
 
 /**
  * @brief corrects any known but unexplored dead-ends.
@@ -156,9 +155,9 @@ void virtualMouse(Mouse* mouse, Node* nodelist);
  * @param maze      The maze in which the cell being checked is held.
  * @param index     The index of the cell within the maze.
  */
-void VMcheck(Mouse* mouse, int index, Node* nodelist);
+void VMcheck(Mouse* mouse, unsigned char index, Node* nodelist);
 
-void DestroyNode(Mouse* mouse, Node* nodelist, unsigned int index);
+void DestroyNode(Mouse* mouse, Node* nodelist, unsigned char index);
 
 
 #endif	/* MAPMAZE_H */

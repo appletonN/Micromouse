@@ -38,7 +38,7 @@
  * @param startdir  direction the mouse is facing at the start
  * @return          satck of moves to get from start to finish
  */
-Stack dijekstra( struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* end, int startdir);
+Stack dijekstra( struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* end, char startdir);
 
 /**
  * @brief cocktail sorts given array.

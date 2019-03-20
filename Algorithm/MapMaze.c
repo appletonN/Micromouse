@@ -17,6 +17,7 @@
 
 
 #include "MapMaze.h"
+#include "Dijekstra.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -27,18 +28,14 @@ void mapmaze(struct Maze* mazeArg, Node* nodelist)
     mouse.maze = mazeArg;
     Stack openlist = {{0}};
     Stack history = {{0}};
-    int i, j;
+    unsigned char i, j;
     
     //setup all mapping stuff
     SetupMapping(&mouse, &openlist, nodelist);
     
-    //printStatus(mouse, &openlist);
-    
     //while openlist is not empty
     while ( openlist.head )
     {
-        printStatus(&mouse, &openlist, nodelist);
-        
         /*  goto first item in openlist  */
         ExploreNewCell(&mouse, &openlist, &history, nodelist);
         
@@ -77,9 +74,17 @@ void mapmaze(struct Maze* mazeArg, Node* nodelist)
     while ( !mouse.maze->cellno[0][mouse.index].isNode )
         moveToAdjacentCell(&mouse, identifyDirection(&mouse, pop(&history)));
     
-    //get back to star
- 
-    printStatus(&mouse, &openlist, nodelist); 
+    
+    printStatus(&mouse, &openlist, nodelist);
+    
+    
+    //get back to start
+    Stack toStart = dijekstra(mouse.maze, nodelist, 
+            &nodelist[mouse.maze->cellno[0][mouse.index].nodeAddress], &nodelist[0], mouse.dir);
+    
+    FollowRoute(toStart);
+    
+    MouseTurn(180);
     
     //block off all dead end routes
     for ( i=1; i< WIDTH*HEIGHT; i++) 
@@ -97,7 +102,7 @@ void SetupMapping(Mouse* mouse, Stack* openlist, Node* nodelist)
     mouse->dir = 0x08;
     
     /* initialise maze */
-    int i;
+    unsigned char i;
     
     
     //set top and bottom walls of max size maze
@@ -120,11 +125,8 @@ void SetupMapping(Mouse* mouse, Stack* openlist, Node* nodelist)
         mouse->maze->cellno[i][0].walls |= 0x01;
     }
     
-    //set LEDs
-    mouse->LEDs = 0x00;
-    
     //set start cell as node
-    unsigned int StartNode = createNode(mouse, 0, nodelist);
+    unsigned char StartNode = createNode(mouse, 0, nodelist);
     
     //set as parent Node
     mouse->parentNode = StartNode;
@@ -143,9 +145,9 @@ void SetupMapping(Mouse* mouse, Stack* openlist, Node* nodelist)
     push(openlist, WIDTH);
 }
 
-unsigned int createNode(Mouse* mouse, unsigned int index, Node* nodelist)
+unsigned char createNode(Mouse* mouse, unsigned char index, Node* nodelist)
 {
-    unsigned int newNode = 0;
+    unsigned char newNode = 0;
     
     //count how many Nodes have been initialised
     while ( nodelist[newNode].distToStart == -1 ) {
@@ -169,11 +171,12 @@ unsigned int createNode(Mouse* mouse, unsigned int index, Node* nodelist)
 
 void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* history)
 {
-    int i, j;
-    unsigned int GoBack = 0;
-    unsigned int adjacentNode = 0;
+    unsigned char i, j;
+    unsigned char GoBack = 0;
+    unsigned char adjacentNode = 0;
     cell* currentcell;
     
+    unsigned char sensorval;
     
     currentcell = &(mouse->maze->cellno[0][mouse->index]);
     
@@ -185,7 +188,7 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* hist
         mouse->dir = turn(i, mouse->dir);
         
                 
-        int sensorval = readSensor(mouse->index, mouse->dir);
+        sensorval = readSensor(mouse->index, mouse->dir);
         
         //repeat twice
         for ( j=0; j<2; j++ )
@@ -232,7 +235,7 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* hist
     /*  UPDATE CELL INFO    */
     
     // COUNT WALLS
-    unsigned int walls = currentcell->walls;
+    unsigned char walls = currentcell->walls;
     for ( i=0; i<4; i++)
     {
         //if first bit of walls is 1, increment noOfWalls
@@ -267,7 +270,7 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* hist
 
     //add cost to move into adjacent cell
     mouse->currentConnection.cost += STRAIGHT_COST;
-    unsigned int dir;
+    unsigned char dir;
 
     //connect any adjacent Nodes
     for (i=0; i<4; i++) {
@@ -322,7 +325,7 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* hist
     }
 }
 
-void ConnectNodes(Mouse* mouse, Node* nodelist, unsigned int dir)
+void ConnectNodes(Mouse* mouse, Node* nodelist, unsigned char dir)
 {    
     //shortcut to parent node
     Node* ParentNode = &nodelist[mouse->parentNode];
@@ -335,7 +338,7 @@ void ConnectNodes(Mouse* mouse, Node* nodelist, unsigned int dir)
     //increment number of connections
     ParentNode->noOfConnections++;
     
-    int currentNodeIndex;
+    unsigned char currentNodeIndex;
     //if current cell not already a Node
     if ( !(mouse->maze->cellno[0][mouse->index].isNode) ) {
         //create a New Node at the current cell
@@ -367,10 +370,10 @@ void ConnectNodes(Mouse* mouse, Node* nodelist, unsigned int dir)
 void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelist)
 {
     //set target as most recently found unexplored cell
-    unsigned int target = pop(openlist);
-    unsigned int tempTarget;
+    unsigned char target = pop(openlist);
+    unsigned char tempTarget;
     
-    unsigned int direction = identifyDirection(mouse, target);
+    unsigned char direction = identifyDirection(mouse, target);
     
     //while first item in openlist is not adjacent
     while ( !direction )
@@ -416,7 +419,7 @@ void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelis
     
 }
 
-unsigned int identifyDirection(Mouse* mouse, unsigned int target)
+unsigned char identifyDirection(Mouse* mouse, unsigned char target)
 {
 
     if ( target == mouse->index + WIDTH ) {
@@ -443,7 +446,7 @@ unsigned int identifyDirection(Mouse* mouse, unsigned int target)
     return 0;
 }
 
-void moveToAdjacentCell(Mouse* mouse, unsigned int direction)
+void moveToAdjacentCell(Mouse* mouse, unsigned char direction)
 {
     
     if ( !(direction & mouse->dir) ) {
@@ -455,7 +458,7 @@ void moveToAdjacentCell(Mouse* mouse, unsigned int direction)
         mouse->currentConnection.cost += TURN_COST;
         
         //set turn to RIGHT
-        int turnDir = RIGHT;
+        unsigned char turnDir = RIGHT;
         
         if ( !(direction & mouse->dir) ) {
             //if mouse is still not facing correct direction
@@ -485,7 +488,7 @@ void moveToAdjacentCell(Mouse* mouse, unsigned int direction)
 
 void virtualMouse(Mouse* mouse, Node* nodelist)
 {
-    int i;
+    unsigned char i;
     
     for (i = 1; i < WIDTH*HEIGHT; i++)
     {
@@ -496,7 +499,7 @@ void virtualMouse(Mouse* mouse, Node* nodelist)
     }
 }
 
-void VMcheck(Mouse* mouse, int index, Node* nodelist)
+void VMcheck(Mouse* mouse, unsigned char index, Node* nodelist)
 {
     cell* currentcell = &(mouse->maze->cellno[0][index]);
     
@@ -510,7 +513,7 @@ void VMcheck(Mouse* mouse, int index, Node* nodelist)
         currentcell->explored = 1;
 
         //set dir to direction of gap
-        unsigned int dir = ~(0xFFF0 | currentcell->walls);
+        unsigned char dir = ~(0xF0 | currentcell->walls);
         
         //set all walls to 1
         currentcell->walls = 0x0F;
@@ -535,7 +538,7 @@ void VMcheck(Mouse* mouse, int index, Node* nodelist)
     }
 }
 
-void DestroyNode(Mouse* mouse, Node* nodelist, unsigned int index)
+void DestroyNode(Mouse* mouse, Node* nodelist, unsigned char index)
 {
     cell* currentCell = &(mouse->maze->cellno[0][index]);
     
@@ -583,7 +586,7 @@ void DestroyNode(Mouse* mouse, Node* nodelist, unsigned int index)
     } else if ( nodelist[currentCell->nodeAddress].noOfConnections == 2 ) {
         
         Node* NextNode = &nodelist[mouse->maze->cellno[0][currentNode->connections[1].connectedCell].nodeAddress];
-        int i, previousNodeConnectionNo, NextNodeConnectionNo;
+        unsigned char i, previousNodeConnectionNo, NextNodeConnectionNo;
         
         for ( i=0; i<4; i++){
             //determine which connection links to the node to be deleted
@@ -596,7 +599,7 @@ void DestroyNode(Mouse* mouse, Node* nodelist, unsigned int index)
         }//FOR
         
         //edit data of both connecting nodes destroying the Node in the middle
-        unsigned int previousNodecost = previousNode->connections[previousNodeConnectionNo].cost;
+        unsigned char previousNodecost = previousNode->connections[previousNodeConnectionNo].cost;
         
         previousNode->connections[previousNodeConnectionNo].connectedCell = NextNode->index;
         previousNode->connections[previousNodeConnectionNo].cost += NextNode->connections[NextNodeConnectionNo].cost;

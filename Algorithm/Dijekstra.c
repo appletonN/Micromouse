@@ -6,13 +6,13 @@
 #define RIGHTT  2
 #define UTURN   3
 
-Stack dijekstra(struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* end, int startdir)
+Stack dijekstra(struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* end, char startdir)
 {
-    int i, j;
+    unsigned char i, j;
    
     //set openlists
     Node* openlist[MAX_NODES];
-    int openlisthead = 0;
+    unsigned char openlisthead = 0;
     
     //check start Node to begin with
     Node* currentNode = start;
@@ -21,7 +21,7 @@ Stack dijekstra(struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* e
     
     while ( currentNode != end )
     {
-
+        
         //check each connection connected to the current cell
         for ( i=0; i<currentNode->noOfConnections; i++) {
               
@@ -29,11 +29,11 @@ Stack dijekstra(struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* e
             connectedNode = &nodemap[maze->cellno[0][currentNode->connections[i].connectedCell].nodeAddress];            
 
             //add turn if necessary
-            if ( currentNode->connections[i].direction != turn(2, currentNode->connections[j].direction) && i!=0 )
+            if ( currentNode != start && currentNode->connections[i].direction != turn(2, currentNode->connections[j].direction) )
                 currentNode->connections[i].cost += TURN_COST; 
          
             //if it is a new shortest path to this Node, then update the cost
-            if ( currentNode->distToStart + currentNode->connections[i].cost < connectedNode->distToStart
+            if ( currentNode->distToStart + currentNode->connections[i].cost < connectedNode->distToStart 
                     || connectedNode->distToStart == -1 ) {
                 
                 //if it is a new candidate, add it to the openlist
@@ -70,9 +70,10 @@ Stack dijekstra(struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* e
     //nodemap now contains shortest path
     
     Stack route = {{0}};
-    unsigned int index, move, dir;
+    unsigned char index, move, dir;
     
-        
+    move = 0;    
+    
     //get ready to move down path
     index = currentNode->index;
     dir = currentNode->connections[0].direction;
@@ -162,11 +163,11 @@ Stack dijekstra(struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* e
 
 void cocktail(Node* arr[MAX_NODES])
 {
-    int flag, i, j;
+    unsigned char flag, i, j;
     Node* temp;
     while(1)
     {
-        int sizes[2] = {0, WIDTH*HEIGHT-2};
+        unsigned char sizes[2] = {0, WIDTH*HEIGHT*2 -2};
             
         for ( i=1; i>=0; i-- ) {   //1 counts up, 0 counts down
             flag = 1;
