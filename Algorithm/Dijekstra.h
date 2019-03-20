@@ -29,7 +29,7 @@
  * direction, then it has the initial forward move (or 0 if there isn't
  * one). From there it alternates between each forward move and each turn
  * required to get into the next cell. The turns include the move into the
- * Next cell.
+ * Next cell. Last item in stack is a straight, moves into the end Node cell.
  * 
  * @param maze      maze to search through
  * @param nodemap   nodemap of the maze given

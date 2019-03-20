@@ -99,6 +99,8 @@ Stack dijekstra(struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* e
                     push(&route, move);
                     push(&route, i);
                     move = 0;
+                } else {
+                    move++;
                 }
                 
                 break;
@@ -148,7 +150,7 @@ Stack dijekstra(struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* e
         dir = turn(i, dir);
 
         //when it's facing the right way, break
-        if ( dir == startdir )
+        if ( dir == turn(2,startdir) )
             break;
     }
     //push initial turn
