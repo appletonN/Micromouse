@@ -40,6 +40,47 @@ typedef struct Mouse
  * calls all the other functions to map out the whole
  * reachable maze.
  * 
+ * @startuml
+ *      [-> PIC : inMaze
+ *      activate PIC
+ * 
+ *      create Mouse
+ *      PIC -> Mouse : SetupMapping()
+ *      create openlist
+ *      PIC -> openlist : SetupMapping()
+ *      create VirtualMouse
+ *      PIC -> VirtualMouse : SetupMapping()
+ * 
+ *      loop While Openlist is Not Empty
+ *         PIC -> Mouse ++ : ExploreNewCell()
+ *            PIC <-- Mouse
+ * 
+ *            PIC -> Mouse : checkcurrentcell()
+ *            PIC <-- Mouse --
+ * 
+ *         PIC -> openlist ** : Verify
+ *            openlist -> openlist : DeleteDuplicates
+ * 
+ *            openlist -> openlist : pop()
+ *      
+ *         PIC <-- openlist -- :nextIndex
+ *      end
+ * 
+ *      PIC -> Mouse ++ : BacktrackToNode
+ *      return atNode
+ * 
+ *      PIC -> PIC : Dijekstra()
+ *      
+ *      PIC -> Mouse ++ : GotoStart
+ *      return atStart
+ *      
+ *      PIC -> VirtualMouse ++: runVM()
+ *      return
+ * 
+ *      [<- PIC : atStart
+ *      deactivate PIC
+ * @enduml 
+ * 
  * @param mouse     representation of the mouse in the maze.
  * @param nodelist  list of all the Nodes in the maze. can be considered the Nodemap.
  * @return          the index of the Node the mouse is currently at in the nodelist
@@ -65,9 +106,11 @@ void SetupMapping(Mouse* mouse, Stack* openlist, Node* nodelist);
  * the correct index to a node and adds a pointer to the
  * new node.
  * 
- * @param mouse
- * @param index     index at which the new Node is to be created
- * @return          a pointer to the newly created node
+ * @memberof Node
+ * 
+ * @param mouse     representation of the mouse in the maze.
+ * @param index     index at which the new Node is to be created.
+ * @return          a pointer to the newly created node.
  */
 unsigned char createNode(Mouse* mouse, unsigned char index, Node* nodelist);
 
@@ -79,8 +122,51 @@ unsigned char createNode(Mouse* mouse, unsigned char index, Node* nodelist);
  * cells to the openlist and changing the cells properties
  * to reflect it's status (it's now been explored).
  * 
+ * @memberof Mouse
+ * 
+ * @startuml
+ *      [-> Mouse ++ : checkcurnetcell()
+ *  
+ *      loop for each direction
+ *          Mouse -> PIC ++ : readSensor()
+ *          PIC -> Sensor ++ : getValue()
+ *          return value
+ *          PIC -> PIC : DecodeValue
+ *          Mouse <-- PIC -- : WallOrNot
+ *          
+ *          alt Wall
+ *              Mouse -> Maze ++: appendWall
+ *              return
+ *          else
+ *              alt Not Explored
+ *                  Mouse -> openlist : push()
+ *                  return
+ *              else Node is Adjacent
+ *                  Mouse -> Nodelist ++ : addNode()
+ *                  return
+ *              end
+ *          end
+ *      end
+ * 
+ *      Mouse -> Maze ++ : countWalls
+ *      Mouse <-- Maze : noOfWalls
+ *      
+ *      deactivate Mouse
+ *      
+ *      alt noOfWalls = 3
+ *          Maze -> Maze : setDeadEnd
+ *      else noOfwalls > 2
+ *          Maze -> Nodelist ++ : setAsNode
+ *          Nodelist -> Nodelist : connectNodes()
+ *          return
+ *      end
+ *      [<-- Mouse --
+ * @enduml
+ * 
  * @param mouse     representation of the mouse in the maze.
- * @param openlist  The stack of unexplored cells.
+ * @param openlist  The stack of cells to be explored.
+ * @param Nodelist  list of all the Nodes in the maze.
+ * @param history   stack of the cells which were visited by the mouse.
  */
 void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* history);
 
@@ -91,8 +177,10 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* hist
  * adds the connection back from current cell to parent Node. If the
  * current cell is not a Node, it creates a new node to use.
  * 
- * @param mouse
- * @param nodelist
+ * @memberof Node
+ *  
+ * @param mouse         representation of the mouse in the maze.
+ * @param nodelist      List of all the Nodes in the maze.
  * @param dir           direction in which the mouse entered the cell to be connected to the parent.
  */
 void ConnectNodes(Mouse* mouse, Node* nodelist, unsigned char dir);
@@ -104,8 +192,44 @@ void ConnectNodes(Mouse* mouse, Node* nodelist, unsigned char dir);
  * at that index. If the cell is not accessible from the current
  * cell, then it backtracks until it finds it.
  * 
- * @param mouse
- * @param openlist
+ * @memberof Mouse
+ * 
+ * @startuml
+ *      [-> Mouse ++ : ExploreNewCell
+ * 
+ *      Mouse -> openlist ++ : requestTarget
+ *      openlist -> openlist : pop()
+ *      Mouse <-- openlist -- : data
+ *  
+ *      Mouse -> Maze ++ : identifyDirection()
+ *      return direction
+ *  
+ *      loop While not facing correct direction
+ *          Mouse -> openlist ++ : backtrackSpace
+ *          openlist -> openlist : pop()
+ *          Mouse <-- openlist -- : history
+ * 
+ *          alt if dead end finished 
+ *              Mouse -> Maze ++ : fixDeadEnd
+ *              return
+ *          end
+ * 
+ *          Mouse -> PIC ++ moveToAdjacentCell()
+ *          return
+ *      end
+ *      
+ *      Mouse -> Maze ++ : identifyDirection()
+ *      return direction
+ * 
+ *      mouse -> PIC ++ : moveToAdjacentCell()
+ *      return
+ *      
+ *      [<-- Mouse -- : atNewCell
+ * 
+ * @enduml
+ *  
+ * @param mouse         representation of the mouse in the maze.
+ * @param openlist      The stack of cells to be explored.
  */
 void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelist);
 
@@ -115,7 +239,7 @@ void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelis
  * Identifies which direction an adjacent cell is in, if the
  * target cell is not adjacent, then 0 is returned.
  * 
- * @param mouse
+ * @param mouse     representation of the mouse in the maze.
  * @param target    the cell that the mouse is trying to get to.
  * @return          the direction of the adjacent cell.
  */
@@ -126,10 +250,18 @@ unsigned char identifyDirection(Mouse* mouse, unsigned char target);
  * 
  * Moves the physical mouse into a cell geven in the direction param.
  * 
- * @param mouse
+ * @memberof mouse
+ * 
+ * @param mouse         representation of the mouse in the maze.
  * @param direction     the direction in which the adjacent cell is.
  */
 void moveToAdjacentCell(Mouse* mouse, unsigned char direction);
+
+/**
+ * @class VirtualMouse
+ * 
+ * @brief traverses maze and blocks any dead-ends.
+ */
 
 /**
  * @brief corrects any known but unexplored dead-ends.
@@ -138,12 +270,16 @@ void moveToAdjacentCell(Mouse* mouse, unsigned char direction);
  * walls, then it will mark the cell as explored. This will get the 
  * cell removed from the openlist during the mapmaze function.
  * 
+ * @memberof VirtualMouse
+ * 
  * @param maze      the maze that needs to be checked.
  */
 void virtualMouse(Mouse* mouse, Node* nodelist);
 
 /**
  * @brief checks one cell for dead end and corrects it.
+ * 
+ * @memberof VirtualMouse
  * 
  * checks if cell is dead end by looking at wall pattern. If it is, it
  * sets all the walls to 1, moves into the cell that connects to it and
@@ -157,6 +293,17 @@ void virtualMouse(Mouse* mouse, Node* nodelist);
  */
 void VMcheck(Mouse* mouse, unsigned char index, Node* nodelist);
 
+/**
+ * @brief destroy a given Node.
+ * 
+ * Removes Node from nodelist by setting the distanceToStart as 0.
+ * 
+ * @memberof Node
+ * 
+ * @param mouse         representation of the mouse in the maze.
+ * @param nodelist      List of all Nodes in the maze.
+ * @param index         index where the Node to be destroyed is.
+ */
 void DestroyNode(Mouse* mouse, Node* nodelist, unsigned char index);
 
 

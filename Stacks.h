@@ -36,6 +36,8 @@ typedef struct Stack {
  * points to the current head of the stack. The stack pointer
  * is then moved to point at the new stackitem.
  * 
+ * @memberof Stack
+ * 
  * @param stack        the stack that the data will be pushed to.
  * @param Newdata      the data that will be pushed to the stack.
  */
@@ -47,6 +49,8 @@ void push(Stack* stack, unsigned char Newdata);
  * returns the data from the top-most stackitem, points the stack
  * pointer to the item below where it was and frees the topmost
  * item.
+ * 
+ * @memberof Stack
  * 
  * @param stack     the stack from which the data will be popped.
  */

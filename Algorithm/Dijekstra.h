@@ -45,7 +45,7 @@ Stack dijekstra( struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* 
  * 
  * @param arr       array to be sorted
  */
-int cocktail(Node* arr[MAX_NODES]);
+void cocktail(Node* arr[MAX_NODES]);
 
 
 #endif	/* DIJEKSTRA_H */

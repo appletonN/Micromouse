@@ -51,7 +51,7 @@ int readSensor(int index, int direction);
   * 
   * @param direciton    Direction to turn.
   */
- void MouseTurn(int direciton);
+ void Turn(int direciton);
  
  /**
   * @brief Move physical mouse forward one cell.
@@ -60,7 +60,7 @@ int readSensor(int index, int direction);
   * placeholder so that the final program will run correctly on the
   * simulator with minimal changing of code.
   */
- void ForwardOneCell(void);
+ void Fwd_One_Cell(void);
  
  
  void FollowRoute(Stack route);

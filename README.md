@@ -3,6 +3,8 @@
 
 # LED Codes
 
+These codes are used when calling the Display function to tell it what to display.
+
 0 - Display Error
 1 - Flash
 2 - wake up
@@ -11,6 +13,8 @@
 5 - dance
 
 # Test Mazes
+
+Test mazes for use in the simulated environment. Each maze focusses on tripping up the algorithm in a different way.
 
 1)
 	{0,1,1,1, 0,1,1,1, 0,1,1,1, 0,1,1,1, 0,1,1,1, 0,1,1,1},

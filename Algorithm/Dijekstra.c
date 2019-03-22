@@ -169,7 +169,7 @@ Stack dijekstra(struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* e
 }
 
 
-int cocktail(Node* arr[MAX_NODES])
+void cocktail(Node* arr[MAX_NODES])
 {
     unsigned char flag, i, j;
     Node* temp;
@@ -199,8 +199,7 @@ int cocktail(Node* arr[MAX_NODES])
             
             //if no elements were swapped, break out if both directions have been checked
             if ( flag && i )
-                return 0;
+                return;
         }
     }
-    return 1;
 }

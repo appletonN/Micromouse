@@ -84,7 +84,7 @@ void mapmaze(struct Maze* mazeArg, Node* nodelist)
     
     FollowRoute(toStart);
     
-    MouseTurn(180);
+    Turn(180);
     
     //block off all dead end routes
     for ( i=1; i< WIDTH*HEIGHT; i++) 
@@ -320,7 +320,7 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* hist
     //do a U-turn
     if ( GoBack ) {
         mouse->dir = turn(2, mouse->dir);
-        MouseTurn(180);
+        Turn(3);
         GoBack = 0;
     }
 }
@@ -470,7 +470,7 @@ void moveToAdjacentCell(Mouse* mouse, unsigned char direction)
             turnDir = LEFT;
         }//IF TURN LEFT
         
-        MouseTurn(turnDir);        
+        Turn(turnDir);        
     }//IF TURN
     
     //if at node now, make it parent and correct values before moving into new cell
@@ -483,7 +483,7 @@ void moveToAdjacentCell(Mouse* mouse, unsigned char direction)
     mouse->currentConnection.cost += STRAIGHT_COST;
     
     mouse->index = incrementIndex(mouse->index, mouse->dir);
-    ForwardOneCell();
+    Fwd_One_Cell();
 }
 
 void virtualMouse(Mouse* mouse, Node* nodelist)
