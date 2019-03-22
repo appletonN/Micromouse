@@ -178,7 +178,7 @@ void cocktail(Node* arr[MAX_NODES])
     while(1)
     {
             
-        for ( i=0; i<2; i++ ) {   //0 counts up, 1 counts down
+         for ( i=0; i<2; i++ ) {   //0 counts up, 1 counts down
             flag = 1;
             
             //start checking

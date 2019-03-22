@@ -140,8 +140,8 @@ int readSensor(int index, int direction)
     
 }
  
-void MouseTurn(int direciton){}
+void Turn(int direciton){}
 
-void ForwardOneCell(void){}
+void Fwd_One_Cell(void){}
 
 void FollowRoute(Stack route){}

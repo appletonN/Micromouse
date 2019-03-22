@@ -81,7 +81,6 @@ typedef struct Mouse
  *      deactivate PIC
  * @enduml 
  * 
- * @param mouse     representation of the mouse in the maze.
  * @param nodelist  list of all the Nodes in the maze. can be considered the Nodemap.
  * @return          the index of the Node the mouse is currently at in the nodelist
  */
@@ -95,9 +94,9 @@ void mapmaze(struct Maze* mazeArg, Node* nodelist);
  * to 0b1000 (North). Creates the start Node and seets it 
  * as the parent node.
  * 
- * @param mouse
+ * @param openlist lise
  */
-void SetupMapping(Mouse* mouse, Stack* openlist, Node* nodelist);
+void SetupMapping(Stack* openlist, Node* nodelist);
 
 /**
  * @brief creates a new node.
@@ -112,7 +111,7 @@ void SetupMapping(Mouse* mouse, Stack* openlist, Node* nodelist);
  * @param index     index at which the new Node is to be created.
  * @return          a pointer to the newly created node.
  */
-unsigned char createNode(Mouse* mouse, unsigned char index, Node* nodelist);
+unsigned char createNode(unsigned char index, Node* nodelist);
 
 /**
  * @brief updates info on the cell currently occupied.
@@ -168,7 +167,7 @@ unsigned char createNode(Mouse* mouse, unsigned char index, Node* nodelist);
  * @param Nodelist  list of all the Nodes in the maze.
  * @param history   stack of the cells which were visited by the mouse.
  */
-void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* history);
+void checkcurrentcell(Stack* openlist, Node* nodelist, Stack* history);
 
 /**
  * @brief Connects the parent node to the current cell.
@@ -183,7 +182,7 @@ void checkcurrentcell(Mouse* mouse, Stack* openlist, Node* nodelist, Stack* hist
  * @param nodelist      List of all the Nodes in the maze.
  * @param dir           direction in which the mouse entered the cell to be connected to the parent.
  */
-void ConnectNodes(Mouse* mouse, Node* nodelist, unsigned char dir);
+void ConnectNodes(Node* nodelist, unsigned char dir);
 
 /**
  * @breif Used to get to new areas.
@@ -231,7 +230,7 @@ void ConnectNodes(Mouse* mouse, Node* nodelist, unsigned char dir);
  * @param mouse         representation of the mouse in the maze.
  * @param openlist      The stack of cells to be explored.
  */
-void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelist);
+void ExploreNewCell(Stack* openlist, Stack* history, Node* nodelist);
 
 /**
  * @brief identify in which direction a cell is.
@@ -243,7 +242,7 @@ void ExploreNewCell(Mouse* mouse, Stack* openlist, Stack* history, Node* nodelis
  * @param target    the cell that the mouse is trying to get to.
  * @return          the direction of the adjacent cell.
  */
-unsigned char identifyDirection(Mouse* mouse, unsigned char target);
+unsigned char identifyDirection(unsigned char target);
 
 /**
  * @brief move mouse into an adjacent cell in the direction given.
@@ -255,7 +254,7 @@ unsigned char identifyDirection(Mouse* mouse, unsigned char target);
  * @param mouse         representation of the mouse in the maze.
  * @param direction     the direction in which the adjacent cell is.
  */
-void moveToAdjacentCell(Mouse* mouse, unsigned char direction);
+void moveToAdjacentCell(unsigned char direction);
 
 /**
  * @class VirtualMouse
@@ -274,7 +273,7 @@ void moveToAdjacentCell(Mouse* mouse, unsigned char direction);
  * 
  * @param maze      the maze that needs to be checked.
  */
-void virtualMouse(Mouse* mouse, Node* nodelist);
+void virtualMouse(Node* nodelist);
 
 /**
  * @brief checks one cell for dead end and corrects it.
@@ -291,7 +290,7 @@ void virtualMouse(Mouse* mouse, Node* nodelist);
  * @param maze      The maze in which the cell being checked is held.
  * @param index     The index of the cell within the maze.
  */
-void VMcheck(Mouse* mouse, unsigned char index, Node* nodelist);
+void VMcheck(unsigned char index, Node* nodelist);
 
 /**
  * @brief destroy a given Node.
@@ -304,7 +303,7 @@ void VMcheck(Mouse* mouse, unsigned char index, Node* nodelist);
  * @param nodelist      List of all Nodes in the maze.
  * @param index         index where the Node to be destroyed is.
  */
-void DestroyNode(Mouse* mouse, Node* nodelist, unsigned char index);
+void DestroyNode(Node* nodelist, unsigned char index);
 
 
 #endif	/* MAPMAZE_H */
