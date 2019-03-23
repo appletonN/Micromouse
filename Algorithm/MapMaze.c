@@ -1,4 +1,3 @@
-
 /** 
  * @brief Use simulator or Mouse.
  * 
@@ -10,11 +9,15 @@
 
 #if SIMULATOR
 	#include "simulator.h"
+
 #else
     #include "MappingFunctions.h"
+
 #endif
 ///@}
 
+#include "../Integration/Motors.h"
+#include "../Integration/IO.h"
 
 #include "MapMaze.h"
 #include "Dijekstra.h"
@@ -76,23 +79,18 @@ void mapmaze(struct Maze* mazeArg, Node* nodelist)
         moveToAdjacentCell(identifyDirection(pop(&history)));
     
     
-    printStatus(&mouse, &openlist, nodelist);
-    
     
     //get back to start
     Stack toStart = dijekstra(mouse.maze, nodelist, 
             &nodelist[mouse.maze->cellno[0][mouse.index].nodeAddress], &nodelist[0], mouse.dir);
     
-    FollowRoute(toStart);
+    Fast_Run(toStart, 0);
     
     Turn(180);
     
     //block off all dead end routes
     for ( i=1; i< WIDTH*HEIGHT; i++) 
         VMcheck(i, nodelist);
-            
-    printStatus(&mouse, &openlist, nodelist);
-    
 }
 
 
@@ -189,7 +187,7 @@ void checkcurrentcell(Stack* openlist, Node* nodelist, Stack* history)
         mouse.dir = turn(i, mouse.dir);
         
                 
-        sensorval = readSensor(mouse.index, mouse.dir);
+        sensorval = Wall_Check(mouse.index, mouse.dir);
         
         //repeat twice
         for ( j=0; j<2; j++ )
@@ -459,7 +457,7 @@ void moveToAdjacentCell(unsigned char direction)
         mouse.currentConnection.cost += TURN_COST;
         
         //set turn to RIGHT
-        unsigned char turnDir = RIGHT;
+        unsigned char turnDir = R90;
         
         if ( !(direction & mouse.dir) ) {
             //if mouse is still not facing correct direction
@@ -468,7 +466,7 @@ void moveToAdjacentCell(unsigned char direction)
             mouse.dir = turn(2, mouse.dir);
             
             //set turn to LEFT
-            turnDir = LEFT;
+            turnDir = L90;
         }//IF TURN LEFT
         
         Turn(turnDir);        

@@ -29,38 +29,38 @@
  * @param index			index that the mouse is at within the maze.
  * @param direction		direction register of the mouse.
  */
-int readSensor(int index, int direction);
+int Wall_Check(unsigned char index, unsigned char direction);
 
-/**
- * @brief Print out the maze to stdout.
- *
- * Prints the maze in it's current state to the standard output, including
- * state of the LEDs, position and direction of the mouse and the mouse's 
- * model of the maze - this will display the walls and nodes graphically.
- *
- * @param mouse			representation of the mouse to be referenced.
- */
- void printStatus(Mouse* mouse, Stack* openlist, Node* nodelist);
- 
- /**
-  * @brief Turn physical Mouse.
-  * 
-  * Dummy function as there is no physical mouse to turn. This is a 
-  * placeholder so that the final program will run correctly on the
-  * simulator with minimal changing of code.
-  * 
-  * @param direciton    Direction to turn.
-  */
- void Turn(int direciton);
- 
- /**
-  * @brief Move physical mouse forward one cell.
-  * 
-  * Dummy function as there is no physical mouse to turn. This is a 
-  * placeholder so that the final program will run correctly on the
-  * simulator with minimal changing of code.
-  */
- void Fwd_One_Cell(void);
- 
- 
- void FollowRoute(Stack route);
+///**
+// * @brief Print out the maze to stdout.
+// *
+// * Prints the maze in it's current state to the standard output, including
+// * state of the LEDs, position and direction of the mouse and the mouse's 
+// * model of the maze - this will display the walls and nodes graphically.
+// *
+// * @param mouse			representation of the mouse to be referenced.
+// */
+// void printStatus(Mouse* mouse, Stack* openlist, Node* nodelist);
+// 
+// /**
+//  * @brief Turn physical Mouse.
+//  * 
+//  * Dummy function as there is no physical mouse to turn. This is a 
+//  * placeholder so that the final program will run correctly on the
+//  * simulator with minimal changing of code.
+//  * 
+//  * @param direciton    Direction to turn.
+//  */
+// void Turn(int direciton);
+// 
+// /**
+//  * @brief Move physical mouse forward one cell.
+//  * 
+//  * Dummy function as there is no physical mouse to turn. This is a 
+//  * placeholder so that the final program will run correctly on the
+//  * simulator with minimal changing of code.
+//  */
+// void Fwd_One_Cell(void);
+// 
+// 
+// void FollowRoute(Stack route);

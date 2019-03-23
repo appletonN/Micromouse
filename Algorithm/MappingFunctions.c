@@ -2,7 +2,7 @@
 #include "MappingFunctions.h"
 
 
-unsigned char turn(char N, unsigned char dir)
+unsigned char turn(unsigned char N, unsigned char dir)
 {
 	unsigned char i;
     

@@ -58,14 +58,6 @@
 #define STRAIGHT_COST 1
 ///@}
 
-/**
- * @brief direction inputs into the turn function
- */
-///@{
-#define LEFT 1
-#define RIGHT -1
-///@}
-
 
 /**
  * @brief Connection between 2 nodes.
@@ -123,7 +115,7 @@ struct Maze
  * @param dir   Current direction to be turned.
  * @return      New direction after turning
  */
-unsigned char turn(char N, unsigned char dir);
+unsigned char turn(unsigned char N, unsigned char dir);
 
 /**
  * @brief Changes the index of the mouse to move into an adjacent cell.

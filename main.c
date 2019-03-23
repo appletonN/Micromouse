@@ -16,19 +16,23 @@
 #include "Algorithm/MappingFunctions.h"
 #include "Algorithm/MapMaze.h"
 #include "Algorithm/Dijekstra.h"
-#include "Integration/LED.h"
+#include "Integration/Setup.h"
 #include <stdlib.h>
 #include <stdio.h>
 
 _FWDT(WDT_OFF); 
 //watch dog is disabled
 
-
 int main(void)
 {
-//    setupLEDs();
-//    timer1Setup();    
+    /**** SETUP INTERRUPTS ****/
     
+    IOSetup();
+    PWMSetup();
+    UARTSetup();
+    timer1Setup();
+    
+    /******* MAP MAZE ********/
     //create maze
     struct Maze Cellmaze;
     
