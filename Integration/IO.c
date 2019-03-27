@@ -3,19 +3,22 @@
 #include <p30Fxxxx.h>
 
 
-//Definitions
-#define noWall 10
-#define upperError 10
+#define noWall 10           /**< threshold for if a wall has been sensed. */
+/** @brief thresholds for anomilous sensor values used in PID
+ * @{
+ */ 
+#define upperError 10       
 #define lowerError 10
+//@}
 
 
-
-//Sensor read global variable 
+/**
+ * @brief Value read by the sensor. Global because it is used in the interrupt.
+ */
 unsigned char sensorVal;
 
-//speed and mode of LEDs global
-unsigned int speed;
-unsigned char mode;
+unsigned int speed;     /**< speed at which the LED patterns will be displayed. */
+unsigned char mode;     /**< LED mode to be displayed */
 
 void __attribute__((interrupt, no_auto_psv)) _ADCInterrupt(void)
 {

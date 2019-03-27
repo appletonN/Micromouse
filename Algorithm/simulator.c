@@ -18,9 +18,6 @@
 #define ACTUAL_HEIGHT 8		/**< the Height the simulated maze actually is */
 ///@}
 
-#define DELAY 20000
-
-
 int Wall_Check(unsigned char index, unsigned char direction)
 {
 

@@ -24,7 +24,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
+/**
+ * @brief global representation of the mouse used by every function.
+ */
 Mouse mouse;
 
 void mapmaze(struct Maze* mazeArg, Node* nodelist)

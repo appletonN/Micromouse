@@ -25,8 +25,8 @@
  * The size of the stack equal to number of cells in the maze.
  */
 typedef struct Stack {
-    unsigned char data[WIDTH*HEIGHT*2];
-    unsigned char head;
+    unsigned char data[WIDTH*HEIGHT*2];     /**< data that is stored in the Stack */
+    unsigned char head;                     /**< head of the Stack where data is pushed to and popped from */
 } Stack ;
 
 /**

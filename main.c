@@ -23,6 +23,10 @@
 _FWDT(WDT_OFF); 
 //watch dog is disabled
 
+/**
+ * @brief main.
+ * @return 
+ */
 int main(void)
 {
     /**** SETUP INTERRUPTS ****/

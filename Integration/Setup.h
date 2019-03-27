@@ -1,3 +1,12 @@
+/**
+*		@file Setup.c
+*		@brief Functions and Definitions for peripheral systems
+*
+*
+*		@author		Christian Woof @ UWE Robotics
+*
+*/
+
 #ifndef SETUP_H
 #define	SETUP_H
 
@@ -5,11 +14,10 @@
 
 
 
-////////////////////////////////////////////////////
-/////                   I/O                    /////
-////////////////////////////////////////////////////   
-
-
+/**
+ * @brief IO defines
+ */
+//@{
 //********** Sensors Selection **********************
 
 //Sensor 1 RB1 
@@ -64,16 +72,21 @@
 #define LED7Tris      TRISBbits.TRISB8
 #define LED7Latch     LATBbits.LATB8
 #define LED7Port      PORTBbits.RB8
+//@}
 
 
-//*****************Misc. Definitions*******************
+
+/**
+ * @brief Misc Definitions
+ */
+//@{
 //Directions
 #define F 1
 #define B -1
 
 //turn Directions
-#define L -1
-#define R 1
+#define L 1
+#define R 2
 
 //PID Control Gains
 #define Kp 1
@@ -86,14 +99,14 @@
 
 //Reset State for PID
 #define Reset 9
+//@}
 
 
 
-
-/////////////////////////////////////////////////
-/////               PWM                     /////
-/////////////////////////////////////////////////
-
+/**
+ * @brief PWM defines
+ */
+//@{
 //PWM1 Bit Definitions
 //PT1ConBits
 #define PTMOD   PTCONbits.PTMOD
@@ -110,15 +123,13 @@
 #define PEN2L   PWMCON1bits.PEN2L
 #define PEN2H   PWMCON1bits.PEN2H
 
-//PWM2 Bit Definitions 
-//PT2ConBits
+//@}
 
 
-
-/////////////////////////////////////////////
-/////               UART                /////
-/////////////////////////////////////////////
-
+/**
+ * @brief UART definitions
+ */
+//@{
 
 //***********UART 1 Mode bits *****************
 #define U1_UARTEN U1MODEbits.UARTEN
@@ -162,8 +173,12 @@
     
 //Enable transmission bit 
 #define U2_UTXEN U2STAbits.UTXEN      
-    
+//@}
 
+/**
+ * @brief Timer defines
+ */
+//@{
 #define T1on                T1CONbits.TON 
 #define T1Prescaler         T1CONbits.TCKPS 
 #define T1inputClock        T1CONbits.TCS
@@ -173,15 +188,31 @@
 #define T1Flag              IFS0bits.T1IF  
 #define T1Priority          IPC0bits.T1IP
 #define T1InteruptEnable    IEC0bits.T1IE 
+//@}
 
-
-
+/**
+ * @brief IO Setup Function.
+ */
 void IOSetup(void);
 
+/**
+ * @brief PWM Setup Function.
+ */
 void PWMSetup(void);
 
+/**
+ * @brief UART Setup Function.
+ */
 void UARTSetup(void);
 
+/**
+ * @brief ADC Setup Function.
+ */
+void ADC_Setup(void)
+
+/**
+ * @brief Timer 1 Setup Function.
+ */
 void timer1Setup(void);
 
 

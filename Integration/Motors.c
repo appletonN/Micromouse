@@ -3,9 +3,12 @@
 #include "Motors.h"
 
 
-//Encoder counts global Variables
+/**
+ * @brief Encoder counts.
+ * @{
+ */
 int MLEncCount, MREncCount;
-float MLVel, MRVel;
+//@}
 
 //************************M1 PID*************************
 //PID control is for ensuring central travel 
