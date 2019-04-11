@@ -3,7 +3,7 @@
  *		@brief Defines everything needed to implement stacks.
  *
  *      Includes the stack datatype, as well as the stackitem
- *      structure used to creat stacks. Stacks can have data
+ *      structure used to create stacks. Stacks can have data
  *      pushed to them and popped from them. Uses Linked lists 
  *      to do this.
  *
@@ -25,8 +25,8 @@
  * The size of the stack equal to number of cells in the maze.
  */
 typedef struct Stack {
-    unsigned char data[WIDTH*HEIGHT*2];     /**< data that is stored in the Stack */
-    unsigned char head;                     /**< head of the Stack where data is pushed to and popped from */
+    unsigned char data[WIDTH*HEIGHT*2];
+    unsigned char head;
 } Stack ;
 
 /**

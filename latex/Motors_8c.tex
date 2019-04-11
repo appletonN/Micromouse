@@ -1,0 +1,224 @@
+\hypertarget{Motors_8c}{}\section{Integration/\+Motors.c File Reference}
+\label{Motors_8c}\index{Integration/\+Motors.\+c@{Integration/\+Motors.\+c}}
+
+
+Motor Functions and Defines.  
+
+
+{\ttfamily \#include \char`\"{}Setup.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}I\+O.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Motors.\+h\char`\"{}}\newline
+Include dependency graph for Motors.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=313pt]{Motors_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{Motors_8c_a9a09ab1256a3fb60fec7a786de4fbfdc}{P\+ID} (int close\+\_\+\+Sensor\+\_\+\+Side)
+\begin{DoxyCompactList}\small\item\em P\+ID controller for moving through the maze. \end{DoxyCompactList}\item 
+void \hyperlink{Motors_8c_a226557d5e42f7e29ddaff30606138459}{\+\_\+\+\_\+attribute\+\_\+\+\_\+} ((interrupt, no\+\_\+auto\+\_\+psv))
+\begin{DoxyCompactList}\small\item\em A\+DC interrupt for use with sensors. \end{DoxyCompactList}\item 
+void \hyperlink{Motors_8c_a6d8a633e18359b5375fe00cdc74964ff}{Velocity\+\_\+\+Curve} (unsigned char direction)
+\begin{DoxyCompactList}\small\item\em accelerate the mouse up to speed, or from speed to static. \end{DoxyCompactList}\item 
+void \hyperlink{Motors_8c_a550c2e802fb3ecc724fc377a38312899}{Turn\+\_\+\+Velocity\+\_\+\+Curve} (unsigned char direction)
+\begin{DoxyCompactList}\small\item\em accelerate or decelerate the mouse for the turns when exploring. \end{DoxyCompactList}\item 
+void \hyperlink{Motors_8c_aa1f8e804eab7ce71bff408b7d89c52d6}{M\+\_\+\+Dir} (int M\+L\+Dir, int M\+R\+Dir)
+\begin{DoxyCompactList}\small\item\em sets motor directions. \end{DoxyCompactList}\item 
+void \hyperlink{Motors_8c_add90bf710ddc10212c0d3abec982a1d1}{Turn} (int \hyperlink{MappingFunctions_8h_ab1cb7abf977587694dab1ef4c39de52f}{turn})
+\begin{DoxyCompactList}\small\item\em Turn physical \hyperlink{structMouse}{Mouse}. \end{DoxyCompactList}\item 
+void \hyperlink{Motors_8c_a324b4be9e04c414eda8564c949fed51f}{Fwd\+\_\+\+One\+\_\+\+Cell} (void)
+\begin{DoxyCompactList}\small\item\em Move physical mouse forward one cell. \end{DoxyCompactList}\item 
+void \hyperlink{Motors_8c_a723968c7dd5070f3dab8cdcc72c45355}{Fast\+\_\+\+Run} (\hyperlink{structStack}{Stack} instructions, unsigned char \hyperlink{IO_8c_a481cb487704fc7f8c8ddc6613aed3785}{speed})
+\begin{DoxyCompactList}\small\item\em complete a fast run of a stack of instructions. \end{DoxyCompactList}\item 
+void \hyperlink{Motors_8c_ab2fa04584bc59ca4993e325c87aad36a}{Fwd} (int cells)
+\begin{DoxyCompactList}\small\item\em move the mouse forward the number of cells given. \end{DoxyCompactList}\item 
+void \hyperlink{Motors_8c_a27d46a52f8d8f190abe85888d35a5cf4}{Fast\+\_\+\+Turn} (unsigned char dir)
+\begin{DoxyCompactList}\small\item\em make a turn at full speed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\textbf{ }\par
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{Motors_8c_a09508bf842d31874b9cd2c1271d4b8de}\label{Motors_8c_a09508bf842d31874b9cd2c1271d4b8de}} 
+int \hyperlink{Motors_8c_a09508bf842d31874b9cd2c1271d4b8de}{M\+L\+Enc\+Count}
+\begin{DoxyCompactList}\small\item\em Encoder counts. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{Motors_8c_acf3b0e8270d0e0cfc372fcce5ea98e0d}\label{Motors_8c_acf3b0e8270d0e0cfc372fcce5ea98e0d}} 
+int {\bfseries M\+R\+Enc\+Count}
+\end{DoxyCompactItemize}
+
+
+
+\subsection{Detailed Description}
+Motor Functions and Defines. 
+
+\begin{DoxyAuthor}{Author}
+Christian Woof @ U\+WE Robotics 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{Motors_8c_a226557d5e42f7e29ddaff30606138459}\label{Motors_8c_a226557d5e42f7e29ddaff30606138459}} 
+\index{Motors.\+c@{Motors.\+c}!\+\_\+\+\_\+attribute\+\_\+\+\_\+@{\+\_\+\+\_\+attribute\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+attribute\+\_\+\+\_\+@{\+\_\+\+\_\+attribute\+\_\+\+\_\+}!Motors.\+c@{Motors.\+c}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+attribute\+\_\+\+\_\+()}{\_\_attribute\_\_()}}
+{\footnotesize\ttfamily void \+\_\+\+\_\+attribute\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{(interrupt, no\+\_\+auto\+\_\+psv)}]{ }\end{DoxyParamCaption})}
+
+
+
+A\+DC interrupt for use with sensors. 
+
+U\+A\+RT 1 receive interrupt for encoder 1 and programmer.
+
+A\+DC interrupt for use with sensors. \mbox{\Hypertarget{Motors_8c_a723968c7dd5070f3dab8cdcc72c45355}\label{Motors_8c_a723968c7dd5070f3dab8cdcc72c45355}} 
+\index{Motors.\+c@{Motors.\+c}!Fast\+\_\+\+Run@{Fast\+\_\+\+Run}}
+\index{Fast\+\_\+\+Run@{Fast\+\_\+\+Run}!Motors.\+c@{Motors.\+c}}
+\subsubsection{\texorpdfstring{Fast\+\_\+\+Run()}{Fast\_Run()}}
+{\footnotesize\ttfamily void Fast\+\_\+\+Run (\begin{DoxyParamCaption}\item[{\hyperlink{structStack}{Stack}}]{instructions,  }\item[{unsigned char}]{speed }\end{DoxyParamCaption})}
+
+
+
+complete a fast run of a stack of instructions. 
+
+follows the instructions in the given stack to get from the current location to the destination using the fast move functions. This will be used for the final run.
+
+
+\begin{DoxyParams}{Parameters}
+{\em instructions} & \hyperlink{structStack}{Stack} of instructions to follow to get to the destination. \\
+\hline
+{\em speed} & Whether it is going full or half speed. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{Motors_8c_a27d46a52f8d8f190abe85888d35a5cf4}\label{Motors_8c_a27d46a52f8d8f190abe85888d35a5cf4}} 
+\index{Motors.\+c@{Motors.\+c}!Fast\+\_\+\+Turn@{Fast\+\_\+\+Turn}}
+\index{Fast\+\_\+\+Turn@{Fast\+\_\+\+Turn}!Motors.\+c@{Motors.\+c}}
+\subsubsection{\texorpdfstring{Fast\+\_\+\+Turn()}{Fast\_Turn()}}
+{\footnotesize\ttfamily void Fast\+\_\+\+Turn (\begin{DoxyParamCaption}\item[{unsigned char}]{dir }\end{DoxyParamCaption})}
+
+
+
+make a turn at full speed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dir} & Direction to turn. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{Motors_8c_ab2fa04584bc59ca4993e325c87aad36a}\label{Motors_8c_ab2fa04584bc59ca4993e325c87aad36a}} 
+\index{Motors.\+c@{Motors.\+c}!Fwd@{Fwd}}
+\index{Fwd@{Fwd}!Motors.\+c@{Motors.\+c}}
+\subsubsection{\texorpdfstring{Fwd()}{Fwd()}}
+{\footnotesize\ttfamily void Fwd (\begin{DoxyParamCaption}\item[{int}]{cells }\end{DoxyParamCaption})}
+
+
+
+move the mouse forward the number of cells given. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cells} & How many cells forward to move. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{Motors_8c_a324b4be9e04c414eda8564c949fed51f}\label{Motors_8c_a324b4be9e04c414eda8564c949fed51f}} 
+\index{Motors.\+c@{Motors.\+c}!Fwd\+\_\+\+One\+\_\+\+Cell@{Fwd\+\_\+\+One\+\_\+\+Cell}}
+\index{Fwd\+\_\+\+One\+\_\+\+Cell@{Fwd\+\_\+\+One\+\_\+\+Cell}!Motors.\+c@{Motors.\+c}}
+\subsubsection{\texorpdfstring{Fwd\+\_\+\+One\+\_\+\+Cell()}{Fwd\_One\_Cell()}}
+{\footnotesize\ttfamily void Fwd\+\_\+\+One\+\_\+\+Cell (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Move physical mouse forward one cell. 
+
+move the mouse forward one cell.
+
+Dummy function as there is no physical mouse to turn. This is a placeholder so that the final program will run correctly on the simulator with minimal changing of code. \mbox{\Hypertarget{Motors_8c_aa1f8e804eab7ce71bff408b7d89c52d6}\label{Motors_8c_aa1f8e804eab7ce71bff408b7d89c52d6}} 
+\index{Motors.\+c@{Motors.\+c}!M\+\_\+\+Dir@{M\+\_\+\+Dir}}
+\index{M\+\_\+\+Dir@{M\+\_\+\+Dir}!Motors.\+c@{Motors.\+c}}
+\subsubsection{\texorpdfstring{M\+\_\+\+Dir()}{M\_Dir()}}
+{\footnotesize\ttfamily void M\+\_\+\+Dir (\begin{DoxyParamCaption}\item[{int}]{M\+L\+Dir,  }\item[{int}]{M\+R\+Dir }\end{DoxyParamCaption})}
+
+
+
+sets motor directions. 
+
+1 for forward. 0 for stop. -\/1 for backwards.
+
+
+\begin{DoxyParams}{Parameters}
+{\em M\+L\+Dir} & Direction to set left motor to go. \\
+\hline
+{\em M\+R\+Dir} & Direction to set right motor to go. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{Motors_8c_a9a09ab1256a3fb60fec7a786de4fbfdc}\label{Motors_8c_a9a09ab1256a3fb60fec7a786de4fbfdc}} 
+\index{Motors.\+c@{Motors.\+c}!P\+ID@{P\+ID}}
+\index{P\+ID@{P\+ID}!Motors.\+c@{Motors.\+c}}
+\subsubsection{\texorpdfstring{P\+I\+D()}{PID()}}
+{\footnotesize\ttfamily float P\+ID (\begin{DoxyParamCaption}\item[{int}]{close\+\_\+\+Sensor\+\_\+\+Side }\end{DoxyParamCaption})}
+
+
+
+P\+ID controller for moving through the maze. 
+
+Checks the sensor and slows down the opposite wheel if needed to keep the mouse in the centre of the maze.
+
+
+\begin{DoxyParams}{Parameters}
+{\em close\+\_\+\+Sensor\+\_\+\+Side} & Side which sensor to be checked is on. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+how much the opposite wheel needs to slow down by. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{Motors_8c_add90bf710ddc10212c0d3abec982a1d1}\label{Motors_8c_add90bf710ddc10212c0d3abec982a1d1}} 
+\index{Motors.\+c@{Motors.\+c}!Turn@{Turn}}
+\index{Turn@{Turn}!Motors.\+c@{Motors.\+c}}
+\subsubsection{\texorpdfstring{Turn()}{Turn()}}
+{\footnotesize\ttfamily void Turn (\begin{DoxyParamCaption}\item[{int}]{direciton }\end{DoxyParamCaption})}
+
+
+
+Turn physical \hyperlink{structMouse}{Mouse}. 
+
+turn the mouse 90 degrees in a given direction.
+
+Dummy function as there is no physical mouse to turn. This is a placeholder so that the final program will run correctly on the simulator with minimal changing of code.
+
+
+\begin{DoxyParams}{Parameters}
+{\em direciton} & Direction to turn. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{Motors_8c_a550c2e802fb3ecc724fc377a38312899}\label{Motors_8c_a550c2e802fb3ecc724fc377a38312899}} 
+\index{Motors.\+c@{Motors.\+c}!Turn\+\_\+\+Velocity\+\_\+\+Curve@{Turn\+\_\+\+Velocity\+\_\+\+Curve}}
+\index{Turn\+\_\+\+Velocity\+\_\+\+Curve@{Turn\+\_\+\+Velocity\+\_\+\+Curve}!Motors.\+c@{Motors.\+c}}
+\subsubsection{\texorpdfstring{Turn\+\_\+\+Velocity\+\_\+\+Curve()}{Turn\_Velocity\_Curve()}}
+{\footnotesize\ttfamily void Turn\+\_\+\+Velocity\+\_\+\+Curve (\begin{DoxyParamCaption}\item[{unsigned char}]{direction }\end{DoxyParamCaption})}
+
+
+
+accelerate or decelerate the mouse for the turns when exploring. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em direction} & whether accelerating (1) or decelerating (0). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{Motors_8c_a6d8a633e18359b5375fe00cdc74964ff}\label{Motors_8c_a6d8a633e18359b5375fe00cdc74964ff}} 
+\index{Motors.\+c@{Motors.\+c}!Velocity\+\_\+\+Curve@{Velocity\+\_\+\+Curve}}
+\index{Velocity\+\_\+\+Curve@{Velocity\+\_\+\+Curve}!Motors.\+c@{Motors.\+c}}
+\subsubsection{\texorpdfstring{Velocity\+\_\+\+Curve()}{Velocity\_Curve()}}
+{\footnotesize\ttfamily void Velocity\+\_\+\+Curve (\begin{DoxyParamCaption}\item[{unsigned char}]{direction }\end{DoxyParamCaption})}
+
+
+
+accelerate the mouse up to speed, or from speed to static. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em direction} & whether accelerating (1) or decelerating (0). \\
+\hline
+\end{DoxyParams}

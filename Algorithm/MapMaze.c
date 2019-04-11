@@ -5,10 +5,10 @@
  * the actual mouse.
  */
 ///@{
-#define SIMULATOR 1
+#define SIMULATOR 0
 
 #if SIMULATOR
-	#include "simulator.h"
+//	#include "simulator.h"
 
 #else
     #include "MappingFunctions.h"
@@ -24,9 +24,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-/**
- * @brief global representation of the mouse used by every function.
- */
+
 Mouse mouse;
 
 void mapmaze(struct Maze* mazeArg, Node* nodelist)
@@ -80,15 +78,13 @@ void mapmaze(struct Maze* mazeArg, Node* nodelist)
     while ( !mouse.maze->cellno[0][mouse.index].isNode )
         moveToAdjacentCell(identifyDirection(pop(&history)));
     
-    
-    
     //get back to start
     Stack toStart = dijekstra(mouse.maze, nodelist, 
             &nodelist[mouse.maze->cellno[0][mouse.index].nodeAddress], &nodelist[0], mouse.dir);
     
-    Fast_Run(toStart, 0);
+    //Fast_Run(toStart);
     
-    Turn(180);
+    //Turn(180);
     
     //block off all dead end routes
     for ( i=1; i< WIDTH*HEIGHT; i++) 
@@ -189,7 +185,7 @@ void checkcurrentcell(Stack* openlist, Node* nodelist, Stack* history)
         mouse.dir = turn(i, mouse.dir);
         
                 
-        sensorval = Wall_Check(mouse.index, mouse.dir);
+        sensorval = Wall_Check(i+1);
         
         //repeat twice
         for ( j=0; j<2; j++ )

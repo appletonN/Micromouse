@@ -3,8 +3,8 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>Micromouse</name>
-            <creation-uuid>c82b48bf-8b99-4c0f-b238-820982d5c192</creation-uuid>
+            <name>ADC_testing</name>
+            <creation-uuid>ee3f35f8-9860-45d4-b478-15bd295699f2</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>

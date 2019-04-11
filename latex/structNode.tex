@@ -1,0 +1,83 @@
+\hypertarget{structNode}{}\section{Node Struct Reference}
+\label{structNode}\index{Node@{Node}}
+
+
+All info about a given \hyperlink{structNode}{Node}.  
+
+
+
+
+{\ttfamily \#include $<$Mapping\+Functions.\+h$>$}
+
+
+
+Collaboration diagram for Node\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=193pt]{structNode__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+unsigned char \hyperlink{structNode_a77c45b2ff49ea5dc4195fed43e7787c2}{index}
+\item 
+unsigned int \hyperlink{structNode_abc8ade5cf38b553b33542473c104272a}{is\+End}\+: 1
+\item 
+unsigned int \hyperlink{structNode_a1ca0af175fe450a22f8d8625f0b58cbd}{no\+Of\+Connections}\+: 3
+\item 
+struct \hyperlink{structconnection}{connection} \hyperlink{structNode_a1552d162ffa511bd47eb78cfe89240d1}{connections} \mbox{[}4\mbox{]}
+\item 
+int \hyperlink{structNode_ae66c167e6d151204d510f418a81f4afc}{dist\+To\+Start}
+\item 
+unsigned char \hyperlink{structNode_a63fd18834461e80cc0ce292269f6f169}{via}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+All info about a given \hyperlink{structNode}{Node}. 
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{structNode_a1552d162ffa511bd47eb78cfe89240d1}\label{structNode_a1552d162ffa511bd47eb78cfe89240d1}} 
+\index{Node@{Node}!connections@{connections}}
+\index{connections@{connections}!Node@{Node}}
+\subsubsection{\texorpdfstring{connections}{connections}}
+{\footnotesize\ttfamily struct \hyperlink{structconnection}{connection} Node\+::connections\mbox{[}4\mbox{]}}
+
+Array of connected nodes \mbox{\Hypertarget{structNode_ae66c167e6d151204d510f418a81f4afc}\label{structNode_ae66c167e6d151204d510f418a81f4afc}} 
+\index{Node@{Node}!dist\+To\+Start@{dist\+To\+Start}}
+\index{dist\+To\+Start@{dist\+To\+Start}!Node@{Node}}
+\subsubsection{\texorpdfstring{dist\+To\+Start}{distToStart}}
+{\footnotesize\ttfamily int Node\+::dist\+To\+Start}
+
+Shortest distance found to centre of maze. -\/1 represents infinite distance \mbox{\Hypertarget{structNode_a77c45b2ff49ea5dc4195fed43e7787c2}\label{structNode_a77c45b2ff49ea5dc4195fed43e7787c2}} 
+\index{Node@{Node}!index@{index}}
+\index{index@{index}!Node@{Node}}
+\subsubsection{\texorpdfstring{index}{index}}
+{\footnotesize\ttfamily unsigned char Node\+::index}
+
+index of the cell that this node references \mbox{\Hypertarget{structNode_abc8ade5cf38b553b33542473c104272a}\label{structNode_abc8ade5cf38b553b33542473c104272a}} 
+\index{Node@{Node}!is\+End@{is\+End}}
+\index{is\+End@{is\+End}!Node@{Node}}
+\subsubsection{\texorpdfstring{is\+End}{isEnd}}
+{\footnotesize\ttfamily unsigned int Node\+::is\+End}
+
+Marks whether the \hyperlink{structNode}{Node} is at the centre of the maze \mbox{\Hypertarget{structNode_a1ca0af175fe450a22f8d8625f0b58cbd}\label{structNode_a1ca0af175fe450a22f8d8625f0b58cbd}} 
+\index{Node@{Node}!no\+Of\+Connections@{no\+Of\+Connections}}
+\index{no\+Of\+Connections@{no\+Of\+Connections}!Node@{Node}}
+\subsubsection{\texorpdfstring{no\+Of\+Connections}{noOfConnections}}
+{\footnotesize\ttfamily unsigned int Node\+::no\+Of\+Connections}
+
+Number of Nodes connected to this one \mbox{\Hypertarget{structNode_a63fd18834461e80cc0ce292269f6f169}\label{structNode_a63fd18834461e80cc0ce292269f6f169}} 
+\index{Node@{Node}!via@{via}}
+\index{via@{via}!Node@{Node}}
+\subsubsection{\texorpdfstring{via}{via}}
+{\footnotesize\ttfamily unsigned char Node\+::via}
+
+\hyperlink{structNode}{Node} shortest route goes through to get here. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Algorithm/\hyperlink{MappingFunctions_8h}{Mapping\+Functions.\+h}\end{DoxyCompactItemize}

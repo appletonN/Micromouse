@@ -1,0 +1,85 @@
+\hypertarget{structMouse}{}\section{Mouse Struct Reference}
+\label{structMouse}\index{Mouse@{Mouse}}
+
+
+Representation of the \hyperlink{structMouse}{Mouse} in virtual space.  
+
+
+
+
+{\ttfamily \#include $<$Map\+Maze.\+h$>$}
+
+
+
+Collaboration diagram for Mouse\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=278pt]{structMouse__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \hyperlink{structMouse_a6d4adc5b89ee69f33487e894e94b2640}{dir}\+: 4
+\item 
+unsigned char \hyperlink{structMouse_acdc68538ce06d1a8c134b359baf1ca54}{index}
+\item 
+unsigned int \hyperlink{structMouse_ad3d231b3da189659a15447dcb3e94fed}{Dead\+End}\+: 1
+\item 
+struct \hyperlink{structMaze}{Maze} $\ast$ \hyperlink{structMouse_ab8306542bdc35dfbbf53e734a364124e}{maze}
+\item 
+unsigned char \hyperlink{structMouse_ae6ac50ea4f691724ca55079ea4ddbd4b}{parent\+Node}
+\item 
+struct \hyperlink{structconnection}{connection} \hyperlink{structMouse_a63ce4210cb8aaec17760f2a0191aa42f}{current\+Connection}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Representation of the \hyperlink{structMouse}{Mouse} in virtual space. 
+
+represents the mouse that inhabits the virtual maze. including physical attributes and debugging info. 
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{structMouse_a63ce4210cb8aaec17760f2a0191aa42f}\label{structMouse_a63ce4210cb8aaec17760f2a0191aa42f}} 
+\index{Mouse@{Mouse}!current\+Connection@{current\+Connection}}
+\index{current\+Connection@{current\+Connection}!Mouse@{Mouse}}
+\subsubsection{\texorpdfstring{current\+Connection}{currentConnection}}
+{\footnotesize\ttfamily struct \hyperlink{structconnection}{connection} Mouse\+::current\+Connection}
+
+Info about current exploration from parent \hyperlink{structNode}{Node} \mbox{\Hypertarget{structMouse_ad3d231b3da189659a15447dcb3e94fed}\label{structMouse_ad3d231b3da189659a15447dcb3e94fed}} 
+\index{Mouse@{Mouse}!Dead\+End@{Dead\+End}}
+\index{Dead\+End@{Dead\+End}!Mouse@{Mouse}}
+\subsubsection{\texorpdfstring{Dead\+End}{DeadEnd}}
+{\footnotesize\ttfamily unsigned int Mouse\+::\+Dead\+End}
+
+Marks whether backtracking from a dead end \mbox{\Hypertarget{structMouse_a6d4adc5b89ee69f33487e894e94b2640}\label{structMouse_a6d4adc5b89ee69f33487e894e94b2640}} 
+\index{Mouse@{Mouse}!dir@{dir}}
+\index{dir@{dir}!Mouse@{Mouse}}
+\subsubsection{\texorpdfstring{dir}{dir}}
+{\footnotesize\ttfamily unsigned int Mouse\+::dir}
+
+Direction the mouse is facing \mbox{\Hypertarget{structMouse_acdc68538ce06d1a8c134b359baf1ca54}\label{structMouse_acdc68538ce06d1a8c134b359baf1ca54}} 
+\index{Mouse@{Mouse}!index@{index}}
+\index{index@{index}!Mouse@{Mouse}}
+\subsubsection{\texorpdfstring{index}{index}}
+{\footnotesize\ttfamily unsigned char Mouse\+::index}
+
+Position of the mouse within the maze \mbox{\Hypertarget{structMouse_ab8306542bdc35dfbbf53e734a364124e}\label{structMouse_ab8306542bdc35dfbbf53e734a364124e}} 
+\index{Mouse@{Mouse}!maze@{maze}}
+\index{maze@{maze}!Mouse@{Mouse}}
+\subsubsection{\texorpdfstring{maze}{maze}}
+{\footnotesize\ttfamily struct \hyperlink{structMaze}{Maze}$\ast$ Mouse\+::maze}
+
+contains the mouse\textquotesingle{}s model of the maze \mbox{\Hypertarget{structMouse_ae6ac50ea4f691724ca55079ea4ddbd4b}\label{structMouse_ae6ac50ea4f691724ca55079ea4ddbd4b}} 
+\index{Mouse@{Mouse}!parent\+Node@{parent\+Node}}
+\index{parent\+Node@{parent\+Node}!Mouse@{Mouse}}
+\subsubsection{\texorpdfstring{parent\+Node}{parentNode}}
+{\footnotesize\ttfamily unsigned char Mouse\+::parent\+Node}
+
+index of \hyperlink{structNode}{Node} last viseted in nodelist, next node found will be connected to this 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Algorithm/Map\+Maze.\+h\end{DoxyCompactItemize}

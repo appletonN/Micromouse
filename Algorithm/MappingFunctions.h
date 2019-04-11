@@ -48,7 +48,7 @@
  * describes the amount of memory needed to store the list of Nodes.
  * Will not be able to store more Nodes than this.
  */
-#define MAX_NODES 22
+#define MAX_NODES 15 
 
 /**
  * @brief cost of the movements between Nodes.
@@ -109,6 +109,8 @@ struct Maze
  * Bitshifts the direction register of the mouse right by N places.
  * Also corrects for if the 1 bit falls off the end of the register.
  * 
+ * @memberof mouse
+ *
  * @param N 	Number of turns to make.
  * @param dir   Current direction to be turned.
  * @return      New direction after turning
@@ -121,6 +123,8 @@ unsigned char turn(unsigned char N, unsigned char dir);
  * looks at the direction the mouse is facing and changes the index by the
  * right amount to move the mouse into the adjacent cell in that direction.
  *
+ * @memberof mouse
+ * 
  * @param index     index to be incremented.
  * @param dir       direction to move into.
  * @return          the index having been incremented into the adjacent cell.

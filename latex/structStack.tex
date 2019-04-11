@@ -1,0 +1,99 @@
+\hypertarget{structStack}{}\section{Stack Struct Reference}
+\label{structStack}\index{Stack@{Stack}}
+
+
+array of data that is the \hyperlink{structStack}{Stack}.  
+
+
+
+
+{\ttfamily \#include $<$Stacks.\+h$>$}
+
+
+
+Collaboration diagram for Stack\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=133pt]{structStack__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{structStack_a0bd90a5dfacc09f2df0382c269e0236b}{push} (\hyperlink{structStack}{Stack} $\ast$stack, unsigned char Newdata)
+\begin{DoxyCompactList}\small\item\em pushes item onto a stack. \end{DoxyCompactList}\item 
+unsigned char \hyperlink{structStack_aa2c179f9f71cccf23778012d4e9326de}{pop} (\hyperlink{structStack}{Stack} $\ast$stack)
+\begin{DoxyCompactList}\small\item\em pops an item from the top of the stack. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+unsigned char \hyperlink{structStack_af7c19f315867ae89b59eb06bb1e6c8bf}{data} \mbox{[}\hyperlink{MappingFunctions_8h_a241aeeb764887ae5e3de58b98f04b16d}{W\+I\+D\+TH} $\ast$\hyperlink{MappingFunctions_8h_aed89bd71aee8be823e8a20ec4e093c1e}{H\+E\+I\+G\+HT} $\ast$2\mbox{]}
+\item 
+unsigned char \hyperlink{structStack_ae9de4145f4aee2664247e585ec86d220}{head}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+array of data that is the \hyperlink{structStack}{Stack}. 
+
+The size of the stack equal to number of cells in the maze. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{structStack_aa2c179f9f71cccf23778012d4e9326de}\label{structStack_aa2c179f9f71cccf23778012d4e9326de}} 
+\index{Stack@{Stack}!pop@{pop}}
+\index{pop@{pop}!Stack@{Stack}}
+\subsubsection{\texorpdfstring{pop()}{pop()}}
+{\footnotesize\ttfamily unsigned char pop (\begin{DoxyParamCaption}\item[{\hyperlink{structStack}{Stack} $\ast$}]{stack }\end{DoxyParamCaption})}
+
+
+
+pops an item from the top of the stack. 
+
+returns the data from the top-\/most stackitem, points the stack pointer to the item below where it was and frees the topmost item.
+
+
+\begin{DoxyParams}{Parameters}
+{\em stack} & the stack from which the data will be popped. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{structStack_a0bd90a5dfacc09f2df0382c269e0236b}\label{structStack_a0bd90a5dfacc09f2df0382c269e0236b}} 
+\index{Stack@{Stack}!push@{push}}
+\index{push@{push}!Stack@{Stack}}
+\subsubsection{\texorpdfstring{push()}{push()}}
+{\footnotesize\ttfamily void push (\begin{DoxyParamCaption}\item[{\hyperlink{structStack}{Stack} $\ast$}]{stack,  }\item[{unsigned char}]{Newdata }\end{DoxyParamCaption})}
+
+
+
+pushes item onto a stack. 
+
+creates a new stackitem which contains the new data and points to the current head of the stack. The stack pointer is then moved to point at the new stackitem.
+
+
+\begin{DoxyParams}{Parameters}
+{\em stack} & the stack that the data will be pushed to. \\
+\hline
+{\em Newdata} & the data that will be pushed to the stack. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{structStack_af7c19f315867ae89b59eb06bb1e6c8bf}\label{structStack_af7c19f315867ae89b59eb06bb1e6c8bf}} 
+\index{Stack@{Stack}!data@{data}}
+\index{data@{data}!Stack@{Stack}}
+\subsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily unsigned char Stack\+::data\mbox{[}\hyperlink{MappingFunctions_8h_a241aeeb764887ae5e3de58b98f04b16d}{W\+I\+D\+TH} $\ast$\hyperlink{MappingFunctions_8h_aed89bd71aee8be823e8a20ec4e093c1e}{H\+E\+I\+G\+HT} $\ast$2\mbox{]}}
+
+data that is stored in the \hyperlink{structStack}{Stack} \mbox{\Hypertarget{structStack_ae9de4145f4aee2664247e585ec86d220}\label{structStack_ae9de4145f4aee2664247e585ec86d220}} 
+\index{Stack@{Stack}!head@{head}}
+\index{head@{head}!Stack@{Stack}}
+\subsubsection{\texorpdfstring{head}{head}}
+{\footnotesize\ttfamily unsigned char Stack\+::head}
+
+head of the \hyperlink{structStack}{Stack} where data is pushed to and popped from 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{Stacks_8h}{Stacks.\+h}\end{DoxyCompactItemize}

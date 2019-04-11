@@ -1,0 +1,144 @@
+\hypertarget{simulator_8c}{}\section{Algorithm/simulator.c File Reference}
+\label{simulator_8c}\index{Algorithm/simulator.\+c@{Algorithm/simulator.\+c}}
+
+
+Display the maze for debugging.  
+
+
+{\ttfamily \#include \char`\"{}simulator.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+Include dependency graph for simulator.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=309pt]{simulator_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{Indent}\textbf{ Maze Actual Simulated Dimensions}\par
+{\em The actual size of the simulated maze.
+
+This section defines sizes that the simulated maze actually is. The maze is used in the read\+Sensors function as all the other functions will refer to the mouses view of the maze. }\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{simulator_8c_abf766f80723946ab81de447490748744}{A\+C\+T\+U\+A\+L\+\_\+\+W\+I\+D\+TH}~6
+\item 
+\#define \hyperlink{simulator_8c_ad6967ee13d58faee6aec23fb7e6494da}{A\+C\+T\+U\+A\+L\+\_\+\+H\+E\+I\+G\+HT}~8
+\end{DoxyCompactItemize}
+\end{Indent}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{simulator_8c_aa5ab68e883f48468965e2864b55f4759}{Wall\+\_\+\+Check} (unsigned char index, unsigned char direction)
+\begin{DoxyCompactList}\small\item\em used to find if a wall is there or not. \end{DoxyCompactList}\item 
+void \hyperlink{simulator_8c_ac6e138e1843b45c00214e66b975b912e}{print\+Status} (\hyperlink{structMouse}{Mouse} $\ast$\hyperlink{MapMaze_8c_a07faa847230d0abd8c3db00e3f8cae7a}{mouse}, \hyperlink{structStack}{Stack} $\ast$openlist, \hyperlink{structNode}{Node} $\ast$nodelist)
+\begin{DoxyCompactList}\small\item\em Print out the maze to stdout. \end{DoxyCompactList}\item 
+void \hyperlink{simulator_8c_a3f607ad9cc68bfb0c710be0893a867e0}{Turn} (int direciton)
+\begin{DoxyCompactList}\small\item\em Turn physical \hyperlink{structMouse}{Mouse}. \end{DoxyCompactList}\item 
+void \hyperlink{simulator_8c_a324b4be9e04c414eda8564c949fed51f}{Fwd\+\_\+\+One\+\_\+\+Cell} (void)
+\begin{DoxyCompactList}\small\item\em Move physical mouse forward one cell. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{simulator_8c_ad9b144f0c677a8f7b2434f4d8b441756}\label{simulator_8c_ad9b144f0c677a8f7b2434f4d8b441756}} 
+void {\bfseries Fast\+\_\+\+Run} (\hyperlink{structStack}{Stack} route, int \hyperlink{IO_8c_a481cb487704fc7f8c8ddc6613aed3785}{speed})
+\item 
+\mbox{\Hypertarget{simulator_8c_abaf2ecf718b0d21a6aa28e54c1951c54}\label{simulator_8c_abaf2ecf718b0d21a6aa28e54c1951c54}} 
+void {\bfseries Fast\+Turn} (int dir)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Display the maze for debugging. 
+
+Adds functionality for the simulator to be used. This will mean that the program can be run without using the physical Micromouse. The functions have the same name as in the non-\/ simulator functions so by defining S\+I\+M\+U\+L\+A\+T\+OR in the main it will run these instead of the actual mouse integratiion funtions.
+
+\begin{DoxyAuthor}{Author}
+Nick Appleton @ U\+WE Robotics
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+22/2/19 
+\end{DoxyDate}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{simulator_8c_ad6967ee13d58faee6aec23fb7e6494da}\label{simulator_8c_ad6967ee13d58faee6aec23fb7e6494da}} 
+\index{simulator.\+c@{simulator.\+c}!A\+C\+T\+U\+A\+L\+\_\+\+H\+E\+I\+G\+HT@{A\+C\+T\+U\+A\+L\+\_\+\+H\+E\+I\+G\+HT}}
+\index{A\+C\+T\+U\+A\+L\+\_\+\+H\+E\+I\+G\+HT@{A\+C\+T\+U\+A\+L\+\_\+\+H\+E\+I\+G\+HT}!simulator.\+c@{simulator.\+c}}
+\subsubsection{\texorpdfstring{A\+C\+T\+U\+A\+L\+\_\+\+H\+E\+I\+G\+HT}{ACTUAL\_HEIGHT}}
+{\footnotesize\ttfamily \#define A\+C\+T\+U\+A\+L\+\_\+\+H\+E\+I\+G\+HT~8}
+
+the Height the simulated maze actually is \mbox{\Hypertarget{simulator_8c_abf766f80723946ab81de447490748744}\label{simulator_8c_abf766f80723946ab81de447490748744}} 
+\index{simulator.\+c@{simulator.\+c}!A\+C\+T\+U\+A\+L\+\_\+\+W\+I\+D\+TH@{A\+C\+T\+U\+A\+L\+\_\+\+W\+I\+D\+TH}}
+\index{A\+C\+T\+U\+A\+L\+\_\+\+W\+I\+D\+TH@{A\+C\+T\+U\+A\+L\+\_\+\+W\+I\+D\+TH}!simulator.\+c@{simulator.\+c}}
+\subsubsection{\texorpdfstring{A\+C\+T\+U\+A\+L\+\_\+\+W\+I\+D\+TH}{ACTUAL\_WIDTH}}
+{\footnotesize\ttfamily \#define A\+C\+T\+U\+A\+L\+\_\+\+W\+I\+D\+TH~6}
+
+the Width the simulated maze actually is 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{simulator_8c_a324b4be9e04c414eda8564c949fed51f}\label{simulator_8c_a324b4be9e04c414eda8564c949fed51f}} 
+\index{simulator.\+c@{simulator.\+c}!Fwd\+\_\+\+One\+\_\+\+Cell@{Fwd\+\_\+\+One\+\_\+\+Cell}}
+\index{Fwd\+\_\+\+One\+\_\+\+Cell@{Fwd\+\_\+\+One\+\_\+\+Cell}!simulator.\+c@{simulator.\+c}}
+\subsubsection{\texorpdfstring{Fwd\+\_\+\+One\+\_\+\+Cell()}{Fwd\_One\_Cell()}}
+{\footnotesize\ttfamily void Fwd\+\_\+\+One\+\_\+\+Cell (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Move physical mouse forward one cell. 
+
+move the mouse forward one cell.
+
+Dummy function as there is no physical mouse to turn. This is a placeholder so that the final program will run correctly on the simulator with minimal changing of code. \mbox{\Hypertarget{simulator_8c_ac6e138e1843b45c00214e66b975b912e}\label{simulator_8c_ac6e138e1843b45c00214e66b975b912e}} 
+\index{simulator.\+c@{simulator.\+c}!print\+Status@{print\+Status}}
+\index{print\+Status@{print\+Status}!simulator.\+c@{simulator.\+c}}
+\subsubsection{\texorpdfstring{print\+Status()}{printStatus()}}
+{\footnotesize\ttfamily void print\+Status (\begin{DoxyParamCaption}\item[{\hyperlink{structMouse}{Mouse} $\ast$}]{mouse,  }\item[{\hyperlink{structStack}{Stack} $\ast$}]{openlist,  }\item[{\hyperlink{structNode}{Node} $\ast$}]{nodelist }\end{DoxyParamCaption})}
+
+
+
+Print out the maze to stdout. 
+
+Prints the maze in it\textquotesingle{}s current state to the standard output, including state of the L\+E\+Ds, position and direction of the mouse and the mouse\textquotesingle{}s model of the maze -\/ this will display the walls and nodes graphically.
+
+
+\begin{DoxyParams}{Parameters}
+{\em mouse} & representation of the mouse to be referenced. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{simulator_8c_a3f607ad9cc68bfb0c710be0893a867e0}\label{simulator_8c_a3f607ad9cc68bfb0c710be0893a867e0}} 
+\index{simulator.\+c@{simulator.\+c}!Turn@{Turn}}
+\index{Turn@{Turn}!simulator.\+c@{simulator.\+c}}
+\subsubsection{\texorpdfstring{Turn()}{Turn()}}
+{\footnotesize\ttfamily void Turn (\begin{DoxyParamCaption}\item[{int}]{direciton }\end{DoxyParamCaption})}
+
+
+
+Turn physical \hyperlink{structMouse}{Mouse}. 
+
+turn the mouse 90 degrees in a given direction.
+
+Dummy function as there is no physical mouse to turn. This is a placeholder so that the final program will run correctly on the simulator with minimal changing of code.
+
+
+\begin{DoxyParams}{Parameters}
+{\em direciton} & Direction to turn. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{simulator_8c_aa5ab68e883f48468965e2864b55f4759}\label{simulator_8c_aa5ab68e883f48468965e2864b55f4759}} 
+\index{simulator.\+c@{simulator.\+c}!Wall\+\_\+\+Check@{Wall\+\_\+\+Check}}
+\index{Wall\+\_\+\+Check@{Wall\+\_\+\+Check}!simulator.\+c@{simulator.\+c}}
+\subsubsection{\texorpdfstring{Wall\+\_\+\+Check()}{Wall\_Check()}}
+{\footnotesize\ttfamily int Wall\+\_\+\+Check (\begin{DoxyParamCaption}\item[{unsigned char}]{index,  }\item[{unsigned char}]{direction }\end{DoxyParamCaption})}
+
+
+
+used to find if a wall is there or not. 
+
+contains the array of the actual maze walls and uses the index and direction of the mouse to determine if there is a wall or not. This is a simulated version of reading the sensor values and passing a 1 or 0 depending on the status of the wall.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & index that the mouse is at within the maze. \\
+\hline
+{\em direction} & direction register of the mouse. \\
+\hline
+\end{DoxyParams}
+Which wall is being checked 

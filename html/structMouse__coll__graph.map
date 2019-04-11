@@ -1,0 +1,5 @@
+<map id="Mouse" name="Mouse">
+<area shape="rect" id="node2" href="$structconnection.html" title="Connection between 2 nodes. " alt="" coords="5,204,123,311"/>
+<area shape="rect" id="node3" href="$structMaze.html" title="Contains the representation of the maze itself. " alt="" coords="186,219,241,296"/>
+<area shape="rect" id="node4" href="$structcell.html" title="All info about a given cell. " alt="" coords="158,5,269,141"/>
+</map>

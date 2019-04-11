@@ -1,28 +1,25 @@
-/**
-*		@file Motors.c
-*		@brief Motor Functions and Defines
-*
-*		@author		Christian Woof @ UWE Robotics
-*
-*/
+/* 
+ * File:   Motors.h
+ * Author: crt2-woof
+ *
+ * Created on 02 April 2019, 19:22
+ */
 
 #ifndef MOTORS_H
 #define	MOTORS_H
 
 #include "../Stacks.h"
 
-/**
- * @brief Encoder Counts
- */
-//@{
-//Linear Movement encoder counts
-//  0.5
+#ifdef	__cplusplus
+extern "C" {
+#endif
 
-#define ML_F0_5 0           //
-#define MR_F0_5 0           //
+#define ML_F0_5 168           
+#define MR_F0_5 168         
 //  1
-#define ML_F1 0             //1
-#define MR_F1 0             //1
+#define ML_F1 335             
+#define MR_F1 335
+
 //  2
 #define ML_F2 1
 #define MR_F2 1
@@ -46,7 +43,7 @@
 #define MR_F8 1
 
 //Stopping velocity curve encoder count
-#define stopEnc 0           //10
+#define stopEnc 30           //10
 #define turnStopEnc 0       //10
 
 //Fast Turning encoder counts
@@ -56,121 +53,85 @@
 #define outer_R 0   //215
 
 //Turning encoder counts
-#define ML_90L  0    //215
-#define MR_90L  0    //215
-#define ML_90R  0    //215
-#define MR_90R  0    //215
-#define ML_180  0    //430
-#define MR_180  0    //430
-//@}
+#define ML_90L  95//118//110   //215
+#define MR_90L  95//118//110    //215
+#define ML_90R  95//110   //215
+#define MR_90R  95//110   //215
+#define ML_180  206//216    //430
+#define MR_180  206//216    //430
 
-/**
- * @brief PWM speed values
- */
-//@{
+//*****************PWM Values*******************
 //Max Linear Movement Motor Speed
-#define MLSpeed 0       //15000
-#define MRSpeed 0       //15000
-#define CreepSpeed 0    //2000
-
+#define MLSpeed 16000   //15000
+#define MRSpeed 16000       //15000
+#define CreepSpeedL 1500//2000    //2000
+#define CreepSpeedR 1550//2000   //2000
+#define CreepSpeed 10000   //2000
 //Turning Speeds for 90 Degrees
-#define MLTurnSpeed 0    //16000
-#define MRTurnSpeed 0    //16000
-
+#define MLTurnSpeed 2000    //16000
+#define MRTurnSpeed 2000    //16000
+//Acceleration Curve Speeds
+#define Acc_R   450
+#define Acc_L   500
 //Turning Speeds for Fast Run
 #define innerSpeed 0    //8000
 #define outerSpeed 0    //16000
 
 //Turning parameter arguments
-#define R90 2
-#define L90 1
+#define L90 2
+#define R90 1
 #define T180 3
-//@}
 
-/**
- * @brief PID controller for moving through the maze.
- * 
- * Checks the sensor and slows down the opposite wheel if needed to keep
- * the mouse in the centre of the maze.
- * 
- * @param close_Sensor_Side     Side which sensor to be checked is on.
- * @return                      how much the opposite wheel needs to slow down by.
- */
-float PID(int close_Sensor_Side);
+//*****************Misc. Definitions*******************
+//Directions
+#define F 1
+#define B -1
 
-/**
- * @brief UART 1 receive interrupt for encoder 1 and programmer.
- */
+//turn Directions
+#define L 1
+#define R 2
+
+//PID Control Gains
+#define Kp 5//6//1.5//20
+#define Ki 1
+#define Kd 0
+#define PosKp 50
+#define PosKi 1
+#define PosKd 5
+    
+    
+//Desired sensor value
+#define Des_Sensor_Val  190
+#define sensor_Threshold 150
+#define Tolerance 10
+#define WallThres 80
+#define upperError 600
+#define lowerError 100
+
+//float PIDPos(int side);
+void PID();
+float PIDPos();
 void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void);
 
-/**
- * @brief UART 2 receive interrupt for encoder 2 and USB interface.
- */
 void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void);
 
-/**
- * @brief accelerate the mouse up to speed, or from speed to static.
- * 
- * @param direction whether accelerating (1) or decelerating (0).
- */
-void Velocity_Curve(unsigned char direction);
-
-/**
- * @brief accelerate or decelerate the mouse for the turns when exploring.
- * 
- * @param direction whether accelerating (1) or decelerating (0).
- */
+void Velocity_Curve(unsigned int direction);
+void reverse(int motor);
 void Turn_Velocity_Curve(unsigned char direction);
 
-/**
- * @brief sets motor directions.
- * 
- * 1 for forward. 0 for stop. -1 for backwards.
- * 
- * @param MLDir     Direction to set left motor to go.
- * @param MRDir     Direction to set right motor to go.
- */
-void M_Dir(int MLDir, int MRDir);
+void M_Dir(int Left, int Right);
 
-/**
- * @brief turn the mouse 90 degrees in a given direction.
- * 
- * Used in the exploring of the maze.
- * @param turn      direction to turn the mouse.
- */
 void Turn(int turn);
-
-/**
- * @brief move the mouse forward the number of cells given.
- * 
- * @param cells     How many cells forward to move.
- */
-void Fwd(int cells);
-
-/**
- * @brief move the mouse forward one cell.
- */
+//void Fwd(int cells);
+void Stop(int dir);
 void Fwd_One_Cell(void);
 
-/**
- * @brief complete a fast run of a stack of instructions.
- * 
- * follows the instructions in the given stack to get from the current location
- * to the destination using the fast move functions. This will be used for the
- * final run.
- *  
- * @param instructions  Stack of instructions to follow to get to the destination.
- * @param speed         Whether it is going full or half speed.
- */
-void Fast_Run(Stack instructions, unsigned char speed);
+void Fast_Run(Stack instructions);
 
-/**
- * @brief make a turn at full speed.
- * 
- * @param dir       Direction to turn.
- */
-void Fast_Turn(unsigned char dir);
 
+#ifdef	__cplusplus
+}
+#endif
 
 #endif	/* MOTORS_H */
 

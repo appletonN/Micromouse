@@ -1,0 +1,75 @@
+\hypertarget{structcell}{}\section{cell Struct Reference}
+\label{structcell}\index{cell@{cell}}
+
+
+All info about a given cell.  
+
+
+
+
+{\ttfamily \#include $<$Mapping\+Functions.\+h$>$}
+
+
+
+Collaboration diagram for cell\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=163pt]{structcell__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \hyperlink{structcell_a9a2929dcb308b9eb30f19cddebcc5c52}{walls}\+: 4
+\item 
+unsigned int \hyperlink{structcell_a8d23cc3f76831a9bcf536b77ba272848}{no\+Of\+Walls}\+: 6
+\item 
+unsigned int \hyperlink{structcell_aefc3f7506ad8c2ad9f31e7d9ba093828}{explored}\+: 1
+\item 
+unsigned int \hyperlink{structcell_aaa0cb97f34f5d696c6d7f2ef154fbfc8}{is\+Node}\+: 1
+\item 
+unsigned char \hyperlink{structcell_a0b372a9239a2ed20cde6edb427069bd8}{node\+Address}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+All info about a given cell. 
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{structcell_aefc3f7506ad8c2ad9f31e7d9ba093828}\label{structcell_aefc3f7506ad8c2ad9f31e7d9ba093828}} 
+\index{cell@{cell}!explored@{explored}}
+\index{explored@{explored}!cell@{cell}}
+\subsubsection{\texorpdfstring{explored}{explored}}
+{\footnotesize\ttfamily unsigned int cell\+::explored}
+
+Marks whether cell has been visited \mbox{\Hypertarget{structcell_aaa0cb97f34f5d696c6d7f2ef154fbfc8}\label{structcell_aaa0cb97f34f5d696c6d7f2ef154fbfc8}} 
+\index{cell@{cell}!is\+Node@{is\+Node}}
+\index{is\+Node@{is\+Node}!cell@{cell}}
+\subsubsection{\texorpdfstring{is\+Node}{isNode}}
+{\footnotesize\ttfamily unsigned int cell\+::is\+Node}
+
+Marks whether cell is a \hyperlink{structNode}{Node} or not \mbox{\Hypertarget{structcell_a0b372a9239a2ed20cde6edb427069bd8}\label{structcell_a0b372a9239a2ed20cde6edb427069bd8}} 
+\index{cell@{cell}!node\+Address@{node\+Address}}
+\index{node\+Address@{node\+Address}!cell@{cell}}
+\subsubsection{\texorpdfstring{node\+Address}{nodeAddress}}
+{\footnotesize\ttfamily unsigned char cell\+::node\+Address}
+
+Index of \hyperlink{structNode}{Node} that references this cell in nodelist \mbox{\Hypertarget{structcell_a8d23cc3f76831a9bcf536b77ba272848}\label{structcell_a8d23cc3f76831a9bcf536b77ba272848}} 
+\index{cell@{cell}!no\+Of\+Walls@{no\+Of\+Walls}}
+\index{no\+Of\+Walls@{no\+Of\+Walls}!cell@{cell}}
+\subsubsection{\texorpdfstring{no\+Of\+Walls}{noOfWalls}}
+{\footnotesize\ttfamily unsigned int cell\+::no\+Of\+Walls}
+
+Number of walls of cell. can never be more than 4 \mbox{\Hypertarget{structcell_a9a2929dcb308b9eb30f19cddebcc5c52}\label{structcell_a9a2929dcb308b9eb30f19cddebcc5c52}} 
+\index{cell@{cell}!walls@{walls}}
+\index{walls@{walls}!cell@{cell}}
+\subsubsection{\texorpdfstring{walls}{walls}}
+{\footnotesize\ttfamily unsigned int cell\+::walls}
+
+Layout of walls; 1 denotes a wall, 0 is no wall. bit-\/order is N$>$E$>$S$>$W 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Algorithm/\hyperlink{MappingFunctions_8h}{Mapping\+Functions.\+h}\end{DoxyCompactItemize}

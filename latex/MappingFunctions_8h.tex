@@ -1,0 +1,169 @@
+\hypertarget{MappingFunctions_8h}{}\section{Algorithm/\+Mapping\+Functions.h File Reference}
+\label{MappingFunctions_8h}\index{Algorithm/\+Mapping\+Functions.\+h@{Algorithm/\+Mapping\+Functions.\+h}}
+
+
+contains all functions, structures and data types used by most files.  
+
+
+{\ttfamily \#include \char`\"{}../\+Stacks.\+h\char`\"{}}\newline
+Include dependency graph for Mapping\+Functions.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{MappingFunctions_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{MappingFunctions_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structconnection}{connection}
+\begin{DoxyCompactList}\small\item\em Connection between 2 nodes. \end{DoxyCompactList}\item 
+struct \hyperlink{structNode}{Node}
+\begin{DoxyCompactList}\small\item\em All info about a given \hyperlink{structNode}{Node}. \end{DoxyCompactList}\item 
+struct \hyperlink{structcell}{cell}
+\begin{DoxyCompactList}\small\item\em All info about a given cell. \end{DoxyCompactList}\item 
+struct \hyperlink{structMaze}{Maze}
+\begin{DoxyCompactList}\small\item\em Contains the representation of the maze itself. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{MappingFunctions_8h_abd2aacdca9cb2a1a30f3392256b96ea3}{M\+A\+X\+\_\+\+N\+O\+D\+ES}~22
+\begin{DoxyCompactList}\small\item\em maximum number of Nodes that can be stored. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{Indent}\textbf{ Maze Max Dimensions}\par
+{\em The maximum dimensions the maze can be.
+
+This section will determine the size of most of the arrays and so should be set to the smallest values that will definitely contain the entire maze. If it is set to small then the mouse will not explore the whole maze. }\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{MappingFunctions_8h_a241aeeb764887ae5e3de58b98f04b16d}{W\+I\+D\+TH}~6
+\item 
+\#define \hyperlink{MappingFunctions_8h_aed89bd71aee8be823e8a20ec4e093c1e}{H\+E\+I\+G\+HT}~8
+\item 
+\#define \hyperlink{MappingFunctions_8h_a566d2490ad1a61a7a3079a6206c34bd9}{M\+A\+X\+\_\+\+D\+I\+M\+E\+N\+S\+I\+O\+NS}
+\end{DoxyCompactItemize}
+\end{Indent}
+\textbf{ }\par
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{MappingFunctions_8h_ab9a3c000d08d7bc3809090b0d91e6d15}\label{MappingFunctions_8h_ab9a3c000d08d7bc3809090b0d91e6d15}} 
+\#define \hyperlink{MappingFunctions_8h_ab9a3c000d08d7bc3809090b0d91e6d15}{T\+U\+R\+N\+\_\+\+C\+O\+ST}~3
+\begin{DoxyCompactList}\small\item\em cost of the movements between Nodes. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{MappingFunctions_8h_ade770e395ba7136d47f13089d9ecfdf8}\label{MappingFunctions_8h_ade770e395ba7136d47f13089d9ecfdf8}} 
+\#define {\bfseries S\+T\+R\+A\+I\+G\+H\+T\+\_\+\+C\+O\+ST}~1
+\end{DoxyCompactItemize}
+
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{MappingFunctions_8h_a0466fc5f1bc9e6de776e48149b19c471}\label{MappingFunctions_8h_a0466fc5f1bc9e6de776e48149b19c471}} 
+typedef struct \hyperlink{structNode}{Node} \hyperlink{MappingFunctions_8h_a0466fc5f1bc9e6de776e48149b19c471}{Node}
+\begin{DoxyCompactList}\small\item\em All info about a given \hyperlink{structNode}{Node}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{MappingFunctions_8h_a7d3e730b07d2c8df607a2e561d1911ce}\label{MappingFunctions_8h_a7d3e730b07d2c8df607a2e561d1911ce}} 
+typedef struct \hyperlink{structcell}{cell} \hyperlink{MappingFunctions_8h_a7d3e730b07d2c8df607a2e561d1911ce}{cell}
+\begin{DoxyCompactList}\small\item\em All info about a given cell. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+unsigned char \hyperlink{MappingFunctions_8h_ab1cb7abf977587694dab1ef4c39de52f}{turn} (unsigned char N, unsigned char dir)
+\begin{DoxyCompactList}\small\item\em Turn the right mouse within the virtual maze. \end{DoxyCompactList}\item 
+unsigned char \hyperlink{MappingFunctions_8h_ac9d82259600ca30aa33430d3ae345533}{increment\+Index} (unsigned char index, unsigned char dir)
+\begin{DoxyCompactList}\small\item\em Changes the index of the mouse to move into an adjacent cell. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains all functions, structures and data types used by most files. 
+
+Functions are used throughout the program, mostly to edit the maze information. Structures that are used to store info about the maze are defined in this header so can be accessed from any file that includes it. This will be necessary for almost all navigating of the maze.
+
+\begin{DoxyAuthor}{Author}
+Nick Appleton @ U\+WE Robotics
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+21/2/19 
+\end{DoxyDate}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{MappingFunctions_8h_aed89bd71aee8be823e8a20ec4e093c1e}\label{MappingFunctions_8h_aed89bd71aee8be823e8a20ec4e093c1e}} 
+\index{Mapping\+Functions.\+h@{Mapping\+Functions.\+h}!H\+E\+I\+G\+HT@{H\+E\+I\+G\+HT}}
+\index{H\+E\+I\+G\+HT@{H\+E\+I\+G\+HT}!Mapping\+Functions.\+h@{Mapping\+Functions.\+h}}
+\subsubsection{\texorpdfstring{H\+E\+I\+G\+HT}{HEIGHT}}
+{\footnotesize\ttfamily \#define H\+E\+I\+G\+HT~8}
+
+height of the maze to be solved. If maze height is not known, set as largest value maze width that could occour. \mbox{\Hypertarget{MappingFunctions_8h_a566d2490ad1a61a7a3079a6206c34bd9}\label{MappingFunctions_8h_a566d2490ad1a61a7a3079a6206c34bd9}} 
+\index{Mapping\+Functions.\+h@{Mapping\+Functions.\+h}!M\+A\+X\+\_\+\+D\+I\+M\+E\+N\+S\+I\+O\+NS@{M\+A\+X\+\_\+\+D\+I\+M\+E\+N\+S\+I\+O\+NS}}
+\index{M\+A\+X\+\_\+\+D\+I\+M\+E\+N\+S\+I\+O\+NS@{M\+A\+X\+\_\+\+D\+I\+M\+E\+N\+S\+I\+O\+NS}!Mapping\+Functions.\+h@{Mapping\+Functions.\+h}}
+\subsubsection{\texorpdfstring{M\+A\+X\+\_\+\+D\+I\+M\+E\+N\+S\+I\+O\+NS}{MAX\_DIMENSIONS}}
+{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+D\+I\+M\+E\+N\+S\+I\+O\+NS}
+
+marker to check if dimensions already defined. \mbox{\Hypertarget{MappingFunctions_8h_abd2aacdca9cb2a1a30f3392256b96ea3}\label{MappingFunctions_8h_abd2aacdca9cb2a1a30f3392256b96ea3}} 
+\index{Mapping\+Functions.\+h@{Mapping\+Functions.\+h}!M\+A\+X\+\_\+\+N\+O\+D\+ES@{M\+A\+X\+\_\+\+N\+O\+D\+ES}}
+\index{M\+A\+X\+\_\+\+N\+O\+D\+ES@{M\+A\+X\+\_\+\+N\+O\+D\+ES}!Mapping\+Functions.\+h@{Mapping\+Functions.\+h}}
+\subsubsection{\texorpdfstring{M\+A\+X\+\_\+\+N\+O\+D\+ES}{MAX\_NODES}}
+{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+N\+O\+D\+ES~22}
+
+
+
+maximum number of Nodes that can be stored. 
+
+describes the amount of memory needed to store the list of Nodes. Will not be able to store more Nodes than this. \mbox{\Hypertarget{MappingFunctions_8h_a241aeeb764887ae5e3de58b98f04b16d}\label{MappingFunctions_8h_a241aeeb764887ae5e3de58b98f04b16d}} 
+\index{Mapping\+Functions.\+h@{Mapping\+Functions.\+h}!W\+I\+D\+TH@{W\+I\+D\+TH}}
+\index{W\+I\+D\+TH@{W\+I\+D\+TH}!Mapping\+Functions.\+h@{Mapping\+Functions.\+h}}
+\subsubsection{\texorpdfstring{W\+I\+D\+TH}{WIDTH}}
+{\footnotesize\ttfamily \#define W\+I\+D\+TH~6}
+
+Width of the maze to be solved. If maze width is not known, set as largest value maze width that could occour. 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{MappingFunctions_8h_ac9d82259600ca30aa33430d3ae345533}\label{MappingFunctions_8h_ac9d82259600ca30aa33430d3ae345533}} 
+\index{Mapping\+Functions.\+h@{Mapping\+Functions.\+h}!increment\+Index@{increment\+Index}}
+\index{increment\+Index@{increment\+Index}!Mapping\+Functions.\+h@{Mapping\+Functions.\+h}}
+\subsubsection{\texorpdfstring{increment\+Index()}{incrementIndex()}}
+{\footnotesize\ttfamily unsigned char increment\+Index (\begin{DoxyParamCaption}\item[{unsigned char}]{index,  }\item[{unsigned char}]{dir }\end{DoxyParamCaption})}
+
+
+
+Changes the index of the mouse to move into an adjacent cell. 
+
+looks at the direction the mouse is facing and changes the index by the right amount to move the mouse into the adjacent cell in that direction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & index to be incremented. \\
+\hline
+{\em dir} & direction to move into. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the index having been incremented into the adjacent cell. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{MappingFunctions_8h_ab1cb7abf977587694dab1ef4c39de52f}\label{MappingFunctions_8h_ab1cb7abf977587694dab1ef4c39de52f}} 
+\index{Mapping\+Functions.\+h@{Mapping\+Functions.\+h}!turn@{turn}}
+\index{turn@{turn}!Mapping\+Functions.\+h@{Mapping\+Functions.\+h}}
+\subsubsection{\texorpdfstring{turn()}{turn()}}
+{\footnotesize\ttfamily unsigned char turn (\begin{DoxyParamCaption}\item[{unsigned char}]{N,  }\item[{unsigned char}]{dir }\end{DoxyParamCaption})}
+
+
+
+Turn the right mouse within the virtual maze. 
+
+Bitshifts the direction register of the mouse right by N places. Also corrects for if the 1 bit falls off the end of the register.
+
+
+\begin{DoxyParams}{Parameters}
+{\em N} & Number of turns to make. \\
+\hline
+{\em dir} & Current direction to be turned. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New direction after turning 
+\end{DoxyReturn}

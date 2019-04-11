@@ -1,0 +1,92 @@
+\hypertarget{Dijekstra_8h}{}\section{Algorithm/\+Dijekstra.h File Reference}
+\label{Dijekstra_8h}\index{Algorithm/\+Dijekstra.\+h@{Algorithm/\+Dijekstra.\+h}}
+
+
+dijekstra\textquotesingle{}s function and cocktail sort.  
+
+
+{\ttfamily \#include \char`\"{}Mapping\+Functions.\+h\char`\"{}}\newline
+Include dependency graph for Dijekstra.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=188pt]{Dijekstra_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{Dijekstra_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structStack}{Stack} \hyperlink{Dijekstra_8h_ae4cdc18ed3a8514e0412e0d455f8feeb}{dijekstra} (struct \hyperlink{structMaze}{Maze} $\ast$maze, \hyperlink{structNode}{Node} nodemap\mbox{[}\hyperlink{MappingFunctions_8h_abd2aacdca9cb2a1a30f3392256b96ea3}{M\+A\+X\+\_\+\+N\+O\+D\+ES}\mbox{]}, \hyperlink{structNode}{Node} $\ast$start, \hyperlink{structNode}{Node} $\ast$end, char startdir)
+\begin{DoxyCompactList}\small\item\em Find fastest route between 2 Nodes. \end{DoxyCompactList}\item 
+void \hyperlink{Dijekstra_8h_a6fa19831b9a69465e0810ca738d984c2}{cocktail} (\hyperlink{structNode}{Node} $\ast$arr\mbox{[}\hyperlink{MappingFunctions_8h_abd2aacdca9cb2a1a30f3392256b96ea3}{M\+A\+X\+\_\+\+N\+O\+D\+ES}\mbox{]})
+\begin{DoxyCompactList}\small\item\em cocktail sorts given array. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+dijekstra\textquotesingle{}s function and cocktail sort. 
+
+Cocktail sort is used to order the priority queue after each time a \hyperlink{structNode}{Node} has finished being checked by the dijekstra\textquotesingle{}s function.
+
+\begin{DoxyAuthor}{Author}
+Nick Appleton @ U\+WE Robotics
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+16/3/19 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{Dijekstra_8h_a6fa19831b9a69465e0810ca738d984c2}\label{Dijekstra_8h_a6fa19831b9a69465e0810ca738d984c2}} 
+\index{Dijekstra.\+h@{Dijekstra.\+h}!cocktail@{cocktail}}
+\index{cocktail@{cocktail}!Dijekstra.\+h@{Dijekstra.\+h}}
+\subsubsection{\texorpdfstring{cocktail()}{cocktail()}}
+{\footnotesize\ttfamily void cocktail (\begin{DoxyParamCaption}\item[{\hyperlink{structNode}{Node} $\ast$}]{arr\mbox{[}\+M\+A\+X\+\_\+\+N\+O\+D\+E\+S\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+cocktail sorts given array. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em arr} & array to be sorted \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{Dijekstra_8h_ae4cdc18ed3a8514e0412e0d455f8feeb}\label{Dijekstra_8h_ae4cdc18ed3a8514e0412e0d455f8feeb}} 
+\index{Dijekstra.\+h@{Dijekstra.\+h}!dijekstra@{dijekstra}}
+\index{dijekstra@{dijekstra}!Dijekstra.\+h@{Dijekstra.\+h}}
+\subsubsection{\texorpdfstring{dijekstra()}{dijekstra()}}
+{\footnotesize\ttfamily \hyperlink{structStack}{Stack} dijekstra (\begin{DoxyParamCaption}\item[{struct \hyperlink{structMaze}{Maze} $\ast$}]{maze,  }\item[{\hyperlink{structNode}{Node}}]{nodemap\mbox{[}\+M\+A\+X\+\_\+\+N\+O\+D\+E\+S\mbox{]},  }\item[{\hyperlink{structNode}{Node} $\ast$}]{start,  }\item[{\hyperlink{structNode}{Node} $\ast$}]{end,  }\item[{char}]{startdir }\end{DoxyParamCaption})}
+
+
+
+Find fastest route between 2 Nodes. 
+
+Uses dijekstra\textquotesingle{}s algorithm to find the shortest route thorugh the Nodemap. It routes through the maze, pushing each move that needs to be made to a stack. This stack is then returned.
+
+The stack\textquotesingle{}s format is\+: initial on-\/the-\/spot turn to face the correct direction, then it has the initial forward move (or 0 if there isn\textquotesingle{}t one). From there it alternates between each forward move and each turn required to get into the next cell. The turns include the move into the Next cell. Last item in stack is a straight, moves into the end \hyperlink{structNode}{Node} cell.
+
+
+\begin{DoxyParams}{Parameters}
+{\em maze} & maze to search through \\
+\hline
+{\em nodemap} & nodemap of the maze given \\
+\hline
+{\em start} & location of the \hyperlink{structNode}{Node} to start from \\
+\hline
+{\em end} & location of the \hyperlink{structNode}{Node} to get to \\
+\hline
+{\em startdir} & direction the mouse is facing at the start \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+satck of moves to get from start to finish 
+\end{DoxyReturn}

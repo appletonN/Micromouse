@@ -1,0 +1,317 @@
+\hypertarget{MapMaze_8c}{}\section{Algorithm/\+Map\+Maze.c File Reference}
+\label{MapMaze_8c}\index{Algorithm/\+Map\+Maze.\+c@{Algorithm/\+Map\+Maze.\+c}}
+
+
+Fully maps the maze.  
+
+
+{\ttfamily \#include \char`\"{}simulator.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Map\+Maze.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Dijekstra.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+Include dependency graph for Map\+Maze.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{MapMaze_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\textbf{ }\par
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{MapMaze_8c_ad8a5d8c4e3342fb668142df792e93f38}{S\+I\+M\+U\+L\+A\+T\+OR}~1
+\begin{DoxyCompactList}\small\item\em Use simulator or \hyperlink{structMouse}{Mouse}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{MapMaze_8c_a56582780c29894e5424db2aa1eb5ee20}{mapmaze} (struct \hyperlink{structMaze}{Maze} $\ast$maze\+Arg, \hyperlink{structNode}{Node} $\ast$nodelist)
+\begin{DoxyCompactList}\small\item\em main maze-\/mapping function. \end{DoxyCompactList}\item 
+void \hyperlink{MapMaze_8c_ac2634689289c7d3e68fcbe252e5cc7f3}{Setup\+Mapping} (\hyperlink{structStack}{Stack} $\ast$openlist, \hyperlink{structNode}{Node} $\ast$nodelist)
+\begin{DoxyCompactList}\small\item\em sets up the mouse ready to map out the maze. \end{DoxyCompactList}\item 
+unsigned char \hyperlink{MapMaze_8c_a986e541ab618881448b4b0598b56231f}{create\+Node} (unsigned char index, \hyperlink{structNode}{Node} $\ast$nodelist)
+\begin{DoxyCompactList}\small\item\em creates a new node. \end{DoxyCompactList}\item 
+void \hyperlink{MapMaze_8c_a6d8e855069513377f892eb0df781ba1e}{checkcurrentcell} (\hyperlink{structStack}{Stack} $\ast$openlist, \hyperlink{structNode}{Node} $\ast$nodelist, \hyperlink{structStack}{Stack} $\ast$history)
+\begin{DoxyCompactList}\small\item\em updates info on the cell currently occupied. \end{DoxyCompactList}\item 
+void \hyperlink{MapMaze_8c_a4ddfd0bcc7e064d6a5093be6a3911cc9}{Connect\+Nodes} (\hyperlink{structNode}{Node} $\ast$nodelist, unsigned char dir)
+\begin{DoxyCompactList}\small\item\em Connects the parent node to the current cell. \end{DoxyCompactList}\item 
+void \hyperlink{MapMaze_8c_a44cea4dfa361e85c137fb8acf0a7687f}{Explore\+New\+Cell} (\hyperlink{structStack}{Stack} $\ast$openlist, \hyperlink{structStack}{Stack} $\ast$history, \hyperlink{structNode}{Node} $\ast$nodelist)
+\begin{DoxyCompactList}\small\item\em Used to get to new areas. \end{DoxyCompactList}\item 
+unsigned char \hyperlink{MapMaze_8c_a3b66563016c1681b10fc776de488ad79}{identify\+Direction} (unsigned char target)
+\begin{DoxyCompactList}\small\item\em identify in which direction a cell is. \end{DoxyCompactList}\item 
+void \hyperlink{MapMaze_8c_a2e0744c820e2dfb79f035fc4ab09517e}{move\+To\+Adjacent\+Cell} (unsigned char direction)
+\begin{DoxyCompactList}\small\item\em move mouse into an adjacent cell in the direction given. \end{DoxyCompactList}\item 
+void \hyperlink{MapMaze_8c_a53ecd9bd5b6f7445b0e66e89e3263178}{virtual\+Mouse} (\hyperlink{structNode}{Node} $\ast$nodelist)
+\begin{DoxyCompactList}\small\item\em corrects any known but unexplored dead-\/ends. \end{DoxyCompactList}\item 
+void \hyperlink{MapMaze_8c_a960e470045bed71f16ce4ff8a6614f0b}{V\+Mcheck} (unsigned char index, \hyperlink{structNode}{Node} $\ast$nodelist)
+\begin{DoxyCompactList}\small\item\em checks one cell for dead end and corrects it. \end{DoxyCompactList}\item 
+void \hyperlink{MapMaze_8c_a1edcad7e629303c8f8a47ce88a69463f}{Destroy\+Node} (\hyperlink{structNode}{Node} $\ast$nodelist, unsigned char index)
+\begin{DoxyCompactList}\small\item\em destroy a given \hyperlink{structNode}{Node}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{MapMaze_8c_a07faa847230d0abd8c3db00e3f8cae7a}\label{MapMaze_8c_a07faa847230d0abd8c3db00e3f8cae7a}} 
+\hyperlink{structMouse}{Mouse} \hyperlink{MapMaze_8c_a07faa847230d0abd8c3db00e3f8cae7a}{mouse}
+\begin{DoxyCompactList}\small\item\em global representation of the mouse used by every function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Fully maps the maze. 
+
+Maps the full maze including placing nodes and finding the connections between those Nodes.
+
+\begin{DoxyAuthor}{Author}
+Nick Appleton @ U\+WE Robotics
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+24/2/19 
+\end{DoxyDate}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{MapMaze_8c_ad8a5d8c4e3342fb668142df792e93f38}\label{MapMaze_8c_ad8a5d8c4e3342fb668142df792e93f38}} 
+\index{Map\+Maze.\+c@{Map\+Maze.\+c}!S\+I\+M\+U\+L\+A\+T\+OR@{S\+I\+M\+U\+L\+A\+T\+OR}}
+\index{S\+I\+M\+U\+L\+A\+T\+OR@{S\+I\+M\+U\+L\+A\+T\+OR}!Map\+Maze.\+c@{Map\+Maze.\+c}}
+\subsubsection{\texorpdfstring{S\+I\+M\+U\+L\+A\+T\+OR}{SIMULATOR}}
+{\footnotesize\ttfamily \#define S\+I\+M\+U\+L\+A\+T\+OR~1}
+
+
+
+Use simulator or \hyperlink{structMouse}{Mouse}. 
+
+If the variable is set to 1, the simulator will be used. Otherwise the target will be the actual mouse. 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{MapMaze_8c_a6d8e855069513377f892eb0df781ba1e}\label{MapMaze_8c_a6d8e855069513377f892eb0df781ba1e}} 
+\index{Map\+Maze.\+c@{Map\+Maze.\+c}!checkcurrentcell@{checkcurrentcell}}
+\index{checkcurrentcell@{checkcurrentcell}!Map\+Maze.\+c@{Map\+Maze.\+c}}
+\subsubsection{\texorpdfstring{checkcurrentcell()}{checkcurrentcell()}}
+{\footnotesize\ttfamily void checkcurrentcell (\begin{DoxyParamCaption}\item[{\hyperlink{structStack}{Stack} $\ast$}]{openlist,  }\item[{\hyperlink{structNode}{Node} $\ast$}]{nodelist,  }\item[{\hyperlink{structStack}{Stack} $\ast$}]{history }\end{DoxyParamCaption})}
+
+
+
+updates info on the cell currently occupied. 
+
+This includes correcting all the walls in the current cell and all adjacent cells, adding unexplored adjacent cells to the openlist and changing the cells properties to reflect it\textquotesingle{}s status (it\textquotesingle{}s now been explored).
+
+
+\begin{DoxyImageNoCaption}
+  \mbox{\includegraphics[width=\textwidth,height=\textheight/2,keepaspectratio=true]{inline_umlgraph_2}}
+\end{DoxyImageNoCaption}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em openlist} & The stack of cells to be explored. \\
+\hline
+{\em nodelist} & list of all the Nodes in the maze. \\
+\hline
+{\em history} & stack of the cells which were visited by the mouse. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{MapMaze_8c_a4ddfd0bcc7e064d6a5093be6a3911cc9}\label{MapMaze_8c_a4ddfd0bcc7e064d6a5093be6a3911cc9}} 
+\index{Map\+Maze.\+c@{Map\+Maze.\+c}!Connect\+Nodes@{Connect\+Nodes}}
+\index{Connect\+Nodes@{Connect\+Nodes}!Map\+Maze.\+c@{Map\+Maze.\+c}}
+\subsubsection{\texorpdfstring{Connect\+Nodes()}{ConnectNodes()}}
+{\footnotesize\ttfamily void Connect\+Nodes (\begin{DoxyParamCaption}\item[{\hyperlink{structNode}{Node} $\ast$}]{nodelist,  }\item[{unsigned char}]{dir }\end{DoxyParamCaption})}
+
+
+
+Connects the parent node to the current cell. 
+
+Adds a connection to the parent \hyperlink{structNode}{Node} to the current cell, also adds the connection back from current cell to parent \hyperlink{structNode}{Node}. If the current cell is not a \hyperlink{structNode}{Node}, it creates a new node to use.
+
+
+\begin{DoxyParams}{Parameters}
+{\em nodelist} & List of all the Nodes in the maze. \\
+\hline
+{\em dir} & direction in which the mouse entered the cell to be connected to the parent. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{MapMaze_8c_a986e541ab618881448b4b0598b56231f}\label{MapMaze_8c_a986e541ab618881448b4b0598b56231f}} 
+\index{Map\+Maze.\+c@{Map\+Maze.\+c}!create\+Node@{create\+Node}}
+\index{create\+Node@{create\+Node}!Map\+Maze.\+c@{Map\+Maze.\+c}}
+\subsubsection{\texorpdfstring{create\+Node()}{createNode()}}
+{\footnotesize\ttfamily unsigned char create\+Node (\begin{DoxyParamCaption}\item[{unsigned char}]{index,  }\item[{\hyperlink{structNode}{Node} $\ast$}]{nodelist }\end{DoxyParamCaption})}
+
+
+
+creates a new node. 
+
+Initialises all the \hyperlink{structNode}{Node} variables, sets the cell at the correct index to a node and adds a pointer to the new node.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & index at which the new \hyperlink{structNode}{Node} is to be created. \\
+\hline
+{\em nodelist} & List of all the Nodes in the maze. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a pointer to the newly created node. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{MapMaze_8c_a1edcad7e629303c8f8a47ce88a69463f}\label{MapMaze_8c_a1edcad7e629303c8f8a47ce88a69463f}} 
+\index{Map\+Maze.\+c@{Map\+Maze.\+c}!Destroy\+Node@{Destroy\+Node}}
+\index{Destroy\+Node@{Destroy\+Node}!Map\+Maze.\+c@{Map\+Maze.\+c}}
+\subsubsection{\texorpdfstring{Destroy\+Node()}{DestroyNode()}}
+{\footnotesize\ttfamily void Destroy\+Node (\begin{DoxyParamCaption}\item[{\hyperlink{structNode}{Node} $\ast$}]{nodelist,  }\item[{unsigned char}]{index }\end{DoxyParamCaption})}
+
+
+
+destroy a given \hyperlink{structNode}{Node}. 
+
+Removes \hyperlink{structNode}{Node} from nodelist by setting the distance\+To\+Start as 0.
+
+
+\begin{DoxyParams}{Parameters}
+{\em nodelist} & List of all Nodes in the maze. \\
+\hline
+{\em index} & index where the \hyperlink{structNode}{Node} to be destroyed is. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{MapMaze_8c_a44cea4dfa361e85c137fb8acf0a7687f}\label{MapMaze_8c_a44cea4dfa361e85c137fb8acf0a7687f}} 
+\index{Map\+Maze.\+c@{Map\+Maze.\+c}!Explore\+New\+Cell@{Explore\+New\+Cell}}
+\index{Explore\+New\+Cell@{Explore\+New\+Cell}!Map\+Maze.\+c@{Map\+Maze.\+c}}
+\subsubsection{\texorpdfstring{Explore\+New\+Cell()}{ExploreNewCell()}}
+{\footnotesize\ttfamily void Explore\+New\+Cell (\begin{DoxyParamCaption}\item[{\hyperlink{structStack}{Stack} $\ast$}]{openlist,  }\item[{\hyperlink{structStack}{Stack} $\ast$}]{history,  }\item[{\hyperlink{structNode}{Node} $\ast$}]{nodelist }\end{DoxyParamCaption})}
+
+
+
+Used to get to new areas. 
+
+Pops the first item from the openlist and explores the cell at that index. If the cell is not accessible from the current cell, then it backtracks until it finds it.
+
+
+\begin{DoxyImageNoCaption}
+  \mbox{\includegraphics[width=\textwidth,height=\textheight/2,keepaspectratio=true]{inline_umlgraph_4}}
+\end{DoxyImageNoCaption}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em openlist} & The stack of cells to be explored. \\
+\hline
+{\em history} & stack of all the places visited by the mouse \\
+\hline
+{\em nodelist} & List of all the Nodes in the maze. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{MapMaze_8c_a3b66563016c1681b10fc776de488ad79}\label{MapMaze_8c_a3b66563016c1681b10fc776de488ad79}} 
+\index{Map\+Maze.\+c@{Map\+Maze.\+c}!identify\+Direction@{identify\+Direction}}
+\index{identify\+Direction@{identify\+Direction}!Map\+Maze.\+c@{Map\+Maze.\+c}}
+\subsubsection{\texorpdfstring{identify\+Direction()}{identifyDirection()}}
+{\footnotesize\ttfamily unsigned char identify\+Direction (\begin{DoxyParamCaption}\item[{unsigned char}]{target }\end{DoxyParamCaption})}
+
+
+
+identify in which direction a cell is. 
+
+Identifies which direction an adjacent cell is in, if the target cell is not adjacent, then 0 is returned.
+
+
+\begin{DoxyParams}{Parameters}
+{\em target} & the cell that the mouse is trying to get to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the direction of the adjacent cell. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{MapMaze_8c_a56582780c29894e5424db2aa1eb5ee20}\label{MapMaze_8c_a56582780c29894e5424db2aa1eb5ee20}} 
+\index{Map\+Maze.\+c@{Map\+Maze.\+c}!mapmaze@{mapmaze}}
+\index{mapmaze@{mapmaze}!Map\+Maze.\+c@{Map\+Maze.\+c}}
+\subsubsection{\texorpdfstring{mapmaze()}{mapmaze()}}
+{\footnotesize\ttfamily void mapmaze (\begin{DoxyParamCaption}\item[{struct \hyperlink{structMaze}{Maze} $\ast$}]{maze\+Arg,  }\item[{\hyperlink{structNode}{Node} $\ast$}]{nodelist }\end{DoxyParamCaption})}
+
+
+
+main maze-\/mapping function. 
+
+calls all the other functions to map out the whole reachable maze.
+
+
+\begin{DoxyImageNoCaption}
+  \mbox{\includegraphics[width=\textwidth,height=\textheight/2,keepaspectratio=true]{inline_umlgraph_6}}
+\end{DoxyImageNoCaption}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em maze\+Arg} & pointer to the maze that will be populated by the mouse. \\
+\hline
+{\em nodelist} & list of all the Nodes in the maze. can be considered the Nodemap. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the index of the \hyperlink{structNode}{Node} the mouse is currently at in the nodelist 
+\end{DoxyReturn}
+\mbox{\Hypertarget{MapMaze_8c_a2e0744c820e2dfb79f035fc4ab09517e}\label{MapMaze_8c_a2e0744c820e2dfb79f035fc4ab09517e}} 
+\index{Map\+Maze.\+c@{Map\+Maze.\+c}!move\+To\+Adjacent\+Cell@{move\+To\+Adjacent\+Cell}}
+\index{move\+To\+Adjacent\+Cell@{move\+To\+Adjacent\+Cell}!Map\+Maze.\+c@{Map\+Maze.\+c}}
+\subsubsection{\texorpdfstring{move\+To\+Adjacent\+Cell()}{moveToAdjacentCell()}}
+{\footnotesize\ttfamily void move\+To\+Adjacent\+Cell (\begin{DoxyParamCaption}\item[{unsigned char}]{direction }\end{DoxyParamCaption})}
+
+
+
+move mouse into an adjacent cell in the direction given. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em direction} & the direction in which the adjacent cell is. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{MapMaze_8c_ac2634689289c7d3e68fcbe252e5cc7f3}\label{MapMaze_8c_ac2634689289c7d3e68fcbe252e5cc7f3}} 
+\index{Map\+Maze.\+c@{Map\+Maze.\+c}!Setup\+Mapping@{Setup\+Mapping}}
+\index{Setup\+Mapping@{Setup\+Mapping}!Map\+Maze.\+c@{Map\+Maze.\+c}}
+\subsubsection{\texorpdfstring{Setup\+Mapping()}{SetupMapping()}}
+{\footnotesize\ttfamily void Setup\+Mapping (\begin{DoxyParamCaption}\item[{\hyperlink{structStack}{Stack} $\ast$}]{openlist,  }\item[{\hyperlink{structNode}{Node} $\ast$}]{nodelist }\end{DoxyParamCaption})}
+
+
+
+sets up the mouse ready to map out the maze. 
+
+Initialises the mouse\textquotesingle{}s maze model as all 0s with a border of 1s. Sets the mouse\textquotesingle{}s index to 0 and direction to 0b1000 (North). Creates the start \hyperlink{structNode}{Node} and seets it as the parent node.
+
+
+\begin{DoxyParams}{Parameters}
+{\em openlist} & lise \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{MapMaze_8c_a53ecd9bd5b6f7445b0e66e89e3263178}\label{MapMaze_8c_a53ecd9bd5b6f7445b0e66e89e3263178}} 
+\index{Map\+Maze.\+c@{Map\+Maze.\+c}!virtual\+Mouse@{virtual\+Mouse}}
+\index{virtual\+Mouse@{virtual\+Mouse}!Map\+Maze.\+c@{Map\+Maze.\+c}}
+\subsubsection{\texorpdfstring{virtual\+Mouse()}{virtualMouse()}}
+{\footnotesize\ttfamily void virtual\+Mouse (\begin{DoxyParamCaption}\item[{\hyperlink{structNode}{Node} $\ast$}]{nodelist }\end{DoxyParamCaption})}
+
+
+
+corrects any known but unexplored dead-\/ends. 
+
+Checks every cell in the maze, if the cell is unexplored and has 3 walls, then it will mark the cell as explored. This will get the cell removed from the openlist during the mapmaze function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em nodelist} & List of all the Nodes in the maze. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{MapMaze_8c_a960e470045bed71f16ce4ff8a6614f0b}\label{MapMaze_8c_a960e470045bed71f16ce4ff8a6614f0b}} 
+\index{Map\+Maze.\+c@{Map\+Maze.\+c}!V\+Mcheck@{V\+Mcheck}}
+\index{V\+Mcheck@{V\+Mcheck}!Map\+Maze.\+c@{Map\+Maze.\+c}}
+\subsubsection{\texorpdfstring{V\+Mcheck()}{VMcheck()}}
+{\footnotesize\ttfamily void V\+Mcheck (\begin{DoxyParamCaption}\item[{unsigned char}]{index,  }\item[{\hyperlink{structNode}{Node} $\ast$}]{nodelist }\end{DoxyParamCaption})}
+
+
+
+checks one cell for dead end and corrects it. 
+
+checks if cell is dead end by looking at wall pattern. If it is, it sets all the walls to 1, moves into the cell that connects to it and runs the check on that cell too. This means the \char`\"{}virtual mouse\char`\"{} will move back through the dead-\/end corridor, correcting it cell by cell, until it gets to either a non-\/fully-\/mapped cell or the end of that corridor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the cell within the maze. \\
+\hline
+{\em nodelist} & List of all the Nodes in the maze. \\
+\hline
+\end{DoxyParams}

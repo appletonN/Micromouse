@@ -2,8 +2,8 @@
 #include "Dijekstra.h"
 #include "MappingFunctions.h"
 
-#define LEFTT   1
-#define RIGHTT  2
+#define LEFTT   2
+#define RIGHTT  1
 #define UTURN   3
 
 Stack dijekstra(struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* end, char startdir)
@@ -71,6 +71,7 @@ Stack dijekstra(struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* e
     //nodemap now contains shortest path
     
     Stack route = {{0}};
+    route.head = 0;
     unsigned char index, move, dir;
     
     move = 0;    
@@ -120,10 +121,10 @@ Stack dijekstra(struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* e
                 dir = turn(1, dir);
                 
                 //turn left is required
-                move = LEFTT;
+                move = RIGHTT;
                 if ( dir & maze->cellno[0][index].walls ) {
                     //turn right
-                    move = RIGHTT;
+                    move = LEFTT;
                     dir = turn(2, dir);
                 }
                 //push to openlist and reset move counter
@@ -165,7 +166,7 @@ Stack dijekstra(struct Maze* maze, Node nodemap[MAX_NODES], Node* start, Node* e
     }
     start->distToStart = -1;
     
-    return route;
+      route;
 }
 
 

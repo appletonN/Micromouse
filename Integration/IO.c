@@ -1,47 +1,51 @@
-#include "Setup.h"
+#include "Integration/Setup.h"
 #include "IO.h"
 #include <p30Fxxxx.h>
+#include "Motors.h"
 
 
-#define noWall 10           /**< threshold for if a wall has been sensed. */
-/** @brief thresholds for anomilous sensor values used in PID
- * @{
- */ 
-#define upperError 10       
-#define lowerError 10
-//@}
 
 
-/**
- * @brief Value read by the sensor. Global because it is used in the interrupt.
- */
-unsigned char sensorVal;
 
-unsigned int speed;     /**< speed at which the LED patterns will be displayed. */
-unsigned char mode;     /**< LED mode to be displayed */
+//Sensor read global variable 
+int sensorVal;
+
+//speed and mode of LEDs global
+unsigned int speed;
+unsigned char mode;
 
 void __attribute__((interrupt, no_auto_psv)) _ADCInterrupt(void)
 {
+    //LED5Latch = 1;
     IFS0bits.ADIF=0; //reset the interrupt flag
     ADCON1bits.ASAM=0; //stop the sampling
     //now read the data from the buffers ADCBUF0, ADCBUF1 etc.
+    
     sensorVal=ADCBUF0; //get the result
+
+    //LED5Latch = 0;
 }
 
 float Sensor_Read(int sensor){
     //Array of sensor pin outputs
-    int SensorLatch[3] = {Sensor1Latch, Sensor2Latch, Sensor3Latch};
-    
-    //Drive appropriate sensor high
-    SensorLatch[sensor-1] = 1;
-    
-    //Call ADC Interrupt
+    switch(sensor){
+        case 1: Sensor1Latch = 1;break;
+        case 2: Sensor2Latch = 1; break;
+        //case 3: PDC3 = 16000; break;
+        case 3: Sensor3Latch = 1; break;
+        default: return;
+    }
+    myDelay(1);    
     ADCON1bits.ASAM=1;
     
     //Reset Sensor Pins
     Sensor1Latch = 0;
     Sensor2Latch = 0;
     Sensor3Latch = 0;
+    //OVDCONbits.POUT3H = 1;
+    //PDC3 = 0;
+    //LED5Latch = 0;
+    //LED7Latch = 0;
     
     return sensorVal;
 }
@@ -109,46 +113,79 @@ void Start_Position(void){
 
 
 ////For mapping, function to see the wall
-//int Wall_Check(int side){
-//    
-//    //Variable Initialisation
-//    int division = 100, finalValue, ret, i, p;
-//    float sensorRead[division], sum;
-//    
-//    
-//    //Loop to check the wall
-//    for (i = 0; i < division; i++){
-//        
-//        //Turn on LED of side that is being checked
-//        //SetLED(side, 1);
-//        //Read that side and store in array 
-//        sensorRead[i] = Sensor_Read(side);
-//        
-//    }
-//    
-//    //Check the average of these 
-//    for (p = 0; p < division; p++){
-//        
-//        //Omit results if outside of the correct band
-//        if((sensorRead[p] > upperError) | (sensorRead[p] < lowerError)){
-//            sensorRead[p] = 0;
-//            division--;
-//        }
-//        //Sum the sensor results
-//        sum += sensorRead[p];
-//    }
-//    
-//    //Return the final value
-//    finalValue = sum/division;
-//    
-//    //Return binary check
-//    if(finalValue < noWall){
-//        //turn off LED 
-//        //SetLED(side, 0);
-//        return (0);
-//    }else{return(1);}
-//    
-//}
+int Wall_Check(int side){
+    
+    //Variable Initialisation
+    int division = 100, ret, i, p, stop;
+    float sensorRead[division], sum, finalValue, frontVal;
+    
+    LED5Latch = 1;
+    
+    //Loop to check the wall
+    for (i = 0; i < division; i++){
+        
+        //Read that side and store in array 
+        sensorRead[i] = Sensor_Read(side);
+        
+    }
+    
+    //Check the average of these 
+    for (p = 0; p < division; p++){
+        
+        //Omit results if outside of the correct band
+        if((sensorRead[p] > upperError) || (sensorRead[p] < lowerError)){
+            sensorRead[p] = 0;
+            division--;
+        }
+        //Sum the sensor results
+        sum += sensorRead[p];
+    }
+    
+    //Return the final value
+    finalValue = sum/division;
+    
+    //Return binary check
+    if(finalValue < WallThres){
+        //turn off LED 
+        //SetLED(side, 0);
+        LED5Latch = 0;
+        myDelay(10);
+        return (0);
+    }
+    else{
+        //Check front wall
+        if(side == 1){
+            LED7Latch = 1;
+            frontVal = Sensor_Read(1);
+            //While front wall not in desired position with tolerance
+            //while((frontVal < Des_Sensor_Val - Tolerance) || (frontVal < Des_Sensor_Val + Tolerance) || (frontVal > Des_Sensor_Val + Tolerance)||(frontVal > Des_Sensor_Val - Tolerance)){
+            while((frontVal < Des_Sensor_Val - Tolerance) || (frontVal > Des_Sensor_Val + Tolerance)){
+                //Read sensor
+                frontVal = Sensor_Read(1);
+                //If statements to set direction dependant on too close or too far
+                if(frontVal < Des_Sensor_Val - Tolerance){
+                    M_Dir(1,1);
+                    stop = 3;
+                }else if(frontVal> Des_Sensor_Val + Tolerance){
+                    M_Dir(-1,-1);
+                    stop = 4;
+                }
+                //Power Motors
+                PDC1 = CreepSpeedR;
+                PDC2 = CreepSpeedL;
+                if((frontVal > Des_Sensor_Val - Tolerance) && (frontVal < Des_Sensor_Val + Tolerance)){
+                    Stop(stop);
+                }
+            }
+        }
+        
+        
+        LED5Latch = 0;
+        LED7Latch = 0;
+        myDelay(10);
+        return(1);
+    }
+}
 
 //Sensor testing function
 void Sensor_Test(void){
@@ -187,127 +224,127 @@ void Sensor_Test(void){
 
 /**** TIMER 1 ****/
 
-void __attribute__((interrupt, auto_psv)) _T1Interrupt(void)
-{
-    T1Flag = 0; ///reset the timer 1 interrupt flag
-    static unsigned char count = 0;
-    static unsigned char LEDs;
-    static unsigned char dir = 1;
-    unsigned char i;
-  
-    
-    
-    if (count == speed) {
-        
-        //display the correct mode
-        switch (mode) {
-            case 0:
-                //use speed as an error code
-                LEDs = speed;
-
-                break;
-                
-            case 1:
-                //flash 
-                if ( LEDs == 0x0A )
-                    LEDs = ~LEDs;
-                else
-                    LEDs = 0x0A;
-                break;
-
-            case 2:
-                //wake up
-                if ( LEDs == 0x1F) {
-                    //reset LEDs
-                    LEDs = 0;
-                    
-                } else if ( LEDs == 0x0E ) {
-                    //add next layer
-                    LEDs |= 0x11;
-                    
-                } else if ( LEDs == 0x04 ) {
-                    LEDs |= 0x0A;
-                    
-                } else {
-                    //if all LEDs are off
-                    LEDs = 0x04;
-                }
-                break;
-
-            case 3:
-                //scan
-                
-                if ( LEDs == 0x01 ) {
-                    dir = 1;
-                    LEDs = 0x02;
-                } else if ( LEDs == 0x10 ) {
-                    dir = 0;
-                    LEDs = 0x08;
-                } else if ( LEDs != 0x01 && LEDs != 0x02 
-                        && LEDs != 0x04 && LEDs != 0x08 && LEDs != 0x10 ) {
-                    LEDs = 0x01;
-                } else { 
-                    if ( dir )
-                        LEDs = LEDs << 1;
-                    else
-                        LEDs = LEDs >> 1;
-                }
-                
-                break;
-
-            case 4:
-                //cylon
-                if ( LEDs == 0x04 ) {
-                    //middle LED is lit
-                    //so light LEDs either side of it
-                    //switch direction so it knows what to do next
-                    LEDs = 0x0A;
-                    dir = 1;
-                    
-                } else if ( LEDs == 0x0A && dir ) {
-                    //move out
-                    LEDs = 0x11;
-                    
-                } else if ( LEDs == 0x0A && !dir ) {
-                    //move in
-                    LEDs = 0x04;
-                    
-                } else {
-                    //outermost
-                    LEDs = 0x0A;
-                    dir = 0;
-                }
-                break;
-            
-            case 5:
-                //shift
-                LEDs = LEDs << 1;
-                //set first LED again if second LED is off
-                if ( ~LEDs & 0x02 && ~LEDs & 0x10 )
-                    LEDs |= 0x01;
-                break;
-                
-                
-        }//SWITCH
-        count = 0;
-    }//IF
-    
-    
-    count++;
-    
-    //set all LEDs
-    //loop through LEDs Variable and display each value
-    for ( i=0; i<5; i++ )
-    {
-        //if each bit is set, change LED
-        if ( LEDs >> i & 0x01 ) {
-            SetLED(i, 1);
-        
-        } else {
-            SetLED(i, 0);
-        }
-    }
-}
+//void __attribute__((interrupt, auto_psv)) _T1Interrupt(void)
+//{
+//    T1Flag = 0; ///reset the timer 1 interrupt flag
+//    static unsigned char count = 0;
+//    static unsigned char LEDs;
+//    static unsigned char dir = 1;
+//    unsigned char i;
+//  
+//    
+//    
+//    if (count == speed) {
+//        
+//        //display the correct mode
+//        switch (mode) {
+//            case 0:
+//                //use speed as an error code
+//                LEDs = speed;
+//
+//                break;
+//                
+//            case 1:
+//                //flash 
+//                if ( LEDs == 0x0A )
+//                    LEDs = ~LEDs;
+//                else
+//                    LEDs = 0x0A;
+//                break;
+//
+//            case 2:
+//                //wake up
+//                if ( LEDs == 0x1F) {
+//                    //reset LEDs
+//                    LEDs = 0;
+//                    
+//                } else if ( LEDs == 0x0E ) {
+//                    //add next layer
+//                    LEDs |= 0x11;
+//                    
+//                } else if ( LEDs == 0x04 ) {
+//                    LEDs |= 0x0A;
+//                    
+//                } else {
+//                    //if all LEDs are off
+//                    LEDs = 0x04;
+//                }
+//                break;
+//
+//            case 3:
+//                //scan
+//                
+//                if ( LEDs == 0x01 ) {
+//                    dir = 1;
+//                    LEDs = 0x02;
+//                } else if ( LEDs == 0x10 ) {
+//                    dir = 0;
+//                    LEDs = 0x08;
+//                } else if ( LEDs != 0x01 && LEDs != 0x02 
+//                        && LEDs != 0x04 && LEDs != 0x08 && LEDs != 0x10 ) {
+//                    LEDs = 0x01;
+//                } else { 
+//                    if ( dir )
+//                        LEDs = LEDs << 1;
+//                    else
+//                        LEDs = LEDs >> 1;
+//                }
+//                
+//                break;
+//
+//            case 4:
+//                //cylon
+//                if ( LEDs == 0x04 ) {
+//                    //middle LED is lit
+//                    //so light LEDs either side of it
+//                    //switch direction so it knows what to do next
+//                    LEDs = 0x0A;
+//                    dir = 1;
+//                    
+//                } else if ( LEDs == 0x0A && dir ) {
+//                    //move out
+//                    LEDs = 0x11;
+//                    
+//                } else if ( LEDs == 0x0A && !dir ) {
+//                    //move in
+//                    LEDs = 0x04;
+//                    
+//                } else {
+//                    //outermost
+//                    LEDs = 0x0A;
+//                    dir = 0;
+//                }
+//                break;
+//            
+//            case 5:
+//                //shift
+//                LEDs = LEDs << 1;
+//                //set first LED again if second LED is off
+//                if ( ~LEDs & 0x02 && ~LEDs & 0x10 )
+//                    LEDs |= 0x01;
+//                break;
+//                
+//                
+//        }//SWITCH
+//        count = 0;
+//    }//IF
+//    
+//    
+//    count++;
+//    
+//    //set all LEDs
+//    //loop through LEDs Variable and display each value
+//    for ( i=0; i<5; i++ )
+//    {
+//        //if each bit is set, change LED
+//        if ( LEDs >> i & 0x01 ) {
+//            SetLED(i, 1);
+//        
+//        } else {
+//            SetLED(i, 0);
+//        }
+//    }
+//}
 
 
 void SetLED(unsigned char LED, unsigned char set)
@@ -340,3 +377,4 @@ void Display(unsigned char setmode, unsigned int speedchange)
     mode = setmode;
     speed = speedchange;
 }
+

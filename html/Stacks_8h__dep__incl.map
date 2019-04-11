@@ -1,0 +1,11 @@
+<map id="Stacks.h" name="Stacks.h">
+<area shape="rect" id="node2" href="$MappingFunctions_8h.html" title="contains all functions, structures and data types used by most files. " alt="" coords="5,80,204,107"/>
+<area shape="rect" id="node6" href="$simulator_8h_source.html" title="Algorithm/simulator.h" alt="" coords="325,155,471,181"/>
+<area shape="rect" id="node8" href="$MapMaze_8h_source.html" title="Algorithm/MapMaze.h" alt="" coords="227,80,377,107"/>
+<area shape="rect" id="node9" href="$Motors_8h_source.html" title="Integration/Motors.h" alt="" coords="481,80,619,107"/>
+<area shape="rect" id="node3" href="$Dijekstra_8h.html" title="dijekstra&#39;s function and cocktail sort. " alt="" coords="55,155,199,181"/>
+<area shape="rect" id="node5" href="$main_8c.html" title="this is the main file that controls the robot. " alt="" coords="97,229,158,256"/>
+<area shape="rect" id="node4" href="$MapMaze_8c.html" title="Fully maps the maze. " alt="" coords="197,229,346,256"/>
+<area shape="rect" id="node7" href="$simulator_8c.html" title="Display the maze for debugging. " alt="" coords="371,229,516,256"/>
+<area shape="rect" id="node10" href="$Motors_8c.html" title="Motor Functions and Defines. " alt="" coords="495,155,634,181"/>
+</map>

@@ -1,0 +1,202 @@
+\hypertarget{IO_8c}{}\section{Integration/\+IO.c File Reference}
+\label{IO_8c}\index{Integration/\+I\+O.\+c@{Integration/\+I\+O.\+c}}
+
+
+Functions for input and output Integration.  
+
+
+{\ttfamily \#include \char`\"{}Setup.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}I\+O.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$p30\+Fxxxx.\+h$>$}\newline
+Include dependency graph for I\+O.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{IO_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{IO_8c_ae70d49989e387fc76c7e21607f094778}{no\+Wall}~10
+\end{DoxyCompactItemize}
+\textbf{ }\par
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{IO_8c_a99ad70af8ff9fce7b7141201a3ee2dc6}\label{IO_8c_a99ad70af8ff9fce7b7141201a3ee2dc6}} 
+\#define \hyperlink{IO_8c_a99ad70af8ff9fce7b7141201a3ee2dc6}{upper\+Error}~10
+\begin{DoxyCompactList}\small\item\em thresholds for anomilous sensor values used in P\+ID \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{IO_8c_acf6b905fc6a9f8b8bd4c13199f746be7}\label{IO_8c_acf6b905fc6a9f8b8bd4c13199f746be7}} 
+\#define {\bfseries lower\+Error}~10
+\end{DoxyCompactItemize}
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{IO_8c_a226557d5e42f7e29ddaff30606138459}{\+\_\+\+\_\+attribute\+\_\+\+\_\+} ((interrupt, no\+\_\+auto\+\_\+psv))
+\begin{DoxyCompactList}\small\item\em U\+A\+RT 2 receive interrupt for encoder 2 and U\+SB interface. \end{DoxyCompactList}\item 
+float \hyperlink{IO_8c_a5ce20c906e202258abde90ad5ac5f975}{Sensor\+\_\+\+Read} (int sensor)
+\begin{DoxyCompactList}\small\item\em read the Sensors using the A\+DC. \end{DoxyCompactList}\item 
+void \hyperlink{IO_8c_a4dda47d5c64a5471c6321138c570dcc5}{Start\+\_\+\+Position} (void)
+\begin{DoxyCompactList}\small\item\em Use L\+E\+Ds to give feedback on position in cell. \end{DoxyCompactList}\item 
+void \hyperlink{IO_8c_a30b6155e77b7ff2de2da47c456769428}{Sensor\+\_\+\+Test} (void)
+\begin{DoxyCompactList}\small\item\em check if there is a wall or not. \end{DoxyCompactList}\item 
+void \hyperlink{IO_8c_a348b663f86a656f5ea991d496ff9b896}{\+\_\+\+\_\+attribute\+\_\+\+\_\+} ((interrupt, auto\+\_\+psv))
+\begin{DoxyCompactList}\small\item\em Timer1 interrupt for L\+ED display. \end{DoxyCompactList}\item 
+void \hyperlink{IO_8c_a4d8df502b7da76dda97312ec92b30ecf}{Set\+L\+ED} (unsigned char L\+ED, unsigned char set)
+\begin{DoxyCompactList}\small\item\em Turn L\+ED on or off. \end{DoxyCompactList}\item 
+void \hyperlink{IO_8c_a6cdc25769fbef821b96dd6c995e9479c}{Display} (unsigned char setmode, unsigned int speedchange)
+\begin{DoxyCompactList}\small\item\em Set what is displayed on the L\+E\+Ds. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{IO_8c_aa359a6a5a50c709ba1c7ba1668c2b518}\label{IO_8c_aa359a6a5a50c709ba1c7ba1668c2b518}} 
+unsigned char \hyperlink{IO_8c_aa359a6a5a50c709ba1c7ba1668c2b518}{sensor\+Val}
+\begin{DoxyCompactList}\small\item\em Value read by the sensor. Global because it is used in the interrupt. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{IO_8c_a481cb487704fc7f8c8ddc6613aed3785}{speed}
+\item 
+unsigned char \hyperlink{IO_8c_a74b654271a172a244c844fb86277cd8a}{mode}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Functions for input and output Integration. 
+
+Includes the interrupts for sensor inputs and L\+ED outputs as well as functions to decode values and make use of the IO
+
+\begin{DoxyAuthor}{Author}
+Christian Woof @ U\+WE Robotics 
+\end{DoxyAuthor}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{IO_8c_ae70d49989e387fc76c7e21607f094778}\label{IO_8c_ae70d49989e387fc76c7e21607f094778}} 
+\index{I\+O.\+c@{I\+O.\+c}!no\+Wall@{no\+Wall}}
+\index{no\+Wall@{no\+Wall}!I\+O.\+c@{I\+O.\+c}}
+\subsubsection{\texorpdfstring{no\+Wall}{noWall}}
+{\footnotesize\ttfamily \#define no\+Wall~10}
+
+threshold for if a wall has been sensed. 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{IO_8c_a226557d5e42f7e29ddaff30606138459}\label{IO_8c_a226557d5e42f7e29ddaff30606138459}} 
+\index{I\+O.\+c@{I\+O.\+c}!\+\_\+\+\_\+attribute\+\_\+\+\_\+@{\+\_\+\+\_\+attribute\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+attribute\+\_\+\+\_\+@{\+\_\+\+\_\+attribute\+\_\+\+\_\+}!I\+O.\+c@{I\+O.\+c}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+attribute\+\_\+\+\_\+()}{\_\_attribute\_\_()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void \+\_\+\+\_\+attribute\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{(interrupt, no\+\_\+auto\+\_\+psv)}]{ }\end{DoxyParamCaption})}
+
+
+
+U\+A\+RT 2 receive interrupt for encoder 2 and U\+SB interface. 
+
+U\+A\+RT 1 receive interrupt for encoder 1 and programmer.
+
+A\+DC interrupt for use with sensors. \mbox{\Hypertarget{IO_8c_a348b663f86a656f5ea991d496ff9b896}\label{IO_8c_a348b663f86a656f5ea991d496ff9b896}} 
+\index{I\+O.\+c@{I\+O.\+c}!\+\_\+\+\_\+attribute\+\_\+\+\_\+@{\+\_\+\+\_\+attribute\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+attribute\+\_\+\+\_\+@{\+\_\+\+\_\+attribute\+\_\+\+\_\+}!I\+O.\+c@{I\+O.\+c}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+attribute\+\_\+\+\_\+()}{\_\_attribute\_\_()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void \+\_\+\+\_\+attribute\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{(interrupt, auto\+\_\+psv)}]{ }\end{DoxyParamCaption})}
+
+
+
+Timer1 interrupt for L\+ED display. 
+
+reset the timer 1 interrupt flag \mbox{\Hypertarget{IO_8c_a6cdc25769fbef821b96dd6c995e9479c}\label{IO_8c_a6cdc25769fbef821b96dd6c995e9479c}} 
+\index{I\+O.\+c@{I\+O.\+c}!Display@{Display}}
+\index{Display@{Display}!I\+O.\+c@{I\+O.\+c}}
+\subsubsection{\texorpdfstring{Display()}{Display()}}
+{\footnotesize\ttfamily void Display (\begin{DoxyParamCaption}\item[{unsigned char}]{setmode,  }\item[{unsigned int}]{speedchange }\end{DoxyParamCaption})}
+
+
+
+Set what is displayed on the L\+E\+Ds. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em setmode} & Which display Mode is to be used. \\
+\hline
+{\em speedchange} & Speed the display should go at. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{IO_8c_a5ce20c906e202258abde90ad5ac5f975}\label{IO_8c_a5ce20c906e202258abde90ad5ac5f975}} 
+\index{I\+O.\+c@{I\+O.\+c}!Sensor\+\_\+\+Read@{Sensor\+\_\+\+Read}}
+\index{Sensor\+\_\+\+Read@{Sensor\+\_\+\+Read}!I\+O.\+c@{I\+O.\+c}}
+\subsubsection{\texorpdfstring{Sensor\+\_\+\+Read()}{Sensor\_Read()}}
+{\footnotesize\ttfamily float Sensor\+\_\+\+Read (\begin{DoxyParamCaption}\item[{int}]{sensor }\end{DoxyParamCaption})}
+
+
+
+read the Sensors using the A\+DC. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sensor} & which sensor to read from. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+value between 0 and 255 of sensor read. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{IO_8c_a30b6155e77b7ff2de2da47c456769428}\label{IO_8c_a30b6155e77b7ff2de2da47c456769428}} 
+\index{I\+O.\+c@{I\+O.\+c}!Sensor\+\_\+\+Test@{Sensor\+\_\+\+Test}}
+\index{Sensor\+\_\+\+Test@{Sensor\+\_\+\+Test}!I\+O.\+c@{I\+O.\+c}}
+\subsubsection{\texorpdfstring{Sensor\+\_\+\+Test()}{Sensor\_Test()}}
+{\footnotesize\ttfamily void Sensor\+\_\+\+Test (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+check if there is a wall or not. 
+
+Uses \hyperlink{IO_8c_a5ce20c906e202258abde90ad5ac5f975}{Sensor\+\_\+\+Read()} to get an average of the sensor values and uses this to determine whether there is a wall or not in the direciton of the sensor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em side} & which side of the mouse is being checked. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 or 0 (Wall or no Wall). Test sensors 
+\end{DoxyReturn}
+\mbox{\Hypertarget{IO_8c_a4d8df502b7da76dda97312ec92b30ecf}\label{IO_8c_a4d8df502b7da76dda97312ec92b30ecf}} 
+\index{I\+O.\+c@{I\+O.\+c}!Set\+L\+ED@{Set\+L\+ED}}
+\index{Set\+L\+ED@{Set\+L\+ED}!I\+O.\+c@{I\+O.\+c}}
+\subsubsection{\texorpdfstring{Set\+L\+E\+D()}{SetLED()}}
+{\footnotesize\ttfamily void Set\+L\+ED (\begin{DoxyParamCaption}\item[{unsigned char}]{L\+ED,  }\item[{unsigned char}]{set }\end{DoxyParamCaption})}
+
+
+
+Turn L\+ED on or off. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em L\+ED} & which L\+ED is being set. \\
+\hline
+{\em set} & Set or Clear. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{IO_8c_a4dda47d5c64a5471c6321138c570dcc5}\label{IO_8c_a4dda47d5c64a5471c6321138c570dcc5}} 
+\index{I\+O.\+c@{I\+O.\+c}!Start\+\_\+\+Position@{Start\+\_\+\+Position}}
+\index{Start\+\_\+\+Position@{Start\+\_\+\+Position}!I\+O.\+c@{I\+O.\+c}}
+\subsubsection{\texorpdfstring{Start\+\_\+\+Position()}{Start\_Position()}}
+{\footnotesize\ttfamily void Start\+\_\+\+Position (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Use L\+E\+Ds to give feedback on position in cell. 
+
+used to setup the mouse in the maze at the beginning by holding the mouse in the cell until the 2 L\+E\+Ds turn off. This means that the mouse is in the correct position. 
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{IO_8c_a74b654271a172a244c844fb86277cd8a}\label{IO_8c_a74b654271a172a244c844fb86277cd8a}} 
+\index{I\+O.\+c@{I\+O.\+c}!mode@{mode}}
+\index{mode@{mode}!I\+O.\+c@{I\+O.\+c}}
+\subsubsection{\texorpdfstring{mode}{mode}}
+{\footnotesize\ttfamily unsigned char mode}
+
+L\+ED mode to be displayed \mbox{\Hypertarget{IO_8c_a481cb487704fc7f8c8ddc6613aed3785}\label{IO_8c_a481cb487704fc7f8c8ddc6613aed3785}} 
+\index{I\+O.\+c@{I\+O.\+c}!speed@{speed}}
+\index{speed@{speed}!I\+O.\+c@{I\+O.\+c}}
+\subsubsection{\texorpdfstring{speed}{speed}}
+{\footnotesize\ttfamily unsigned int speed}
+
+speed at which the L\+ED patterns will be displayed. 
